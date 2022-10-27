@@ -2,6 +2,7 @@ package com.spring.demo.member.service;
 
 import com.spring.demo.member.domain.Member;
 import com.spring.demo.member.dto.LoginDTO;
+import com.spring.demo.member.dto.MyPageDTO;
 import com.spring.demo.member.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -73,6 +74,18 @@ public class MemberService {
             // 아이디 없음
             return NO_ACC;
         }
+    }
+
+    // 마이페이지
+    public MyPageDTO getMyPageInfo(String account){
+
+        MyPageDTO myPage = new MyPageDTO();
+
+        myPage.setBoardCnt(memberMapper.findBoardCount(account));
+        myPage.setReplyCnt(memberMapper.findReplyCount(account));
+
+        return myPage;
+
     }
 
 }

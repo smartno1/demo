@@ -12,12 +12,17 @@ public interface MemberMapper {
     boolean register(Member member);
 
     // 중복체크 기능
-    // 체크타입: 계정 or 이메일
+    // 체크타입: 계정 or 이메일 or 전화번호
     // 체크값: 중복검사대상 값
     int isDuplicate(Map<String, Object> checkMap);
 
-    // 회원정보 조회 기능
+    // 회원 조회 기능
     Member findUser(String account);
+
+
+    int findBoardCount(String account);
+
+    int findReplyCount(String account);
 
 
 }

@@ -4,6 +4,7 @@ import com.spring.demo.member.domain.Auth;
 import com.spring.demo.member.domain.FavoriteMember;
 import com.spring.demo.member.domain.Gender;
 import com.spring.demo.member.domain.Member;
+import com.spring.demo.member.dto.MyPageDTO;
 import com.spring.demo.member.repository.MemberMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,17 @@ class MemberServiceTest {
 
     }
 
+    @Test
+    @DisplayName("계정명을 전달하면 게시글 수와 댓글 수가 반환되어야 한다.")
+    void getMyPageInfoCheck(){
 
+        String account = "banana";
+
+        MyPageDTO myPage = service.getMyPageInfo(account);
+
+        System.out.println("페이지 수 : " + myPage.getBoardCnt());
+        System.out.println("댓글 수 : " + myPage.getReplyCnt());
+
+    }
 
 }

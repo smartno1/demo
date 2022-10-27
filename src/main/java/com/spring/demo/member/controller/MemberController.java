@@ -2,6 +2,7 @@ package com.spring.demo.member.controller;
 
 import com.spring.demo.member.domain.Member;
 import com.spring.demo.member.dto.LoginDTO;
+import com.spring.demo.member.dto.MyPageDTO;
 import com.spring.demo.member.service.LoginFlag;
 import com.spring.demo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -54,19 +55,36 @@ public class MemberController {
         return new ResponseEntity<>(flag, HttpStatus.OK);
     }
 
+    // 마이페이지 비동기 처리
+    @GetMapping("/myPageInfo")
+    @ResponseBody
+    public MyPageDTO MyPageInfo(HttpSession session) {
+
+        if (session.getAttribute("loginUser") != null) {
+
+            Member m = (Member)session.getAttribute("loginUser");
+
+            log.info("Member: {}", m);
+            MyPageDTO myPage = memberService.getMyPageInfo(m.getAccount());
+
+            return myPage;
+        }
+        return null;
+    }
+
     // 로그인 화면을 열어주는 요청처리
-//    @GetMapping("/sign-in")
-//    public void signIn(HttpServletRequest request) {
-//        log.info("/member/sign-in GET! - forwarding to sign-in.jsp");
-//
-//        // 요청 정보 헤더 안에는 Referer라는 키가 있는데
-//        // 여기 안에는 이 페이지로 진입할 때 어디에서 왔는지 URI정보가 들어있음.
-//        String referer = request.getHeader("Referer");
-//        log.info("referer: {}", referer);
-//
-//
-//        request.getSession().setAttribute("redirectURI", referer);
-//    }
+    @GetMapping("/sign-in")
+    public void signIn(HttpServletRequest request) {
+        log.info("/member/sign-in GET! - forwarding to sign-in.jsp");
+
+        // 요청 정보 헤더 안에는 Referer라는 키가 있는데
+        // 여기 안에는 이 페이지로 진입할 때 어디에서 왔는지 URI정보가 들어있음.
+        String referer = request.getHeader("Referer");
+        log.info("referer: {}", referer);
+
+
+        request.getSession().setAttribute("redirectURI", referer);
+    }
 
     // 로그인 요청 처리
     @PostMapping("/sign-in")

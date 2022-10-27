@@ -44,6 +44,24 @@
 
     </select>
 
+    <select id="findBoardCount" resultType="int">
+
+        SELECT COUNT(*)
+        FROM tbl_board
+        WHERE account = #{account}
+
+    </select>
+
+    <select id="findReplyCount" resultType="int">
+
+        SELECT COUNT(*)
+        FROM tbl_reply
+        WHERE account = #{account}
+
+    </select>
+
+
+
 
 
 </mapper>

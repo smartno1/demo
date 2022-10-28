@@ -1,5 +1,7 @@
 package com.spring.demo.gallery.controller;
 
+import com.spring.demo.common.page.Page;
+import com.spring.demo.common.page.PageMaker;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.service.GalleryService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @Log4j2
@@ -22,19 +26,24 @@ public class GalleryController {
 
 
     @GetMapping("/list")
-    public String list(Model model, HttpServletRequest request){
+    public String list(Page page, Model model, HttpServletRequest request){
         log.info("GalleryController /gallery/list GET!");
 
-        List<Gallery> galleries = galleryService.findAllService();
-        log.info("/galleryImg/list GET! = {}", galleries);
-        model.addAttribute("galleries", galleries);
-//        for(Gallery g : galleries){
-//            String gsrc = g.getSrc();
-////            String newgsrc = gsrc.replace("/","\\");
-//            g.setSrc(newgsrc);
-//        }
-        String path = request.getSession().getServletContext().getRealPath("/");
-        log.info("realPath= {}",path );
+        Map<String , Object> galleryMap = galleryService.findAllService(page);
+        log.info("/galleryImg/list GET! = {}", galleryMap);
+
+        // 페이지 정보
+        PageMaker pm = new PageMaker(
+                new Page(page.getPageNum(), page.getAmount())
+                , (Integer) galleryMap.get("tc")
+                );
+
+        model.addAttribute("galleries", galleryMap.get("galleries"));
+        model.addAttribute("pm", pm);
+
+        // 루트 경로확인
+//        String path = request.getSession().getServletContext().getRealPath("/");
+//        log.info("realPath= {}",path );
         return "/gallery/list";
 
     }

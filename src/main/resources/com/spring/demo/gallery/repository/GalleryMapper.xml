@@ -6,22 +6,35 @@
 <mapper namespace="com.spring.demo.gallery.repository.GalleryMapper">
     <resultMap id="galleryMap" type="com.spring.demo.gallery.domain.Gallery">
         <result property="userId" column="user_id" />
+        <result property="regDate" column="reg_date" />
     </resultMap>
 
     <insert id="save">
         INSERT INTO gallery
             (src, text, user_id)
-        VALUES (#{src}, #{text}, #{userId});
+        VALUES (#{src}, #{text}, #{userId})
     </insert>
 
     <select id="findOne" resultMap="galleryMap">
         SELECT *
         FROM gallery
-        WHERE id=#{id};
+        WHERE id=#{id}
     </select>
 
     <select id="findAll" resultMap="galleryMap">
+        WITH v_gallery AS
+                 (
+                     SELECT
+                         ROW_NUMBER() OVER (ORDER BY id) AS RowNumber, gallery.*
+                     FROM gallery
+                 )
         SELECT *
-        FROM gallery;
+        FROM v_gallery
+        WHERE RowNumber BETWEEN ((#{pageNum} - 1) * #{amount} + 1) AND (#{pageNum} * #{amount})
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM gallery
     </select>
 </mapper>

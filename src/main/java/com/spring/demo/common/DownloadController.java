@@ -37,7 +37,8 @@ public class DownloadController {
 
             response.getOutputStream().write(fileByte);
             response.getOutputStream().flush();
-            response.getOutputStream().close();
+
+
 
             return "/gallery/list";
 

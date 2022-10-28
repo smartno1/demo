@@ -32,7 +32,7 @@ public class MemberController {
     // 회원가입 양식 띄우기 요청
     @GetMapping("/sign-up")
     public void signUp() {
-        log.info("/member/sign-up GET! - forwarding to sign-up.jsp");
+        log.info("/member/sign-up GET! - forwarding to sign-up2.jsp");
     }
 
     // 회원가입 처리 요청
@@ -95,13 +95,17 @@ public class MemberController {
         log.info("/member/sign-in POST - {}", inputData);
 //        log.info("session timeout : {}", session.getMaxInactiveInterval());
 
+        log.info("memberService.login 시작");
         // 로그인 서비스 호출
         LoginFlag flag = memberService.login(inputData, session);
 
+        log.info("memberService.login 종료");
         if (flag == LoginFlag.SUCCESS) {
             log.info("login success!!");
-            String redirectURI = (String) session.getAttribute("redirectURI");
-            return "redirect:" + redirectURI;
+
+                String redirectURI = (String) session.getAttribute("redirectURI");
+                return "redirect:" + redirectURI;
+
         }
         model.addAttribute("loginMsg", flag);
         return "member/sign-in";

@@ -4,13 +4,17 @@ import com.spring.demo.member.domain.Auth;
 import com.spring.demo.member.domain.FavoriteMember;
 import com.spring.demo.member.domain.Gender;
 import com.spring.demo.member.domain.Member;
+import com.spring.demo.member.dto.LoginDTO;
 import com.spring.demo.member.dto.MyPageDTO;
 import com.spring.demo.member.repository.MemberMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.servlet.http.HttpSession;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,7 +71,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("계정명을 전달하면 게시글 수와 댓글 수가 반환되어야 한다.")
-    void getMyPageInfoCheck(){
+    void getMyPageInfoCheck() {
 
         String account = "banana";
 
@@ -77,5 +81,6 @@ class MemberServiceTest {
         System.out.println("댓글 수 : " + myPage.getReplyCnt());
 
     }
-
 }
+
+

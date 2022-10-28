@@ -41,30 +41,28 @@
 <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
 <!-- animate css v3.7.0 || https://animate.style -->
-<link rel="stylesheet" href="/css/animate.min.css">
+
 
 <!-- slick css || https://kenwheeler.github.io/slick/  -->
-<link rel="stylesheet" href="/css/slick.css">
 
 <!-- bootstrap css -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- custom css -->
-<link rel="stylesheet" href="/css/main.css">
+
 
 <!-- jquery -->
-<script src="/js/jquery-3.3.1.min.js"></script>
+
 
 <!-- libraries -->
+
 <!-- scrolla js -->
-<script src="/js/scrolla.jquery.min.js" defer></script>
+
+
 <!-- slick js -->
-<script src="/js/slick.min.js" defer></script>
+
 
 <!-- bootstrap js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
 <!-- custom js -->
-<script src="/js/config.js" defer></script>
-<script src="/js/gnb-event.js" defer></script>
-<script src="/js/scroll-event.js" defer></script>

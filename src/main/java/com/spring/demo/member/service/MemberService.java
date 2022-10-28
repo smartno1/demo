@@ -57,10 +57,17 @@ public class MemberService {
     public LoginFlag login(LoginDTO inputData, HttpSession session) {
         // 회원가입 여부 확인
         Member foundMember = memberMapper.findUser(inputData.getAccount());
+        log.info("멤버 : {}", foundMember);
+
         if (foundMember != null) {
+            log.info("password : {} ", inputData.getPassword());
+            log.info("encodePassword : {} ", foundMember.getPassword());
+            log.info("encoder.matches : {}",encoder.matches(inputData.getPassword(), foundMember.getPassword()));
             if (encoder.matches(inputData.getPassword(), foundMember.getPassword())) {
                 // 로그인 성공
                 // 세션에 사용자 정보기록 저장
+
+
                 session.setAttribute("loginUser", foundMember);
 
                 // 세션 타임아웃 설정
@@ -75,6 +82,10 @@ public class MemberService {
             return NO_ACC;
         }
     }
+
+
+
+
 
     // 마이페이지
     public MyPageDTO getMyPageInfo(String account){

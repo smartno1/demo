@@ -105,6 +105,10 @@
 
     <script>
 
+
+
+
+
         const msg = '${msg}';
         if (msg === 'reg-success') {
             alert('축하합니다. 회원가입에 성공했습니다.');

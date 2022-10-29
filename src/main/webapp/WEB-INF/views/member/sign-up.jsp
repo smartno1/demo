@@ -105,7 +105,7 @@
                                     <td><input type="text" name="nickname" id="user_nickname" class="form-control tooltipstered"
                                             maxlength="10" required="required" aria-required="true"
                                             style="margin-bottom: 25px; width: 100%; height: 40px; border: 1px solid #d9d9de"
-                                            placeholder=""></td>
+                                            placeholder="별명은 최대 10자"></td>
                                 </tr>
 
                                 <tr>
@@ -216,7 +216,69 @@
 
     <script>
 
+            const getIdCheck = RegExp(/^[a-zA-Z0-9]{4,14}$/);
+            const getPwCheck = RegExp(
+                /([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
+            const getName = RegExp(/^[가-힣]+$/);
+            const getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+            
+            const getPhoneNum = RegExp(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/);
+            const getNickname = RegExp(/^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/);
+            const getBirth = RegExp(/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/);
+
+            // 입력값 검증 배열
+            // 1: 아이디,  2: 비번, 3: 비번확인, 4: 이름, 5: 이메일 6: 전화번호 7: 닉네임 8: 생년월일
+            const checkArr = [false, false, false, false, false, false, false, false,];
+
+        function checkId(){
+
+            const $idInput = document.getElementById('user_id');
+
+
+            $idInput.addEventListener('keyup', (e)=> {
+                let idChk = $idInput.textContent;
+
+                // 아이디를 입력하지 않은 경우
+                if (idChk.trim() === '') {
+                        $idInput.style.borderColor='red';
+                        $('#idChk').html('<b class="c-red">[아이디는 필수 정보입니다.]</b>');
+                        checkArr[0] = false;
+                        
+                    }else if (!getIdCheck.test($idInput.val())) {
+                            // 아이디를 패턴에 맞지 않게 입력하였을 경우
+                            // test() 메서드는 정규표현식을 검증하여 입력값이 표현식과
+                            // 일치하면 true, 일치하지 않으면 false를 리턴
+                            
+                        $idInput.css('border-color', 'red');
+                        $('#idChk').html('<b class="c-red">[영문, 숫자로 4~14자 사이로 작성하세요!]</b>');
+                        checkArr[0] = false;
+                    }else { // 아이디 중복 확인 검증
+                        fetch('/member/check?type=account&value=' + $idInput.val())
+                            .then(res => res.text())
+                            .then(flag => {
+                                console.log('flag:', flag);
+                                if (flag === 'true') {
+                                    $idInput.css('border-color', 'red');
+                                    $('#idChk').html('<b class="c-red">[중복된 아이디입니다.]</b>');
+                                    checkArr[0] = false;
+                                } else {
+                                    // 정상적으로 입력한 경우
+                                    $idInput.css('border-color', 'skyblue');
+                                    $('#idChk').html('<b class="c-blue">[사용가능한 아이디입니다.]</b>');
+                                    checkArr[0] = true;
+                        }
+                    });
+
+}
+                    
+            })
+
+        }
+
+
         (function(){
+
+            checkId();
 
             const $signUpBtn = document.getElementById('signup-btn');
             const $regForm = document.getElementById('signUpForm');

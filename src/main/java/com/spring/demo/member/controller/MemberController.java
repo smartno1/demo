@@ -32,7 +32,7 @@ public class MemberController {
     // 회원가입 양식 띄우기 요청
     @GetMapping("/sign-up")
     public void signUp() {
-        log.info("/member/sign-up GET! - forwarding to sign-up2.jsp");
+        log.info("/member/sign-up GET! - forwarding to sign-up.jsp");
     }
 
     // 회원가입 처리 요청

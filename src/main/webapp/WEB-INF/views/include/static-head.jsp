@@ -27,8 +27,6 @@
 <title>Hong Studio</title>
 
 <!-- 파비콘 넣기 -->
-<link rel="icon" href="/siteicon.ico">
-<link rel="apple-touch-icon" href="/siteicon.ico">
 
 <!-- reset css -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">

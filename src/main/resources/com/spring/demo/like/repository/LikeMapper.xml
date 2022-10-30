@@ -3,92 +3,74 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.spring.demo.like.repository.LikeMapperMapper">
+<mapper namespace="com.spring.demo.like.repository.LikeMapper">
 
+    <!-- 추천수 반환  -->
+    <select id="likeCnt" resultType="int">
+        SELECT COUNT(*) FROM tbl_like
+        WHERE
+        <if test="type='replyNo'">
+            replyNo
+        </if>
+        <if test="type='BoardNo'">
+            BoardNo
+        </if>
+        =#{no}
 
-<!--  추천수 증가 -->
-<update id="addLike" parameterType="int">
+    </select>
 
-    UPDATE tbl_board
-    SET like_cnt = like_cnt+1
-    where
-    <if test="type=='replyNo'">
-        reply_no = #{replyNo}
-    </if>
-    <if test="type=='boardNo'">
-        board_no = #{boardNo}
-    </if>
+    <!-- 추천 시 insert -->
+    <insert id="insertLike">
 
-</update>
+        INSERT INTO tbl_like
 
-        <!-- 추천수 감소 -->
-<update id="subLike" parameterType="int">
+        <if test="type=='replyNo'">
+            (reply_no , account)
+        </if>
 
-    UPDATE tbl_board
-    SET like_cnt = like_cnt - 1
-    where
-    <if test="type=='replyNo'">
-        reply_no = #{replyNo}
-    </if>
-    <if test="type=='boardNo'">
-        board_no = #{boardNo}
-    </if>
-
-</update>
-
-        <!-- 추천 시 Like 테이블에 insert -->
-<insert id="insertLike">
-
-    INSERT INTO tbl_like
-
-    <if test="checkMap.type=='replyNo'">
-    ( reply_no , account )
-    VALUES
-    ( #{checkMap.replyNo}, #{account})
-    </if>
-
-    <if test="checkMap.type=='boardNo'">
-        ( board_no , account )
+        <if test="type=='boardNo'">
+            (board_no , account)
+        </if>
         VALUES
-        ( #{checkMap.boardNo}, #{account})
-    </if>
+        (#{no}, #{account})
 
 
-</insert>
+    </insert>
 
-        <!-- 댓글 추천취소 시 delete -->
-<delete id="deleteLike">
+    <!-- 추천취소 시 delete -->
+    <delete id="deleteLike">
 
-    DELETE FROM tbl_like
-    WHERE
-    <if test="type=='replyNo'">
-        reply_no = #{replyNo}
-    </if>
-    <if test="type=='boardNo'">
-        board_no = #{boardNo}
-    </if>
+        DELETE FROM tbl_like
+        WHERE
+        <if test="type=='replyNo'">
+            reply_no
+        </if>
+        <if test="type=='boardNo'">
+            board_no
+        </if>
+        = #{no}
+        AND
+        account = #{account}
 
-    AND
-    account = #{account}
 
+    </delete>
 
-</delete>
+    <!--추천이 이미 있는지 확인-->
+    <select id="likeChk" resultType="int">
 
-        <!-- 댓글 추천이 이미 있는지 확인-->
-<select id="likeChk" resultType="int">
+        SELECT COUNT(*) FROM tbl_like
+        WHERE
+        <if test="type=='replyNo'">
+            reply_no
+        </if>
+        <if test="type=='boardNo'">
+            board_no
+        </if>
+        = #{no}
+        AND
+        account = #{account}
 
-    SELECT COUNT(*) FROM tbl_like
-    WHERE
-    <if test="type=='replyNo'">
-        reply_no = #{replyNo}
-    </if>
-    <if test="type=='boardNo'">
-        board_no = #{boardNo}
-    </if>
-    AND
-    account = #{account}
-
-</select>
+    </select>
 
 
 </mapper>

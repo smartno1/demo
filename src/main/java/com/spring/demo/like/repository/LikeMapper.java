@@ -1,5 +1,6 @@
 package com.spring.demo.like.repository;
 
+import com.spring.demo.like.dto.LikeTypeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,15 +11,13 @@ public interface LikeMapper {
 
 
 
-    public int addLike(Map<String, Integer> checkMap);
+    public int likeCnt(LikeTypeDTO like);
 
-    public int subLike(Map<String, Integer> checkMap);
+    public boolean insertLike(LikeTypeDTO like);
 
-    public boolean insertLike(@Param("checkMap")Map<String, Integer> checkMap,@Param("account") String account);
+    public boolean deleteLike(LikeTypeDTO like);
 
-    public boolean deleteLike(Map<String, Integer> checkMap, String account);
-
-    public int likeChk(Map<String, Integer> checkMap, String account);
+    public int likeChk(LikeTypeDTO like);
 
 
 }

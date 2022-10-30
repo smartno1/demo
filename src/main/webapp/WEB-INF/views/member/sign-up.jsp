@@ -133,7 +133,7 @@
                                     <td><input type="text" name="phoneNum" id="user_phone" class="form-control tooltipstered"
                                             maxlength="13" required="required" aria-required="true"
                                             style="margin-bottom: 25px; width: 100%; height: 40px; border: 1px solid #d9d9de"
-                                            placeholder="ex)01012345678"></td>
+                                            placeholder="ex)010-1234-5678"></td>
                                 </tr>
 
                                 <tr>
@@ -147,8 +147,6 @@
                                             style="margin-bottom: 25px; width: 100%; height: 40px; border: 1px solid #d9d9de"
                                             placeholder="ex)19900101"></td>
                                 </tr>
-
-
 
 
 

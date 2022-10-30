@@ -76,7 +76,7 @@ function checkPw() {
     //2. 패스워드 입력값 검증.
     $password.addEventListener('keyup', () => {
         //비밀번호 공백 확인
-        console.log($password.value.length)
+    
         if ($password.value === "") {
             $password.style.borderColor = 'red';
             $pwChk.innerHTML=('<b class="c-red">[패스워드는 필수정보!]</b>');
@@ -282,17 +282,17 @@ function checkBirth(){
         if ($userBirth.value === "") {
             $userBirth.style.borderColor = 'red';
             $birthChk.innerHTML = ('<b class="c-red">[생년월일은 필수정보!]</b>');
-            checkArr[6] = false;
+            checkArr[7] = false;
         }
         //별명값 유효성검사
         else if (!getBirth.test($userBirth.value)) {
             $userBirth.style.borderColor = 'red';
-            $birthChk.innerHTML = ('<b class="c-red">[ 숫자만~ ex)19900101]</b>');
-            checkArr[6] = false;
+            $birthChk.innerHTML = ('<b class="c-red">[ ex)19900101]</b>');
+            checkArr[7] = false;
         } else {
             $userBirth.style.borderColor = 'skyblue';
             $birthChk.innerHTML = ('<b class="c-blue">[참 잘했어요]</b>');
-            checkArr[6] = true;
+            checkArr[7] = true;
         }
 
     });
@@ -303,6 +303,7 @@ function checkBirth(){
 function checkAddress(){
 
 
+    checkArr[8] = true;
 
 
 }
@@ -325,9 +326,12 @@ function checkAddress(){
     checkPhone();
     checkNickname();
     checkBirth();
+    checkAddress();
 
     const $signUpBtn = document.getElementById('signup-btn');
     const $regForm = document.getElementById('signUpForm');
+
+    console.log(checkArr);
 
     $signUpBtn.addEventListener("click", (e) => {
         e.preventDefault();

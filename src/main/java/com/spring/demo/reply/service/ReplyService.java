@@ -103,6 +103,20 @@ public class ReplyService {
                 return likeCnt;
 
             }
+
+            클릭-> 좋아요배열 + replyNo ->
+
+            if not null{
+                for{
+                    배열에 계정 있는지 확인 -> 있으면 string 가져와서
+                    배열 변환 -> 계정 삭제 ->string 변환 -> 저장
+                            +배열 반환
+
+                }
+            }
+            좋아요 가져와서 추가 후 저장
+                    + 배열 반환
+
         }
 
         addLike;

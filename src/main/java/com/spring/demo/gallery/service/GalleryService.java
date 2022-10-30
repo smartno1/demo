@@ -1,6 +1,6 @@
 package com.spring.demo.gallery.service;
 
-import com.spring.demo.common.page.Page;
+import com.spring.demo.common.paging.Page;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.repository.GalleryMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
 @Service

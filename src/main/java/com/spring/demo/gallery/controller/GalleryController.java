@@ -1,8 +1,7 @@
 package com.spring.demo.gallery.controller;
 
-import com.spring.demo.common.page.Page;
-import com.spring.demo.common.page.PageMaker;
-import com.spring.demo.gallery.domain.Gallery;
+import com.spring.demo.common.paging.Page;
+import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.gallery.service.GalleryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @Log4j2

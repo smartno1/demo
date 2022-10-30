@@ -10,6 +10,14 @@
 <html>
 <head>
     <title>Title</title>
+    <!-- reset css -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+        <style>
+            a {
+
+            }
+        </style>
+
     <style>
         .clear-box {
             display: block;
@@ -34,12 +42,16 @@
             /*text-align: center;*/
             background-color: orange;
             width: 1500px;
+            
         }
-        #title{
+        #wrapper #title{
             text-align: center;
         }
-        #gallery-ul {
+        #wrapper #gallery-ul {
 
+            /* background-color: green; */
+
+            height: 680px;
             margin: 10px 0;
             padding-left: 50px;
             position: relative;
@@ -49,6 +61,7 @@
         #gallery-ul li {
             margin-left: 2%;
             margin-top: 20px;
+            border-radius: 10px;
 
             float: left;
             height: 300px;
@@ -74,26 +87,34 @@
         }
 
         #gallery-ul li img.img {
-            cursor: pointer;
             height: 300px;
-        }
-
-        .bottom-section {
-            width: inherit;
-            background-color: red;
-            position: absolute;
-            bottom: 10%;
+            width: 200px;
+            object-fit: cover;
+            cursor: pointer;
 
         }
-        .bottom-ul {
-            background-color: yellowgreen;
-            position: relative;
+
+        #wrapper .bottom-section div{
+           
+            /* background-color: red; */
+
+
+        }
+        #wrapper .bottom-section div .bottom-ul {
+            /* border: 4px solid #000; */
+            /* background-color: yellowgreen; */
+            width: fit-content;
+            height: 50px;
             margin: 0 auto;
+            position: relative;
+            justify-content: center;
 
         }
         
-        .bottom-ul li {
+        #wrapper .bottom-section div .bottom-ul li {
             float: left;
+            margin:10px;
+
         }
 
        #wrapper .close-up {
@@ -187,7 +208,7 @@
                     <c:forEach var="i" items="${galleries}">
                         <li>
                             <img src="${i.src}"  class="img" data-id=${i.id} alt="">
-                            <p class="user-id">#${i.userId}</p>
+                            <p class="user-id">#${i.account}</p>
                             <p class="text">${i.text}</p>
                         </li>
                     </c:forEach>
@@ -212,13 +233,40 @@
 
                         <%--다음 버튼--%>
                         <c:if test="${pm.next}">
-                            <li><a href="/gallery/list?pageNum=${pm.beginPage + 1}&amount=${pm.page.amount}">next</a></li>
+                            <li><a href="/gallery/list?pageNum=${pm.endPage + 1}&amount=${pm.page.amount}">next</a></li>
                         </c:if>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="close-up"></div>
+        <div class="close-up">
+            <div class="up-in-box">
+                <div class="close-div">
+                    <img alt="">
+                </div>
+                <div class="down-div">
+                    <div class="down-user">
+                        <p ></p>
+                    </div>
+                    <div class="down-text" >
+                        <p class="in-text"></P>
+                    </div>
+                    <div class="down-btn">
+
+                        <button class="down-btn-mod" style="display: inline-block">
+                            코멘트수정
+                        </button>
+                        <button class="down-btn-del" style="display: inline-block">
+                            삭제
+                        </button>
+                        <button class="down-btn-back" style="display: inline-block">
+                            돌아가기
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
 
@@ -228,9 +276,10 @@
                 if(!e.target.matches('#gallery-ul li img')){
                     return;
                 }
-                console.log(e.target.parentElement);
+                // console.log(e.target.parentElement);
 
                 closeUp(e.target.parentElement);
+                
             }
         }
 
@@ -246,40 +295,40 @@
             const text = e.lastElementChild.textContent;
             let userId = e.children[1].textContent;
             userId = userId.substring(1) ;
+            console.log(userId);
+            document.querySelector('.close-div').firstElementChild.setAttribute('src', src);
+            document.querySelector('.down-user').firstElementChild.textContent = userId;
+            document.querySelector('.down-text').setAttribute('data-id',id);
+            document.querySelector('.in-text').textContent = text;
+            // $div.innerHTML = `<div class="up-in-box">
+            //                     <div class="close-div">
+            //                         <img src=`+src+` alt="">
+            //                     </div>
+            //                     <div class="down-div">
+            //                         <div class="down-user">
+            //                             <p >`+userId+`</p>
+            //                         </div>
+            //                         <div class="down-text" data-id=`+id+`>
+            //                             <p class="in-text">`+text+`</P>
+            //                         </div>
+            //                         <div class="down-btn">
 
-            $div.innerHTML = `<div class="up-in-box">
-                                <div class="close-div">
-                                    <img src=`+src+` alt="">
-                                </div>
-                                <div class="down-div">
-                                    <div class="down-user">
-                                        <p >`+userId+`</p>
-                                    </div>
-                                    <div class="down-text">
-                                        <p class="in-text">`+text+`</P>
-                                    </div>
-                                    <div>
-                                        <a href="">
-                                            <button class="down-btn-mod" style="display: inline-block">
-                                                코멘트수정
-                                            </button>
-                                        </a>
-                                        <a>
-                                            <button class="down-btn-del" style="display: inline-block">
-                                                삭제
-                                            </button>
-                                        </a>
-                                        <a>
-                                            <button class="down-btn-back" style="display: inline-block">
-                                                돌아가기
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>`;
+            //                             <button class="down-btn-mod" style="display: inline-block">
+            //                                 코멘트수정
+            //                             </button>
+            //                             <button class="down-btn-del" style="display: inline-block">
+            //                                 삭제
+            //                             </button>
+            //                             <button class="down-btn-back" style="display: inline-block">
+            //                                     돌아가기
+            //                             </button>
+
+            //                         </div>
+            //                     </div>
+            //                 </div>`;
             $div.classList.add('up');
 
-            modEvent();
+            modEvent(id);
 
         }
 
@@ -295,29 +344,102 @@
         function closeUpDel (){
             const $closeUp =  document.querySelector('.close-up');
             $closeUp.classList.remove('up')
-            $closeUp.innerHTML=``;
+           
         }
 
-        function modEvent(){
+        function modEvent(id){
             const $mod = document.querySelector('.down-btn-mod').onclick = e => {
                 if (!e.target.matches('.down-btn-mod')) return;
-                mod();
+                mod(id);
             }
 
         }
-        function mod(){
+        function mod(id){
             const $text = document.querySelector('.down-text');
             const text = $text.firstElementChild.textContent;
-            $text.innerHTML=`<form action="/upload/modify">
-                                <input class="in-text" type="text" name="text" value=`+text+`>
-                                <button type="submit">수정</button>
-                              </form>
-                                <button type="button">취소</button>`;
-            document.$text.lastElementChild.onclick = e => {
-            $text.innerHTML=`<p class="in-text">`+text+`</P>`;
+            $text.innerHTML=`
+                            <input class="in-text" type="text" name="text" value=`+text+`>
+                            `;
+
+            const $downBtn = document.querySelector('.down-btn');
+            $downBtn.innerHTML=`<button class="confirm-mod" style="display: inline-block">
+                                수정
+                             </button>
+                            <button class="back-mod" style="display: inline-block">
+                                취소
+                            </button>
+                            `
+            backmodEvent(text);
+            confimmodEvent(id);
+        }
+
+        function backmodEvent(text) {
+            document.querySelector('.back-mod').onclick = e => {
+                
+                if (!e.target.matches('.back-mod')) return;
+                backmod(text);
+            }
+            
+        }
+        function backmod(text){
+            const $downBtn = document.querySelector('.down-btn');
+            $downBtn.innerHTML=`<button class="down-btn-mod" style="display: inline-block">
+                                        코멘트수정
+                                    </button>
+                                    <button class="down-btn-del" style="display: inline-block">
+                                        삭제
+                                    </button>
+                                    <button class="down-btn-back" style="display: inline-block">
+                                            돌아가기
+                                    </button>
+                                `
+            const $text = document.querySelector('.down-text');
+            $text.innerHTML=`
+                            <p class="in-text">`+text+`</P>
+                            `;
+                modEvent();
+        }          
+        
+        function confimmodEvent(id){
+            document.querySelector('.confirm-mod').onclick = e => {
+                
+                if (!e.target.matches('.confirm-mod')) return;
+
+                
+
+                confimmod(id);
             }
         }
 
+        function confimmod(galleryid){
+            const reqInfo = {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: $('#modReplyText').val(),
+                    id: galleryid
+                })
+            };
+
+
+            fetch(URL + '/' + rno, reqInfo)
+                .then(res => res.text())
+                .then(msg => {
+                    if (msg === 'mod-success') {
+                        alert('수정 성공!!');
+                        $modal.modal('hide'); // 모달창 닫기
+                        showReplies(); // 댓글 새로불러오기
+                    } else {
+                        alert('수정 실패!!');
+                    }
+                });
+        };
+               
+        function delEvent(){
+
+        }
 
 
         (function (){

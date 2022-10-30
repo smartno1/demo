@@ -1,4 +1,4 @@
-package com.spring.demo.common.page;
+package com.spring.demo.common.paging;
 
 import lombok.*;
 import lombok.extern.log4j.Log4j2;

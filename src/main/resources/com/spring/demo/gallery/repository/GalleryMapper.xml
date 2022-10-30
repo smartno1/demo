@@ -5,14 +5,14 @@
 
 <mapper namespace="com.spring.demo.gallery.repository.GalleryMapper">
     <resultMap id="galleryMap" type="com.spring.demo.gallery.domain.Gallery">
-        <result property="userId" column="user_id" />
+        <result property="likeCnt" column="like_cnt" />
         <result property="regDate" column="reg_date" />
     </resultMap>
 
     <insert id="save">
         INSERT INTO gallery
-            (src, text, user_id)
-        VALUES (#{src}, #{text}, #{userId})
+            (src, text, account)
+        VALUES (#{src}, #{text}, #{account})
     </insert>
 
     <select id="findOne" resultMap="galleryMap">
@@ -25,7 +25,7 @@
         WITH v_gallery AS
                  (
                      SELECT
-                         ROW_NUMBER() OVER (ORDER BY id) AS RowNumber, gallery.*
+                         ROW_NUMBER() OVER (ORDER BY id DESC) AS RowNumber, gallery.*
                      FROM gallery
                  )
         SELECT *

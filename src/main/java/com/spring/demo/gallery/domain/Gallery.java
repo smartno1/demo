@@ -11,9 +11,9 @@ public class Gallery {
     private int id;
     private String src;
     private String text;
-    private String userId;
+    private String account;
     private LocalDate regDate;
-    private int like;
+    private int likeCnt;
 
 
 

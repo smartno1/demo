@@ -1,4 +1,4 @@
-package com.spring.demo.common.page;
+package com.spring.demo.common.paging;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

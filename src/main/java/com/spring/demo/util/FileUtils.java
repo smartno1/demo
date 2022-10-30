@@ -2,10 +2,9 @@ package com.spring.demo.util;
 
 
 
-
-import com.spring.demo.account.domain.Account;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.service.GalleryService;
+import com.spring.demo.member.domain.Member;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,13 +48,13 @@ public class FileUtils {
         String fullPath = newPath + "\\" + newFileName;
         fullPath = fullPath.replace("\\", "/");
         String filename = file.getOriginalFilename();
-        Account user =(Account)req.getSession().getAttribute("user");
-        System.out.println(user);
+//        Member user =(Member) req.getSession().getAttribute("user");
+//        System.out.println(user);
 
         Gallery gallery = new Gallery();
         gallery.setText(fileText);
         gallery.setSrc(fullPath);
-        gallery.setUserId(user.getUserId());
+//        gallery.setAccount(user.getAccount());
         System.out.println(gallery);
 
         return gallery;

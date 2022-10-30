@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.demo.like.repository.LikeMapperMapper">
+
+
+<!--  추천수 증가 -->
+<update id="addLike" parameterType="int">
+
+    UPDATE tbl_board
+    SET like_cnt = like_cnt+1
+    where
+    <if test="type=='replyNo'">
+        reply_no = #{replyNo}
+    </if>
+    <if test="type=='boardNo'">
+        board_no = #{boardNo}
+    </if>
+
+</update>
+
+        <!-- 추천수 감소 -->
+<update id="subLike" parameterType="int">
+
+    UPDATE tbl_board
+    SET like_cnt = like_cnt - 1
+    where
+    <if test="type=='replyNo'">
+        reply_no = #{replyNo}
+    </if>
+    <if test="type=='boardNo'">
+        board_no = #{boardNo}
+    </if>
+
+</update>
+
+        <!-- 추천 시 Like 테이블에 insert -->
+<insert id="insertLike">
+
+    INSERT INTO tbl_like
+
+    <if test="checkMap.type=='replyNo'">
+    ( reply_no , account )
+    VALUES
+    ( #{checkMap.replyNo}, #{account})
+    </if>
+
+    <if test="checkMap.type=='boardNo'">
+        ( board_no , account )
+        VALUES
+        ( #{checkMap.boardNo}, #{account})
+    </if>
+
+
+</insert>
+
+        <!-- 댓글 추천취소 시 delete -->
+<delete id="deleteLike">
+
+    DELETE FROM tbl_like
+    WHERE
+    <if test="type=='replyNo'">
+        reply_no = #{replyNo}
+    </if>
+    <if test="type=='boardNo'">
+        board_no = #{boardNo}
+    </if>
+
+    AND
+    account = #{account}
+
+
+</delete>
+
+        <!-- 댓글 추천이 이미 있는지 확인-->
+<select id="likeChk" resultType="int">
+
+    SELECT COUNT(*) FROM tbl_like
+    WHERE
+    <if test="type=='replyNo'">
+        reply_no = #{replyNo}
+    </if>
+    <if test="type=='boardNo'">
+        board_no = #{boardNo}
+    </if>
+    AND
+    account = #{account}
+
+</select>
+
+
+</mapper>

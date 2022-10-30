@@ -3,10 +3,13 @@ CREATE TABLE tbl_board (
     writer VARCHAR(20) NOT NULL,
     title VARCHAR(200) NOT NULL,
     content TEXT,
+    like_Cnt INT(10) NOT NULL,
     view_cnt INT(10) DEFAULT 0,
     account VARCHAR(50),
     reg_date DATETIME DEFAULT current_timestamp,
     CONSTRAINT pk_tbl_board PRIMARY KEY (board_no),
-    board_like TEXT
+	CONSTRAINT fk_board_user
+    FOREIGN KEY (account)
+    REFERENCES tbl_user (account) ON DELETE CASCADE
 
 );

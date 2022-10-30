@@ -19,7 +19,7 @@ public class Reply {
 
     private Date replyDate;
 
-    private int boardNo;
+    private Long boardNo;
 
     private String account;
 

@@ -63,6 +63,18 @@
     </select>
 
 
+    <select id="findReplyLike" resultType="String">
+        SELECT reply_like FROM tbl_reply
+        WHERE reply_no = #{replyNo}
+    </select>
+
+    <update id="modifyReplyLike">
+        UPDATE tbl_reply
+        SET reply_like = #{replyLike}
+        WHERE reply_no = #{replyNo}
+    </update>
+
+
 
 
 

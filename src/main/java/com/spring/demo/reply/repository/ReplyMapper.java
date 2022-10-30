@@ -35,6 +35,16 @@ public interface ReplyMapper {
     int getReplyCount(Long boardNo);
 
 
+    String findReplyLike(Long replyNo);
+
+
+    boolean modifyReplyLike(Long replyNo, String replyLike);
+
+
+
+
+
+
 
 
 }

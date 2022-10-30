@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -54,6 +55,61 @@ public class ReplyService {
     public boolean remove(Long replyNo) {
         return replyMapper.remove(replyNo);
     }
+
+    public String[] getLikeList(Long replyNo){
+
+      String likeText = replyMapper.findReplyLike(replyNo);
+
+
+      if(likeText==null||likeText=="")return null;
+      String[] LikeList = likeText.split("%");
+
+      return LikeList;
+
+
+    };
+
+    public int getCnt(String[] likeList){
+
+
+        int likeCnt = likeList.length;
+
+        return likeCnt;
+
+    };
+
+
+    public int updateLikeCnt(Reply reply){
+
+        String account = reply.getAccount();
+        Long replyNo = reply.getReplyNo()
+        String[] likeList = getLikeList(replyNo);
+
+        int likeCnt = 0;
+
+        if(!(likeList.length==0)) {
+            for (String user : likeList) {
+
+                if (user.equals(account)) {
+
+                    String[] newList = likeList.del;
+                    String replyLike = newList.toString();
+                    reply.get
+                    replyMapper.modifyReplyLike(replyNo,new)
+
+
+
+                }
+                return likeCnt;
+
+            }
+        }
+
+        addLike;
+
+        return likeCnt;
+    };
+
 }
 
 

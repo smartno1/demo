@@ -262,14 +262,16 @@
                         <button class="down-btn-back" style="display: inline-block">
                             돌아가기
                         </button>
-
+                        <button class="down-btn-download" style="display: inline-block">
+                            다운로드
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-
+        // 모달창 띄우기 이벤트
         function upEvent(){
             document.getElementById('gallery-ul').onclick = e => {
 
@@ -282,7 +284,7 @@
                 
             }
         }
-
+        // 모달창에 값넣고 띄우기
         function closeUp(e){
             const $bodyDiv = document.getElementById('wrapper');
             const $div = document.querySelector('.close-up');
@@ -328,60 +330,87 @@
             //                 </div>`;
             $div.classList.add('up');
 
-            modEvent(id);
-
+            // 바뀐 모달창에 수정버튼 이벤트걸기
+            modEvent(e);
         }
-
-        function downEvent(){
+        // 모달창 없애는 이벤트걸기
+        function downEvent(e){
             document.querySelector('.close-up').onclick = e => {
                 if(!e.target.matches('.down-btn-back') && !e.target.matches('.close-up')){
                     return;
                 }
+                if(document.querySelector('.confirm-mod')) return;
                 closeUpDel();
             }
         }
-
+        // 모달창 없애는 기능
         function closeUpDel (){
             const $closeUp =  document.querySelector('.close-up');
             $closeUp.classList.remove('up')
-           
+            document.querySelector('.close-div').firstElementChild.setAttribute('src', '');
+            document.querySelector('.down-user').firstElementChild.textContent = '';
+            document.querySelector('.down-text').setAttribute('data-id','');
+            document.querySelector('.in-text').textContent = '';
+        //     document.querySelector('.down-btn').innerHTML = `
+        //                                             <button class="down-btn-mod" style="display: inline-block">
+        //                                                 코멘트수정
+        //                                             </button>
+        //                                              <button class="down-btn-del" style="display: inline-block">
+        //                                                 삭제
+        //                                             </button>
+        //                                              <button class="down-btn-back" style="display: inline-block">
+        //                                                  돌아가기
+        //                                              </button> `
+        //
         }
+        // 모달창 수정버튼 이벤트 걸기
+        function modEvent(ee){
 
-        function modEvent(id){
             const $mod = document.querySelector('.down-btn-mod').onclick = e => {
+
                 if (!e.target.matches('.down-btn-mod')) return;
-                mod(id);
+                mod(ee);
+
             }
 
         }
-        function mod(id){
+        // 모달창 수정버튼 기능
+        function mod(ee){
+
             const $text = document.querySelector('.down-text');
+            const id = $text.dataset.id
             const text = $text.firstElementChild.textContent;
             $text.innerHTML=`
-                            <input class="in-text" type="text" name="text" value=`+text+`>
+                            <textarea class="in-text" name="text">`+text+`</textarea>
                             `;
 
             const $downBtn = document.querySelector('.down-btn');
-            $downBtn.innerHTML=`<button class="confirm-mod" style="display: inline-block">
-                                수정
+            $downBtn.innerHTML=`<button type="button" class="confirm-mod" style="display: inline-block">
+                                등록
                              </button>
                             <button class="back-mod" style="display: inline-block">
                                 취소
                             </button>
-                            `
-            backmodEvent(text);
-            confimmodEvent(id);
-        }
+                            <button class="go-list" style="display: inline-block">
+                                목록으로
+                            </button>
+                            `;
+            backModEvent(text);
+            confirmModEvent(ee);
+            goListEvent();
 
-        function backmodEvent(text) {
+        }
+        // 수정모드에 취소버튼 이벤트걸기
+        function backModEvent(text) {
             document.querySelector('.back-mod').onclick = e => {
                 
                 if (!e.target.matches('.back-mod')) return;
-                backmod(text);
+                backMod(text);
             }
             
         }
-        function backmod(text){
+        // 수정모드 취소버큰 기능
+        function backMod(text){
             const $downBtn = document.querySelector('.down-btn');
             $downBtn.innerHTML=`<button class="down-btn-mod" style="display: inline-block">
                                         코멘트수정
@@ -392,60 +421,108 @@
                                     <button class="down-btn-back" style="display: inline-block">
                                             돌아가기
                                     </button>
-                                `
+                                    <button class="down-btn-download" style="display: inline-block">
+                                            다운로드
+                                    </button>
+                                `;
             const $text = document.querySelector('.down-text');
             $text.innerHTML=`
                             <p class="in-text">`+text+`</P>
                             `;
-                modEvent();
-        }          
-        
-        function confimmodEvent(id){
+            // 취소 이후 수정버튼에 이벤트 다시걸기
+            modEvent();
+            delEvent();
+            downloadEvent();
+        }
+        // 등록버튼에 이벤트 걸기
+        function confirmModEvent(ee){
             document.querySelector('.confirm-mod').onclick = e => {
                 
                 if (!e.target.matches('.confirm-mod')) return;
-
-                
-
-                confimmod(id);
+                if(confirm("코멘트를 수정합니다.")) {
+                    confirmMod(ee);
+                }
             }
         }
-
-        function confimmod(galleryid){
+        // 등록버튼 기능 - 비동기로 수정 보내기
+        function confirmMod(ee){
+            const newText = document.querySelector('.in-text').value;
+            // console.log(newText)
+            const $downText = document.querySelector('.down-text');
+            const galleryId = $downText.dataset.id
             const reqInfo = {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    text: $('#modReplyText').val(),
-                    id: galleryid
+                    text: newText,
+                    id: galleryId
                 })
             };
 
 
-            fetch(URL + '/' + rno, reqInfo)
+            fetch('/api/gallery/mod/' + galleryId, reqInfo)
+
                 .then(res => res.text())
                 .then(msg => {
                     if (msg === 'mod-success') {
                         alert('수정 성공!!');
-                        $modal.modal('hide'); // 모달창 닫기
-                        showReplies(); // 댓글 새로불러오기
+
                     } else {
                         alert('수정 실패!!');
                     }
                 });
-        };
-               
-        function delEvent(){
+            backMod(newText);
+
 
         }
+        // 목록으로 버튼 이벤트 및 기능
+        function goListEvent(){
+            document.querySelector('.go-list').onclick = e => {
+                if(!e.target.matches('.go-list')) return;
+                const url = location.href;
+                location.href = url;
+            }
+        }
+        function delEvent(){
+            document.querySelector('.down-btn-del').onclick = e => {
+                if(!e.target.matches('.down-btn-del')) return;
+                console.log(e.target);
+                if(confirm("갤러리를 삭제합니다.")) {
 
+                    const url = location.href
+                    const index = url.indexOf("pageNum");
+                    const pageNumAmount = url.substring(index);
 
+                    const galleryId = document.querySelector('.down-text').dataset.id;
+                    location.href = "/gallery/del?id=" + galleryId +
+                                    "&pageNum=" + ${pm.page.pageNum}+
+                                    "&amount=" + ${pm.page.amount};
+                }
+            }
+        }
+
+        // 다운로드 이벤트걸기
+        function downloadEvent() {
+            document.querySelector('.down-btn-download').onclick = e => {
+                if(!e.target.matches('.down-btn-download')) return;
+
+                downLoad();
+            }
+        }
+        // 다운로드 기능
+        function downLoad() {
+            const galleryId = document.querySelector('.down-text').dataset.id;
+            const ghref = '/gallery/api/loadFile?id='+galleryId;
+            location.href=ghref;
+
+        }
         (function (){
             upEvent();
             downEvent();
-
+            delEvent();
+            downloadEvent();
 
         })();
     </script>

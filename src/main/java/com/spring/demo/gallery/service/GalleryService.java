@@ -28,7 +28,7 @@ public class GalleryService {
 
     @Transactional
     public Gallery findOneService (int id){
-        log.info("findOneService start ");
+        log.info("findOneService start - id : {}",id);
 
         return galleryMapper.findOne(id);
     }
@@ -47,11 +47,16 @@ public class GalleryService {
         return findDataMap;
     }
 
-    public boolean modifyService (int id, String userId){
+    public boolean modifyService (Gallery gallery){
         log.info("modifyService start ");
 
-        return galleryMapper.modify(id, userId);
+        return galleryMapper.modify(gallery);
     }
 
+    public boolean deleteService(Gallery gallery){
+        log.info("deleteService start - {}", gallery);
+
+        return galleryMapper.delete(gallery);
+    }
 
 }

@@ -13,6 +13,7 @@ public class Gallery {
     private String text;
     private String account;
     private LocalDate regDate;
+    private String nickname;
     private int likeCnt;
 
 

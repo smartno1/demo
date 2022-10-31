@@ -5,6 +5,8 @@ import com.spring.demo.gallery.service.GalleryService;
 import com.spring.demo.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,14 @@ import java.util.List;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
+@PropertySource("classpath:uploadpath.properties")
 public class UploadController {
 
     // 업로드 저장 경로
-    private static final String UPLOAD_PATH = "D:\\web_lks\\java_project09\\demo\\src\\main\\resources\\galleryImg";
+//    private static final String UPLOAD_PATH = "D:\\web_lks\\java_project09\\demo\\src\\main\\resources\\galleryImg";
     private final GalleryService galleryService;
+   @Value("${UPLOAD_PATH}")
+    private String UPLOAD_PATH;
 
     // upload-form.jsp로 포워딩 요청
 
@@ -49,9 +54,5 @@ public class UploadController {
 
         return "redirect:/gallery/list";
     }
-    @GetMapping("/upload/modify")
-    public String modify(@ModelAttribute("id") int id, @ModelAttribute("userid") String userId){
 
-        return "upload/modify-form";
-    }
 }

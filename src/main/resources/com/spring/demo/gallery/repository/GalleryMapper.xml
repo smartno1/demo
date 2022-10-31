@@ -37,4 +37,15 @@
         SELECT COUNT(*)
         FROM gallery
     </select>
+
+    <update id="modify">
+        UPDATE gallery
+        SET text = #{text}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM gallery
+        WHERE id=#{id};
+    </delete>
 </mapper>

@@ -13,7 +13,7 @@ public interface GalleryMapper {
     boolean save(Gallery gallery);
 
     // 수정
-    boolean modify(int id, String userId);
+    boolean modify(Gallery gallery);
     // 개별조회
     Gallery findOne(int id);
     // 전체조회
@@ -22,8 +22,8 @@ public interface GalleryMapper {
     int getTotalCount();
 
     // 삭제
-
-    // 업로드
+    boolean delete(Gallery gallery);
+    // 업로드  - common/UploadController
 
     // 업로드 삭제
 

@@ -5,6 +5,7 @@ package com.spring.demo.util;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.service.GalleryService;
 import com.spring.demo.member.domain.Member;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Log4j2
 public class FileUtils {
 
     // MIME TYPE 설정을 위한 맵 만들기
@@ -33,11 +35,13 @@ public class FileUtils {
         System.out.println("file: " + file);
         System.out.println("text: " + fileText);
         String  newPath = "\\galleryImg";
+
         // 중복이 없게 파일명 변경
         String newFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-
+        log.info("uploadPath = {}",uploadPath);
         // 파일 업로드 수행
-        File f = new File(uploadPath, newFileName);
+        File f = new File(uploadPath + newPath, newFileName);
+        log.info("file f = {}",f);
         try {
             file.transferTo(f);
         }catch (IOException e){

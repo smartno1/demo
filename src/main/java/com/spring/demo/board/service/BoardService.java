@@ -1,6 +1,7 @@
 package com.spring.demo.board.service;
 
 import com.spring.demo.board.domain.Board;
+import com.spring.demo.board.dto.ValidateMemberDTO;
 import com.spring.demo.board.repository.BoardMapper;
 import com.spring.demo.common.paging.Page;
 import com.spring.demo.common.search.Search;
@@ -194,9 +195,14 @@ public class BoardService {
     }
 
 
+    // 첨부파일 목록 가져오는 중간처리
+    public List<String> getFiles(Long bno) {
+        return boardMapper.findFileNames(bno);
+    }
+
     // 게시물 번호로 글쓴이 회원정보 가져오기
-//    public ValidateMemberDTO getMember(Long boardNo) {
-//        return boardMapper.findMemberByBoardNo(boardNo);
-//    }
+    public ValidateMemberDTO getMember(Long boardNo) {
+        return boardMapper.findMemberByBoardNo(boardNo);
+    }
 
 }

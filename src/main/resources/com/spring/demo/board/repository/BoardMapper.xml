@@ -102,7 +102,20 @@
         WHERE board_no=#{boardNo}
     </update>
 
+    <insert id="addFile">
 
+        INSERT INTO file_upload
+        (file_name, bno)
+        VALUES
+        (#{fileName}, last_insert_id())
+
+    </insert>
+
+    <select id="findFileNames" resultType="string">
+        SELECT file_name
+        FROM file_upload
+        WHERE bno = #{bno}
+    </select>
 
 
     <select id="findMemberByBoardNo" resultType="com.spring.demo.board.dto.ValidateMemberDTO">

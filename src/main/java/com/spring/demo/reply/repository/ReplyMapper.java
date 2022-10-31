@@ -1,6 +1,7 @@
 package com.spring.demo.reply.repository;
 
 
+import com.spring.demo.board.dto.ValidateMemberDTO;
 import com.spring.demo.common.paging.Page;
 import com.spring.demo.reply.domain.Reply;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,19 +29,13 @@ public interface ReplyMapper {
     Reply findOne(Long replyNo);
 
     //댓글 목록 조회
-    List<Reply> findAll(@Param("boardNo") Long boardNo
-            , @Param("page") Page page);
+    List<Reply> findAll(Long boardNo
+            ,Page page);
 
     // 댓글 수 조회
     int getReplyCount(Long boardNo);
 
-
-
-
-
-
-
-
+    ValidateMemberDTO findMemberByReplyNo(Long replyNo);
 
 
 }

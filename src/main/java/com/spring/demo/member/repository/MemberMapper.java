@@ -1,6 +1,7 @@
 package com.spring.demo.member.repository;
 
 import com.spring.demo.member.domain.Member;
+import com.spring.demo.member.dto.AutoLoginDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
@@ -23,6 +24,11 @@ public interface MemberMapper {
     int findBoardCount(String account);
 
     int findReplyCount(String account);
+
+    // 자동로그인 쿠키정보 저장
+    void saveAutoLoginValue(AutoLoginDTO dto);
+    // 쿠키값(세션아이디)을 가지고 있는 회원정보 조회
+    Member findMemberBySessionId(String sessionId);
 
 
 }

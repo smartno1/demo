@@ -5,17 +5,51 @@
 
 <mapper namespace="com.spring.demo.like.repository.LikeMapper">
 
-    <!-- 추천수 반환  -->
+
+    <!-- 추천수 업데이트 -->
+    <update id="updateLike">
+
+        UPDATE
+        <if test="type=='replyNo'">
+            tbl_reply
+        </if>
+        <if test="type=='boardNo'">
+            tbl_board
+        </if>
+        SET
+        ike_cnt = (SELECT COUNT(*) FROM tbl_like WHERE
+        <if test="type=='replyNo'">
+            reply_no
+        </if>
+        <if test="type=='boardNo'">
+            board_no
+        </if>
+        =1) WHERE
+        <if test="type=='replyNo'">
+            reply_no
+        </if>
+        <if test="type=='boardNo'">
+            board_no
+        </if>
+        = #{no}
+
+
+    </update>
+
+
+
+
+    <!-- 추천수 조회  -->
     <select id="likeCnt" resultType="int">
         SELECT COUNT(*) FROM tbl_like
         WHERE
-        <if test="type='replyNo'">
-            replyNo
+        <if test="type=='replyNo'">
+            reply_no
         </if>
-        <if test="type='BoardNo'">
-            BoardNo
+        <if test="type=='boardNo'">
+            board_no
         </if>
-        =#{no}
+        = #{no}
 
     </select>
 
@@ -69,6 +103,23 @@
         = #{no}
         AND
         account = #{account}
+
+    </select>
+
+    <select id="findAccount" resultType="String">
+
+        SELECT account FROM
+        <if test="type=='replyNo'">
+            tbl_reply
+            WHERE
+            reply_no
+        </if>
+        <if test="type=='boardNo'">
+            tbl_board
+            WHERE
+            board_no
+        </if>
+        = #{no}
 
     </select>
 

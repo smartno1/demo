@@ -1,8 +1,6 @@
 package com.spring.demo.like.repository;
 
 import com.spring.demo.like.dto.LikeTypeDTO;
-import com.spring.demo.reply.domain.Reply;
-import com.spring.demo.reply.repository.ReplyMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +20,26 @@ class LikeMapperTest {
     LikeMapper likeMapper;
 
     @Test
-    @DisplayName("1번 댓글의 좋아요 생성")
+    @DisplayName("LikeTypeDTO를 입력받아 1번댓글의 추천값을 수정")
+    void updateLikeTest() {
+
+
+        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 1L);
+
+
+        boolean flag = likeMapper.updateLike(like);
+
+
+        assertTrue(flag);
+
+    }
+
+    @Test
+    @DisplayName("LikeTypeDTO를 입력받아 1번 댓글의 추천테이블 생성")
     void insertLikeTest() {
 
 
-        LikeTypeDTO like = new LikeTypeDTO("replyNo","peach",1);
+        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 1L);
 
 
         boolean flag = likeMapper.insertLike(like);
@@ -37,10 +50,10 @@ class LikeMapperTest {
     }
 
     @Test
-    @DisplayName("1번 댓글의 좋아요 삭제")
+    @DisplayName("LikeTypeDTO를 입력받아 1번 댓글의 추천테이블 삭제")
     void deleteLikeTest() {
 
-        LikeTypeDTO like = new LikeTypeDTO("replyNo","peach",1);
+        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 1L);
 
 
         boolean flag = likeMapper.deleteLike(like);
@@ -50,10 +63,10 @@ class LikeMapperTest {
     }
 
     @Test
-    @DisplayName("좋아요가 있는지 확인")
+    @DisplayName("LikeTypeDTO를 입력받아 peach가 1번댓글에 추천을 한적이 있는지 확인")
     void likeChkTest() {
 
-        LikeTypeDTO like = new LikeTypeDTO("replyNo","peach",1);
+        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 1L);
 
 
         int flag = likeMapper.likeChk(like);

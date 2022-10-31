@@ -23,7 +23,7 @@ public class Reply {
 
     private String account;
 
-    private String replyLike;
+    private int likeCnt;
 
 
 

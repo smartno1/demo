@@ -10,6 +10,7 @@ import java.util.Map;
 public interface LikeMapper {
 
 
+    public boolean updateLike(LikeTypeDTO like);
 
     public int likeCnt(LikeTypeDTO like);
 
@@ -18,6 +19,8 @@ public interface LikeMapper {
     public boolean deleteLike(LikeTypeDTO like);
 
     public int likeChk(LikeTypeDTO like);
+
+//    public String findAccount(LikeTypeDTO like);
 
 
 }

@@ -9,11 +9,11 @@ import lombok.*;
 @AllArgsConstructor
 public class LikeTypeDTO {
 
-    public String type;
-
     public String account;
 
-    public int no;
+    public String type;
+
+    public Long no;
 
 
 

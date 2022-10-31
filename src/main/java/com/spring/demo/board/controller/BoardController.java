@@ -8,8 +8,6 @@ import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.common.search.Search;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -118,25 +116,14 @@ public class BoardController {
 
 
     // 게시물 삭제 확정 요청
-    @GetMapping("/delete")
-    public String delete(@ModelAttribute("boardNo") Long boardNo, Model model) {
-
-        log.info("controller request /board/delete GET! - bno: {}", boardNo);
-
-        model.addAttribute("validate", boardService.getMember(boardNo));
-
-        return "board/process-delete";
-    }
-
-    // 게시물 삭제 확정 요청
     @PostMapping("/delete")
     public String delete(Long boardNo) {
         log.info("controller request /board/delete POST! - bno: {}", boardNo);
 
         return boardService.removeService(boardNo) ? "redirect:/board/list" : "redirect:/";
     }
-    // 수정 화면 요청
 
+    // 수정 화면 요청
     @GetMapping("/modify")
     public String modify(Long boardNo, Model model, HttpServletRequest request, HttpServletResponse response) {
         log.info("controller request /board/modify GET! - bno: {}", boardNo);
@@ -155,17 +142,6 @@ public class BoardController {
         boolean flag = boardService.modifyService(board);
         return flag ? "redirect:/board/content/" + board.getBoardNo() : "redirect:/";
     }
-
-    @GetMapping("/file/{bno}")
-    @ResponseBody
-    public ResponseEntity<List<String>> getFiles(@PathVariable Long bno) {
-
-        List<String> files = boardService.getFiles(bno);
-        log.info("/board/file/{} GET! ASYNC - {}", bno, files);
-
-        return new ResponseEntity<>(files, HttpStatus.OK);
-    }
-
 
 
 

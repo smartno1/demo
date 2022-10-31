@@ -31,7 +31,6 @@ class ReplyMapperTest {
             reply.setBoardNo(bno);
             reply.setReplyText("댓글" + i);
             reply.setReplyWriter("메롱이"+ i);
-            reply.setAccount("hello");
 
             replyMapper.save(reply);
         }
@@ -48,7 +47,6 @@ class ReplyMapperTest {
             reply.setBoardNo(bno);
             reply.setReplyText("댓글" + i);
             reply.setReplyWriter("메롱이"+ i);
-            reply.setAccount("hello");
 
             replyMapper.save(reply);
         }
@@ -76,39 +74,13 @@ class ReplyMapperTest {
     @Test
     @DisplayName("특정 게시물의 댓글목록을 조회해야 한다.")
     void findAllTest() {
-        List<Reply> replyList = replyMapper.findAll(297L, new Page());
+        List<Reply> replyList = replyMapper.findAll(1L, new Page());
 
         replyList.forEach(System.out::println);
 
-        System.out.println("0번 : "+replyList.get(0));
-
-        assertEquals(9, replyList.size());
+        assertEquals(7, replyList.size());
 
     }
-
-
-    @Test
-    @DisplayName("특정 댓글을 조회해야 한다.")
-    void findOneTest() {
-        Reply reply = replyMapper.findOne(1L);
-
-
-        System.out.println("댓글 : "+reply);
-
-    }
-
-    @Test
-    @DisplayName("댓글 수 조회")
-    void getReplyCountTest() {
-
-        int replyCnt = replyMapper.getReplyCount(300L);
-
-
-        assertEquals(203, replyCnt);
-
-    }
-
-
 
 
 }

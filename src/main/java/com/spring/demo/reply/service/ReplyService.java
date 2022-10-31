@@ -1,6 +1,5 @@
 package com.spring.demo.reply.service;
 
-import com.spring.demo.board.dto.ValidateMemberDTO;
 import com.spring.demo.common.paging.Page;
 import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.reply.domain.Reply;
@@ -57,9 +56,6 @@ public class ReplyService {
         return replyMapper.remove(replyNo);
     }
 
-    public ValidateMemberDTO getMember(Long replyNo) {
-        return replyMapper.findMemberByReplyNo(replyNo);
-    }
 
 
 

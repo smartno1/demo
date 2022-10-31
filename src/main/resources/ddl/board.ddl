@@ -15,3 +15,5 @@ CREATE TABLE tbl_board (
     REFERENCES tbl_user (account) ON DELETE CASCADE
 
 );
+
+INSERT INTO tbl_board (writer, title, content, like_Cnt,  account) values ("천도복숭아", "복숭아 만세","복숭아는 맛있다",0,"peach");

@@ -17,7 +17,7 @@
             tbl_board
         </if>
         SET
-        ike_cnt = (SELECT COUNT(*) FROM tbl_like WHERE
+        like_cnt = (SELECT COUNT(*) FROM tbl_like WHERE
         <if test="type=='replyNo'">
             reply_no
         </if>

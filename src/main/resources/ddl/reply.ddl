@@ -15,3 +15,5 @@ CREATE TABLE tbl_reply (
     FOREIGN KEY (account)
     REFERENCES tbl_user (account)ON DELETE CASCADE
 );
+
+INSERT INTO tbl_reply (reply_text, reply_writer, board_no, ike_Cnt, account) VALUES("딱복 좋아", "천도복숭아",1,0,"peach");

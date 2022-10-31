@@ -2,6 +2,7 @@ package com.spring.demo.config;
 
 import com.spring.demo.interceptor.AfterLoginInterceptor;
 import com.spring.demo.interceptor.AutoLoginInterceptor;
+import com.spring.demo.interceptor.BeforeLikeInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
+
+
+    private final BeforeLikeInterceptor beforeLikeInterceptor;
 
     private final AutoLoginInterceptor autoLoginInterceptor;
 
@@ -29,6 +33,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 자동 로그인 인터셉터 설정
         registry.addInterceptor(autoLoginInterceptor)
                 .addPathPatterns("/**");
+
+
+        // 비포 라이크 인터셉터 설정
+        registry.addInterceptor(beforeLikeInterceptor)
+                .addPathPatterns("/like");
+
 
     }
 

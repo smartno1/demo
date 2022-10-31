@@ -61,6 +61,22 @@
     </select>
 
 
+    <update id="saveAutoLoginValue">
+
+        UPDATE tbl_member
+        SET session_id = #{sessionId}, limit_time = #{limitTime}
+        WHERE account = #{account}
+
+    </update>
+
+    <select id="findMemberBySessionId" resultMap="memberMap">
+
+        SELECT * FROM tbl_member
+        WHERE session_id = #{sessionId}
+
+    </select>
+
+
 
 
 

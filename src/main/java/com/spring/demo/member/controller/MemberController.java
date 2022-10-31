@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -87,17 +88,15 @@ public class MemberController {
 
     // 로그인 요청 처리
     @PostMapping("/sign-in")
-    public String signIn(LoginDTO inputData
-            , Model model
-            , HttpSession session // 세션정보 객체
-    ) {
+    public String signIn(LoginDTO inputData, Model model, HttpSession session // 세션정보 객체
+                         , HttpServletResponse response) {
 
         log.info("/member/sign-in POST - {}", inputData);
 //        log.info("session timeout : {}", session.getMaxInactiveInterval());
 
         log.info("memberService.login 시작");
         // 로그인 서비스 호출
-        LoginFlag flag = memberService.login(inputData, session);
+        LoginFlag flag = memberService.login(inputData, session, response);
 
         log.info("memberService.login 종료");
         if (flag == LoginFlag.SUCCESS) {

@@ -42,19 +42,24 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
 
         if(boardType !=null){
             Long boardNo = Long.parseLong(boardType);
-            like = new LikeTypeDTO(account, boardType,boardNo);
+            like.setAccount(account);
+            like.setType("boardNo");
+            like.setNo(boardNo);
 
 
         }else if(replyType !=null){
 
             Long replyNo = Long.parseLong(replyType);
-            like = new LikeTypeDTO(account, replyType,replyNo);
+            like.setAccount(account);
+            like.setType("replyNo");
+            like.setNo(replyNo);
         }
 
         String writeUser= likeMapper.findAccount(like);
 
         if(account.equals((writeUser))){
-            request.setAttribute("message","same-Account");
+            log.info("동일계정");
+            request.setAttribute("message","match-account");
             return false;
         }
 

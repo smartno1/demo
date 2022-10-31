@@ -13,8 +13,7 @@
         <result property="replyWriter" column="reply_writer" />
         <result property="replyDate" column="reply_date" />
         <result property="boardNo" column="board_no" />
-        <result property="likeCnt
-" column="like_cnt" />
+        <result property="likeCnt" column="like_cnt" />
 
     </resultMap>
 
@@ -56,7 +55,7 @@
         FROM tbl_reply
         WHERE board_no=#{boardNo}
         ORDER BY reply_no
-        LIMIT #{page.start}, #{page.amount}
+        LIMIT #{page.pageNum}, #{page.amount}
     </select>
 
 
@@ -66,6 +65,17 @@
         WHERE board_no=#{boardNo}
     </select>
 
+    <select id="findMemberByReplyNo" resultType="com.spring.demo.board.dto.ValidateMemberDTO">
+
+        SELECT account, auth
+        FROM tbl_user
+        WHERE account = (
+        SELECT account
+        FROM tbl_reply
+        WHERE reply_no = #{replyNo}
+        )
+
+    </select>
 
 
 

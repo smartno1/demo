@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply {

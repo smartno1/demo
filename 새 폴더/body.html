@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <style>
+        a {color: #fff; text-decoration: none; outline: none}
+        a:hover, a:active {text-decoration: none; color:#fff; background-color:#f59000;}
+    </style>
+    <!-- custom css -->
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="body.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-wrraper">
+          <div class="header-top clear-fix">
+            <div class="header-top-link">
+                <span>인스타</span>
+                <span>페이스북</span>
+                <span>유투브</span>
+            </div>
+            <div class="header-top-account">
+                <span id="login-btn">로그인</span>|<span id="logout-btn">로그아웃</span>
+            </div>
+          </div>
+          <nav class="nav">
+            <ul class="nav-ul clear-fix">
+              <li>
+                HOME
+              </li>
+              <li>
+                PROFILE
+              </li>
+              <li>
+                SCHEDULE
+              </li>
+              <li>
+                NEWS
+              </li>
+              <li id="header-logo">
+                <span>logo</span>
+              </li>
+              <li>
+                BOARD
+              </li>
+              <li>
+                TOUR
+              </li>
+              <li>
+                GALLERY
+              </li>
+              <li>
+                SHOP
+              </li>
+            </ul>
+          </nav>
+        </div>
+    </header>
+    <div class="section-body">
+        <div class="main-photo">
+            <div id="photo">
+                <div class="photo-slider">
+                    <input type="radio" name="slide1" id="slide1" checked>
+                    <input type="radio" name="slide1" id="slide2">
+                    <input type="radio" name="slide1" id="slide3">
+                    <input type="radio" name="slide1" id="slide4">
+                    <ul id="imgholder" class="imgs">
+                        <li><img src="./img/slide1.jpg"></li>
+                        <li><img src="./img/slide1.jpg"></li>
+                        <li><img src="./img/slide01.jpg"></li>
+                        <li><img src="./img/slide03.jpg"></li>
+                    </ul>
+                    <div class="bullets">
+                        <label for="slide1">&nbsp;</label>
+                        <label for="slide2">&nbsp;</label>
+                        <label for="slide3">&nbsp;</label>
+                        <label for="slide4">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+            <div id="photo-bottom">
+            </div>
+        </div>
+        <div class="main-album">
+            <div class="album-slide">
+                <input type="radio" name="slide" id="slide01" checked>
+                <input type="radio" name="slide" id="slide02">
+                <input type="radio" name="slide" id="slide03">
+                <input type="radio" name="slide" id="slide04">
+                <input type="radio" name="slide" id="slide05">
+                <input type="radio" name="slide" id="slide06">
+                <div class="slidewrap">
+                    <ul class="slidelist">
+                        <li>
+                            <a>
+                                <img src="./img/slide01.jpg">
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <img src="./img/slide02.jpg">
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <img src="./img/slide03.jpg">
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <img src="./img/slide04.jpg">
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <img src="./img/slide05.jpg">
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <img src="./img/slide06.jpg">
+                            </a>
+                        </li>
+                    </ul>
+            
+                    <div class="slide-control">
+                        <div class="control01">
+                            <label for="slide03" class="left"></label>
+                            <label for="slide02" class="right"></label>
+                        </div>
+                        <div class="control02">
+                            <label for="slide01" class="left"></label>
+                            <label for="slide03" class="right"></label>
+                        </div>
+                        <div class="control03">
+                            <label for="slide02" class="left"></label>
+                            <label for="slide01" class="right"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="main-menu">
+            <div class="menuwrap">
+                <div class="menubox clear-fix">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+      
+    <footer class="footer">
+        <div class="footer-wrp clear-fix">
+            <div class="footer-family">
+                
+                <div class="familysite">
+                    <p>FAMILY SITES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>▲</span></p>
+                </div>
+                <div class="family-list none">
+                    <div>dfddddddd</div>
+                    <div>dfddddddddf</div>
+                    <div>dfddddddf</div>
+                    <div>dffdddddd</div>
+                </div>
+                
+            </div>
+            <div class="footer-copyright">
+                <span>COPYRIGHT ⓒ 2022 BIG HIT MUSIC / HYBE. ALL RIGHTS RESERVED</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+            const $siteupEvent = document.querySelector('.familysite').onclick = e =>{
+                document.querySelector('.family-list').classList.toggle("none");
+            }
+
+    </script>
+    
+</body>
+</html>

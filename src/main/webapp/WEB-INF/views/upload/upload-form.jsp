@@ -79,7 +79,7 @@
                 $uploadForm.submit();
             } else {
                 alert('파일을 다시 확인하세요');
-            }
+            } e.preventDefault()
         });
     })();
 

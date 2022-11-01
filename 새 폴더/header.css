@@ -1,0 +1,108 @@
+/* common */
+.clear-fix:after{
+    display: block;
+    content: "";
+    clear: both;
+}
+
+
+.header {
+    position: sticky;
+    top: 0;
+    /* background: orange; */
+    z-index: 100;
+}
+
+.header-wrraper {
+    
+    background: rgba(90, 50, 212, 0.729);
+    height: 120px;
+    width: 1200px;
+    
+    margin: 0 auto;
+
+    position: relative;
+}
+
+.header-wrraper .header-top{
+    font-size: 20px;
+    /* background: yellow; */
+    height: 50%;
+    margin-left: 40px;
+    margin-right: 40px;
+
+    line-height: 60px;
+    
+}
+
+.header-wrraper .header-top .header-top-link {
+    /* background: green; */
+    float: left;
+}
+.header-wrraper .header-top .header-top-link span{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.header-wrraper .header-top .header-top-account {
+    /* background: skyblue; */
+    float: right;
+    vertical-align: center;
+}
+.header-wrraper .header-top .header-top-account span {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.header-wrraper .nav {
+    /* background: rgb(202, 176, 218); */
+    height: 50%;
+    margin-left: 40px;
+    margin-right: 40px;
+    position: relative;
+}
+
+.header-wrraper .nav .nav-ul{
+    /* background: red; */
+    height: 50%;
+
+    position: relative;
+    box-sizing: border-box;
+    line-height: 60px;
+}
+.header-wrraper .nav .nav-ul li{
+    /* background: skyblue; */
+    height: fit-content;
+
+    position: relative;
+    float: left;
+    margin-right: 7%;
+
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+
+}
+
+.header-wrraper .nav .nav-ul li:last-child {
+    
+    margin-right: 0;
+}
+.header-wrraper .nav .nav-ul li:nth-child(4){
+    margin-right: 15px;
+}
+.header-wrraper .nav .nav-ul li:nth-child(5){
+    height: 110px;
+    width: 80px;
+    margin-right: 15px;
+    margin-top: -50px;
+}
+
+#header-logo{
+    background: skyblue;
+    
+
+    
+
+    font-size: 30px;
+}

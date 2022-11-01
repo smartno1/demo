@@ -1,0 +1,83 @@
+/* common */
+.clear-fix:after{
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.footer {
+    /* background: red; */
+    height: 100px;
+}
+
+.footer .footer-wrp {
+    /* background: green; */
+
+    width: 1200px;
+    height: 100px;
+    margin: 0 auto;
+
+    position: relative;
+
+}
+
+.footer .footer-wrp .footer-family{
+    /* background: orange; */
+    float: left;
+    margin-top: 20px;
+    margin-left: 40px;
+    /* height: 250px; */
+    width: 200px;
+
+    position: absolute;
+    bottom: 35px;
+
+}
+.footer .footer-wrp .footer-family .family-list{
+    margin-bottom: 50px;
+}
+.footer .footer-wrp .footer-family .family-list div{
+    background: rgba(0, 0, 0, 0.574);
+    height: 50px;
+    width: 300px;
+    border: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    line-height: 50px;
+
+
+    color: rgba(231, 231, 231, 0.354);
+}
+.none{
+    display: none;
+
+}
+
+.footer .footer-wrp .footer-family .family-list div:hover{
+    color: azure;
+    cursor: pointer;
+}
+
+.footer .footer-wrp .footer-family .familysite{
+    background: skyblue;
+    border-radius: 10px;
+    text-align: center;
+    height: 30px;
+    width: inherit;;
+
+    line-height: 30px;
+
+    position: absolute;
+    bottom: 0;
+
+    cursor: pointer;
+}
+.footer .footer-wrp .footer-copyright {
+    /* background: skyblue; */
+    float: right;
+
+    margin-top: 20px;
+    margin-right: 40px;
+    height: 60px;
+    line-height: 60px;
+
+}

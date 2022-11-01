@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,12 +30,25 @@ public class LikeController {
     // 추천 확인
     @GetMapping("/check")
     @ResponseBody
-    public ResponseEntity<Boolean> LikeChk(LikeTypeDTO like, HttpSession session) {
+    public ResponseEntity<Boolean> LikeChk(HttpServletRequest request) {
+
+
+        LikeTypeDTO like = new LikeTypeDTO(request);
+
+
+
         log.info("/check {} GET!! ASYNC", like );
 
-        boolean flag = likeService.isLike(like);
+        if(like!=null) {
+            log.info("추천 여부 반환");
+            boolean flag = likeService.isLike(like);
+            return new ResponseEntity<>(flag, HttpStatus.OK);
+        }
 
-        return new ResponseEntity<>(flag, HttpStatus.OK);
+        boolean flag = false;
+        return new ResponseEntity<>(flag, HttpStatus.BAD_REQUEST);
+
+
     }
 
 
@@ -42,7 +56,9 @@ public class LikeController {
     // 추천 업데이트
     @GetMapping("/update")
     @ResponseBody
-    public int updateLike(LikeTypeDTO like, HttpSession session) {
+    public int updateLike(HttpServletRequest request) {
+
+        LikeTypeDTO like = new LikeTypeDTO(request);
 
         log.info("/update {} GET!! ASYNC", like );
         return likeService.updateLike(like);

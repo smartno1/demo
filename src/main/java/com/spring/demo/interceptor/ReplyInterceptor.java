@@ -29,7 +29,7 @@ public class ReplyInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
 
         //GET(리스트조회)을 제외한 나머지 메서드에서 로그인 확인 및 계정 확인
-        if(method.equalsIgnoreCase("GET")) {
+        if(!method.equalsIgnoreCase("GET")) {
             if (!isLogin(session)) {
 
                 log.info("로그인 정보 없음");

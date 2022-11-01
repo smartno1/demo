@@ -26,44 +26,28 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
 
         log.info("before like interceptor preHandle()");
 
-        LikeTypeDTO like = new LikeTypeDTO();
+
         HttpSession session = request.getSession();
+        String account = getCurrentMemberAccount(session);
         if (!isLogin(session)){
             log.info("로그인 정보 없음");
 
             request.setAttribute("message","no-login");
             return false;
         }
-        String account = getCurrentMemberAccount(session);
 
-        String boardType = request.getParameter("boardNo");
-
-        String replyType = request.getParameter("replyNo");
-
-        if(boardType !=null){
-            Long boardNo = Long.parseLong(boardType);
-            like.setAccount(account);
-            like.setType("boardNo");
-            like.setNo(boardNo);
-
-
-        }else if(replyType !=null){
-
-            Long replyNo = Long.parseLong(replyType);
-            like.setAccount(account);
-            like.setType("replyNo");
-            like.setNo(replyNo);
-        }
+        LikeTypeDTO like = new LikeTypeDTO(request);
 
         String writeUser= likeMapper.findAccount(like);
 
         if(account.equals((writeUser))){
             log.info("동일계정");
             request.setAttribute("message","match-account");
+            response.sendRedirect("/");
             return false;
         }
+        log.info("before like interceptor preHandle() 종료");
 
-        request.setAttribute("like",like);
         return true;
     }
 }

@@ -21,6 +21,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     private final ReplyInterceptor replyInterceptor;
 
+    private  final GalleryInterceptor galleryInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
@@ -51,6 +53,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(replyInterceptor)
                 .addPathPatterns("/reply");
 
+        // 갤러리 인터셉터 설정
+        registry.addInterceptor(galleryInterceptor)
+                .addPathPatterns("/gallery/**");
 
     }
 

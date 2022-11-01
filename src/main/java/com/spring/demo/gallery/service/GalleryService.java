@@ -37,9 +37,9 @@ public class GalleryService {
         log.info("findAllService start ");
 
         Map<String, Object> findDataMap = new HashMap<>();
-
+        // gallery 리스트
         List<Gallery> galleries = galleryMapper.findAll(page);
-
+        // 토탈 카운트
         int totalCount = galleryMapper.getTotalCount();
 
         findDataMap.put("galleries", galleries);

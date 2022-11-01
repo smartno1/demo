@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @AllArgsConstructor @NoArgsConstructor
 public class Gallery {
 
-    private int id;
+    private int galleryNo;
     private String src;
     private String text;
     private String account;

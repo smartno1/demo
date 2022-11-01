@@ -107,7 +107,7 @@ public class MemberController {
 
         }
         model.addAttribute("loginMsg", flag);
-        return "member/sign-in";
+        return "gallery/list";
 
     }
 

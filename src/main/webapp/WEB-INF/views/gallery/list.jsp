@@ -14,12 +14,12 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
         <style>
             a {
-
+                text-underline: none;
             }
         </style>
 
     <style>
-        .clear-box {
+        .clear-box:after {
             display: block;
             content: '';
             clear: both;
@@ -201,14 +201,17 @@
     <div id="wrapper">
         <div class="gallery-board">
             <h1 id="title"> Gallery </h1>
-
-            <a href="/upload-form"><button>upload</button></a>
+            <div>
+                <c:if test="${loginUser}">
+                    <a href="/upload-form"><button>upload</button></a>
+                </c:if>
+            </div>
             <div>
                 <ul id="gallery-ul" class="clear-box">
                     <c:forEach var="i" items="${galleries}">
                         <li>
-                            <img src="${i.src}"  class="img" data-id=${i.id} alt="">
-                            <p class="user-id">#${i.account}</p>
+                            <img src="${i.src}"  class="img" data-id=${i.galleryNo} alt="">
+                            <p class="user-id">#${i.account}<span>${i.lickCnt}</span></p>
                             <p class="text">${i.text}</p>
                         </li>
                     </c:forEach>
@@ -253,12 +256,14 @@
                     </div>
                     <div class="down-btn">
 
-                        <button class="down-btn-mod" style="display: inline-block">
-                            코멘트수정
-                        </button>
-                        <button class="down-btn-del" style="display: inline-block">
-                            삭제
-                        </button>
+                            <button class="down-btn-mod" style="display: inline-block">
+                                코멘트수정
+                            </button>
+
+                            <button class="down-btn-del" style="display: inline-block">
+                                삭제
+                            </button>
+
                         <button class="down-btn-back" style="display: inline-block">
                             돌아가기
                         </button>
@@ -286,8 +291,8 @@
         }
         // 모달창에 값넣고 띄우기
         function closeUp(e){
-            const $bodyDiv = document.getElementById('wrapper');
-            const $div = document.querySelector('.close-up');
+
+            const $downBtn = document.querySelector('.down-btn');
 
             // 노드를 복사
             // const cloneE = e.cloneNode(true)
@@ -302,32 +307,18 @@
             document.querySelector('.down-user').firstElementChild.textContent = userId;
             document.querySelector('.down-text').setAttribute('data-id',id);
             document.querySelector('.in-text').textContent = text;
-            // $div.innerHTML = `<div class="up-in-box">
-            //                     <div class="close-div">
-            //                         <img src=`+src+` alt="">
-            //                     </div>
-            //                     <div class="down-div">
-            //                         <div class="down-user">
-            //                             <p >`+userId+`</p>
-            //                         </div>
-            //                         <div class="down-text" data-id=`+id+`>
-            //                             <p class="in-text">`+text+`</P>
-            //                         </div>
-            //                         <div class="down-btn">
-
-            //                             <button class="down-btn-mod" style="display: inline-block">
-            //                                 코멘트수정
-            //                             </button>
-            //                             <button class="down-btn-del" style="display: inline-block">
-            //                                 삭제
-            //                             </button>
-            //                             <button class="down-btn-back" style="display: inline-block">
-            //                                     돌아가기
-            //                             </button>
-
-            //                         </div>
-            //                     </div>
-            //                 </div>`;
+            $downBtn.innerHTML = `
+                                    <c:if test="${loginUser eq userId}">
+                                        <button class="down-btn-mod" style="display: inline-block">
+                                            코멘트수정
+                                        </button>
+                                        <button class="down-btn-del" style="display: inline-block">
+                                            삭제
+                                        </button>
+                                    </c:if>
+                                    <button class="down-btn-back" style="display: inline-block">
+                                                돌아가기
+                                    </button> `;
             $div.classList.add('up');
 
             // 바뀐 모달창에 수정버튼 이벤트걸기

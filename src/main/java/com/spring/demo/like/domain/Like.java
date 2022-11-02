@@ -8,8 +8,8 @@ public class Like {
 
     private int replyNo;
 
+    private int galleryNo;
+
     private String account;
-
-
 
 }

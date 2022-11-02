@@ -33,8 +33,13 @@
 
 
     </style>
+    <script>
+        console.log(   location.pathname     );
+    </script>
+    <script src="/js/sign-up.js" defer>
 
-    <script src="/js/sign-up.js" defer></script>
+
+    </script>
 </head>
 
 <body>

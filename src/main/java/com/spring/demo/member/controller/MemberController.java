@@ -111,7 +111,7 @@ public class MemberController {
 
         }
         model.addAttribute("loginMsg", flag);
-        return "member/sign-in";
+        return "gallery/list";
 
     }
 
@@ -126,7 +126,7 @@ public class MemberController {
             session.invalidate();
             return "redirect:/";
         }
-        return "redirect:/member/sign-in";
+        return "redirect:/";
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class GalleryApiController {
     private final GalleryService galleryService;
     @Value("${UPLOAD_PATH}")
     private String UPLOAD_PATH;
-
+    @Transactional
     @PutMapping("api/gallery/mod/{galleryId}")
     public String modify(@PathVariable("galleryId") Long gid, @RequestBody Gallery gallery) {
         log.info("/api/gallery/mod POST! - {}",gallery);
@@ -42,7 +43,7 @@ public class GalleryApiController {
     }
 
     @GetMapping("gallery/api/loadFile")
-    public void download(@RequestParam("id") int id, HttpServletRequest request, HttpServletResponse response) {
+    public void download(@RequestParam("id") Long id, HttpServletRequest request, HttpServletResponse response) {
         Gallery gallery = galleryService.findOneService(id);
         String filePath = gallery.getSrc();
         String fileName = filePath.substring(filePath.indexOf("_") + 1);

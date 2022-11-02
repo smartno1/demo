@@ -16,6 +16,9 @@
         <if test="type=='boardNo'">
             tbl_board
         </if>
+        <if test="type=='galleryNo'">
+            gallery
+        </if>
         SET
         like_cnt = (SELECT COUNT(*) FROM tbl_like WHERE
         <if test="type=='replyNo'">
@@ -24,12 +27,18 @@
         <if test="type=='boardNo'">
             board_no
         </if>
-        =1) WHERE
+        <if test="type=='galleryNo'">
+            gallery_no
+        </if>
+        =#{no}) WHERE
         <if test="type=='replyNo'">
             reply_no
         </if>
         <if test="type=='boardNo'">
             board_no
+        </if>
+        <if test="type=='galleryNo'">
+            gallery_no
         </if>
         = #{no}
 

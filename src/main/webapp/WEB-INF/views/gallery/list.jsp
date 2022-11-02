@@ -7,7 +7,8 @@
   Time: 오전 12:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java"  pageEncoding="UTF-8" %>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -19,10 +20,14 @@
     <!-- reset css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <style>
-        a {
-            text-underline: none;
-        }
+        a {color: #fff; text-decoration: none; outline: none}
+        a:hover, a:active {text-decoration: none; }
     </style>
+
+
+    <!--    custom css -->
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
 
     <style>
         .clear-box:after {
@@ -35,39 +40,40 @@
             height: 100%;
         }
 
-        #wrapper {
+        #galleryWrap {
             position: relative;
-            background-color: #ffffff;
+            background: black;
             height: 100%;
             width: 100%;
 
         }
 
-       #wrapper .gallery-board {
+       #galleryWrap .gallery-board {
             margin: 0 auto;
             /*text-align: center;*/
-            background-color: orange;
-            width: 1500px;
+            /*background-color: orange;*/
+            width: 1200px;
             
         }
-        #wrapper #title{
+        #galleryWrap #title{
             text-align: center;
         }
-        #wrapper #gallery-ul {
+        #galleryWrap #gallery-ul {
 
-            /* background-color: green; */
+            /*background-color: green;*/
 
             height: 680px;
             margin: 10px 0;
-            padding-left: 50px;
+            padding-left: 7%;
             position: relative;
             box-sizing: border-box;
         }
 
         #gallery-ul li {
-            margin-left: 2%;
-            margin-top: 20px;
-            border-radius: 10px;
+            margin-right: 7%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            /*border-radius: 10px;*/
 
             float: left;
             height: 300px;
@@ -96,11 +102,19 @@
             margin-left: 10px;
             margin-top: 10px
         }
-        #gallery-ul li div .like {
+        #gallery-ul li div .likeCnt {
             float: right;
             margin-right: 10px;
-            margin-top: 10px
+            margin-top: 10px;
+            border: 1px solid yellow;
         }
+        #gallery-ul li div .likeImg{
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            float: right;
+        }
+
         #gallery-ul li div .text {
             /*background-color: rgba(10,10,10,0.5);*/
             width: inherit;
@@ -119,13 +133,13 @@
 
         }
 
-        #wrapper .bottom-section div{
+        #galleryWrap .bottom-section div{
            
             /* background-color: red; */
 
 
         }
-        #wrapper .bottom-section div .bottom-ul {
+        #galleryWrap .bottom-section div .bottom-ul {
             /* border: 4px solid #000; */
             /* background-color: yellowgreen; */
             width: fit-content;
@@ -136,13 +150,13 @@
 
         }
         
-        #wrapper .bottom-section div .bottom-ul li {
+        #galleryWrap .bottom-section div .bottom-ul li {
             float: left;
             margin:10px;
 
         }
 
-       #wrapper .close-up {
+       #galleryWrap .close-up {
            position: absolute;
            background-color: rgba(0,0,0,0.9);
            top: 0px;
@@ -151,7 +165,7 @@
            z-index: -2;
 
        }
-        #wrapper .close-up.up {
+        #galleryWrap .close-up.up {
           z-index: 2;
         }
         @keyframes up {
@@ -162,7 +176,7 @@
                 z-index: 2;
             }
         }
-        #wrapper .close-up .up-in-box{
+        #galleryWrap .close-up .up-in-box{
             height: 700px;
             width: 1000px;
             position: absolute;
@@ -170,7 +184,7 @@
             left: 50%;
             transform: translate(-50%,-50%);
         }
-        #wrapper .close-up .up-in-box .close-div {
+        #galleryWrap .close-up .up-in-box .close-div {
             position: relative;
             height: 600px;
             width: inherit;
@@ -178,21 +192,21 @@
             border-bottom: 3px solid rgb(244, 245, 254);
             margin-bottom: 10px;
         }
-        #wrapper .close-up .up-in-box .close-div img{
+        #galleryWrap .close-up .up-in-box .close-div img{
             height: inherit;
             width: inherit;
             object-fit: scale-down;
         }
 
-        #wrapper .close-up .up-in-box .down-div{
+        #galleryWrap .close-up .up-in-box .down-div{
             display: flex;
 
         }
-        #wrapper .close-up .up-in-box .down-div .down-user{
+        #galleryWrap .close-up .up-in-box .down-div .down-user{
             /*background-color: yellow;*/
             position: relative;
         }
-        #wrapper .close-up .up-in-box .down-div .down-user p{
+        #galleryWrap .close-up .up-in-box .down-div .down-user p{
             font-size: 30px;
             color: aqua;
             /*background-color: blue;*/
@@ -200,13 +214,13 @@
             top: -30%;
 
         }
-        #wrapper .close-up .up-in-box .down-div .down-text{
+        #galleryWrap .close-up .up-in-box .down-div .down-text{
             /*background-color: orange;*/
             position: relative;
             margin-left: 40px;
             margin-right: 20px;
         }
-        #wrapper .close-up .up-in-box .down-div .down-text .in-text{
+        #galleryWrap .close-up .up-in-box .down-div .down-text .in-text{
             width: 700px;
             height: 80px;
             position: relative;
@@ -215,7 +229,7 @@
             color: #ffffff;
             font-size: 20px;
         }
-        #wrapper .close-up .up-in-box .down-div{
+        #galleryWrap .close-up .up-in-box .down-div{
 
         }
 
@@ -223,16 +237,14 @@
     </style>
 </head>
 <body>
-    
-<%@include file="../include/header.jsp"%>
-    
-    <div id="wrapper">
+<div class="wrap">
+    <%@include file="../include/header.jsp"%>
+    <div id="galleryWrap">
         <div class="gallery-board">
             <h1 id="title"> Gallery </h1>
             <div>
                 <c:if test="${!empty loginUser}">
                     <a href="/upload-form"><button>upload</button></a>
-
                 </c:if>
             </div>
             <div>
@@ -242,7 +254,9 @@
                             <img src="${i.src}"  class="img" data-id=${i.galleryNo} alt="">
                             <div >
                                 <p class="user-id">#${i.nickname}</p>
-                                <p class="like">${i.likeCnt}</p>
+                                <p><img class="likeImg" src="/img/like.jpg" alt=""></p>
+                                <p class="likeCnt">${i.likeCnt}</p>
+
                                 <p class="text">${i.text}</p>
                             </div>
 
@@ -300,8 +314,10 @@
             </div>
         </div>
     </div>
-
     <%@include file="../include/footer.jsp"%>
+</div>
+
+
 
     <script>
         <%
@@ -336,7 +352,7 @@
             const id = e.firstElementChild.dataset.id;
             const text = e.lastElementChild.lastElementChild.textContent;
             let nickName = e.lastElementChild.firstElementChild.textContent;
-            let like = e.lastElementChild.children[1].textContent;
+            let like = e.lastElementChild.children[2].textContent;
             nickName = nickName.substring(1) ;
             console.log(nickName);
             document.querySelector('.close-div').firstElementChild.setAttribute('src', src);

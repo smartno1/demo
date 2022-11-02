@@ -41,6 +41,10 @@ public class GalleryController {
     public String list(Page page, Model model, HttpServletRequest request ){
         log.info("GalleryController /gallery/list GET!");
 
+        // amount 변경.
+        page.setAmount(8);
+        log.info("page - {}",page);
+
         Map<String , Object> galleryMap = galleryService.findAllService(page);
         log.info("/galleryImg/list GET! = {}", galleryMap);
 
@@ -49,7 +53,7 @@ public class GalleryController {
                 new Page(page.getPageNum(), page.getAmount())
                 , (Integer) galleryMap.get("tc")
                 );
-
+        log.info("pm ==> {}",pm);
         model.addAttribute("galleries", galleryMap.get("galleries"));
         model.addAttribute("pm", pm);
 

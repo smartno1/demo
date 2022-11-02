@@ -19,12 +19,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
   <style>
     a {color: #fff; text-decoration: none; outline: none}
-    a:hover, a:active {text-decoration: none; color:#fff; background-color:#f59000;}
+    a:hover, a:active {text-decoration: none; }
   </style>
   <!-- custom css -->
-  <link rel="stylesheet" type="text/css" href="css/footer.css"/>
-  <link rel="stylesheet" type="text/css" href="css/header.css"/>
-  <link rel="stylesheet" type="text/css" href="css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 
 <body>

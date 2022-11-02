@@ -1,3 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <header class="header">
   <div class="header-wrraper">
     <div class="header-top clear-fix">
@@ -7,13 +10,20 @@
         <span>유투브</span>
       </div>
       <div class="header-top-account">
-        <span id="login-btn">로그인</span>|<span id="logout-btn">로그아웃</span>
+        <c:if test="${empty loginUser}">
+          <a href="/member/sign-in"><span id="login-btn">로그인</span></a>
+        </c:if>
+        <c:if test="${!empty loginUser}">
+          <a href="/member/sign-out"><span id="logout-btn">로그아웃</span></a>
+        </c:if>
       </div>
     </div>
     <nav class="nav">
       <ul class="nav-ul clear-fix">
         <li>
+          <a href="/">
           HOME
+          </a>
         </li>
         <li>
           PROFILE

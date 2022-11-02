@@ -302,11 +302,38 @@ function checkBirth(){
 
 function checkAddress(){
 
+    $jusoCallBack= document.getElementById("jusoCallBack");
 
-    checkArr[8] = true;
+
+    $jusoCallBack.addEventListener('click', () => { 
+        var pop = window.open("/juso/jusoPopup", "pop", "width=570,height=420, scrollbars=yes, resizable=yes");
+        
+        // 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(https://business.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+        //var pop = window.open("/juso/jusoPopup","pop","scrollbars=yes, resizable=yes");
+			
+    });
+
+    
 
 
 }
+
+
+
+function jusoCallBack(zipNo, roadAddrPart1, jibunAddr, addrDetail) {
+    // 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+    console.log("주소콜백");
+
+
+    document.getElementById("zipNo").value = zipNo;
+    document.getElementById("roadAddrPart1").value = roadAddrPart1;
+    document.getElementById("jibunAddr").value = jibunAddr;
+    document.getElementById("addrDetail").value = addrDetail;
+
+    checkArr[8] = true;
+}
+
+
 
 
 
@@ -330,14 +357,21 @@ function checkAddress(){
 
     const $signUpBtn = document.getElementById('signup-btn');
     const $regForm = document.getElementById('signUpForm');
+    $zipNo = document.getElementById("zipNo")
+    $roadAddrPart1 = document.getElementById("roadAddrPart1")
+    $address = document.getElementById("user_address")
 
     console.log(checkArr);
 
     $signUpBtn.addEventListener("click", (e) => {
         e.preventDefault();
+        $address.value = $zipNo.value + $roadAddrPart1.value; 
         if (!checkArr.includes(false)) {
             $regForm.submit();
-        } else {
+        }else if (!checkArr[8]) {
+            alert('주소를 입력해 주세요.')
+        }
+        else {
             alert('입력란을 다시 확인하세요.')
         }
 

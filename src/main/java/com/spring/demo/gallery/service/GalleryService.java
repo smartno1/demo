@@ -27,7 +27,7 @@ public class GalleryService {
     }
 
     @Transactional
-    public Gallery findOneService (int id){
+    public Gallery findOneService (Long id){
         log.info("findOneService start - id : {}",id);
 
         return galleryMapper.findOne(id);

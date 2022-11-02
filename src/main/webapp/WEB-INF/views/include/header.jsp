@@ -34,7 +34,9 @@
           TOUR
         </li>
         <li>
-          GALLERY
+          <a href="/gallery/list">
+            GALLERY
+          </a>
         </li>
         <li>
           SHOP

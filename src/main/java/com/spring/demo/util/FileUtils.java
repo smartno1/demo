@@ -52,13 +52,14 @@ public class FileUtils {
         String fullPath = newPath + "\\" + newFileName;
         fullPath = fullPath.replace("\\", "/");
         String filename = file.getOriginalFilename();
-//        Member user =(Member) req.getSession().getAttribute("user");
-//        System.out.println(user);
+        Member user =(Member) req.getSession().getAttribute("loginUser");
+        log.info("user=={}",user);
 
         Gallery gallery = new Gallery();
         gallery.setText(fileText);
         gallery.setSrc(fullPath);
-//        gallery.setAccount(user.getAccount());
+        gallery.setAccount(user.getAccount());
+        gallery.setNickname(user.getNickname());
         System.out.println(gallery);
 
         return gallery;

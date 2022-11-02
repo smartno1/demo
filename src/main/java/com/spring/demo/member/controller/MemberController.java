@@ -122,7 +122,7 @@ public class MemberController {
             session.invalidate();
             return "redirect:/";
         }
-        return "redirect:/member/sign-in";
+        return "redirect:/";
     }
 
 

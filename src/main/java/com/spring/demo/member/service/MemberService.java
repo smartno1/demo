@@ -70,7 +70,7 @@ public class MemberService {
             log.info("password : {} ", inputData.getPassword());
             log.info("encodePassword : {} ", foundMember.getPassword());
             log.info("encoder.matches : {}",encoder.matches(inputData.getPassword(), foundMember.getPassword()));
-            if (encoder.matches(inputData.getPassword(), foundMember.getPassword())) {
+            if (encoder.matches(inputData.getPassword(), foundMember.getPassword())) { //패스워드 암호화로 매치메소드를 사용해서 비교.
                 // 로그인 성공
                 // 세션에 사용자 정보기록 저장
 

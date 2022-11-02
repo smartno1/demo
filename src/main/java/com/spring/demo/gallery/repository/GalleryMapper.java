@@ -15,7 +15,7 @@ public interface GalleryMapper {
     // 수정
     boolean modify(Gallery gallery);
     // 개별조회
-    Gallery findOne(int id);
+    Gallery findOne(Long id);
     // 전체조회
     List<Gallery> findAll(Page page);
     // 전체 게시물 수 조회

@@ -13,19 +13,23 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.Collection;
 import java.util.Map;
 
 @Controller
 @Log4j2
 @RequiredArgsConstructor
 @PropertySource("classpath:uploadpath.properties")
-@RequestMapping("/member")
+//@RequestMapping("")
 public class GalleryController {
 
     @Value("${UPLOAD_PATH}")
@@ -33,8 +37,8 @@ public class GalleryController {
     private final GalleryService galleryService;
 
 
-    @GetMapping("/gallrey/list")
-    public String list(Page page, Model model, HttpServletRequest request){
+    @GetMapping("/gallery/list")
+    public String list(Page page, Model model, HttpServletRequest request ){
         log.info("GalleryController /gallery/list GET!");
 
         Map<String , Object> galleryMap = galleryService.findAllService(page);
@@ -73,19 +77,26 @@ public class GalleryController {
 
         Gallery gallery = FileUtils.uploadFile(file, fileText, UPLOAD_PATH, request);
 //       }
-
+        log.info("upload ======= {}",gallery);
         galleryService.saveService(gallery);
 
         return "redirect:/gallery/list";
     }
+    @Transactional
     @GetMapping("/gallery/del")
-    public String del(int id, String pageNum, String amount){
+    public ModelAndView del(Long galleryNo, String pageNum, String amount, Model model, HttpServletRequest request){
 
-        Gallery gallery = galleryService.findOneService(id);
+//        String refer = request.getHeader("Referer");
+//        log.info(refer);
+        Gallery gallery = galleryService.findOneService(galleryNo);
         String src = gallery.getSrc();
-//        log.info("/gallery/del GET! - {}", gallery);
+        log.info("/gallery/del GET! - {}", gallery);
 //        log.info("pN - {} am - {}",pageNum,amount);
 
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("gallery", gallery);
+        mv.setViewName("redirect:/gallery/list");
         try {
             //파일 삭제
             File delFile = new File(UPLOAD_PATH + src);
@@ -93,12 +104,17 @@ public class GalleryController {
             delFile.delete();
 
             galleryService.deleteService(gallery);
+            String url = "redirect:/gallery/list?pageNum="+pageNum+"&amount="+amount;
+            mv.setViewName(url);
+            log.info("model === {}", mv);
+
+            return mv;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "redirect:/gallery/list?pageNum="+pageNum+"&amount="+amount;
+        return mv;
     }
 
 

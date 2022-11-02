@@ -12,21 +12,21 @@
 
     <insert id="save">
         INSERT INTO gallery
-            (src, text, account)
-        VALUES (#{src}, #{text}, #{account})
+            (src, text, account, nickname)
+        VALUES (#{src}, #{text}, #{account}, #{nickname})
     </insert>
 
     <select id="findOne" resultMap="galleryMap">
         SELECT *
         FROM gallery
-        WHERE id=#{id}
+        WHERE gallery_no=#{galleryNo}
     </select>
 
     <select id="findAll" resultMap="galleryMap">
         WITH v_gallery AS
                  (
                      SELECT
-                         ROW_NUMBER() OVER (ORDER BY id DESC) AS RowNumber, gallery.*
+                         ROW_NUMBER() OVER (ORDER BY gallery_no DESC) AS RowNumber, gallery.*
                      FROM gallery
                  )
         SELECT *
@@ -42,11 +42,11 @@
     <update id="modify">
         UPDATE gallery
         SET text = #{text}
-        WHERE id = #{id}
+        WHERE gallery_no = #{galleryNo}
     </update>
 
     <delete id="delete">
         DELETE FROM gallery
-        WHERE id=#{id};
+        WHERE gallery_no=#{galleryNo};
     </delete>
 </mapper>

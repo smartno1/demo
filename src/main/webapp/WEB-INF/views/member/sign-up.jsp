@@ -11,7 +11,7 @@
 
     <style>
         .wrap {
-            margin: 200px auto;
+            margin: 50px auto;
         }
 
         .c-red {
@@ -21,6 +21,17 @@
         .c-blue {
             color: rgb(25, 236, 120);
         }
+
+
+
+        table.address-table{
+            border-collapse: separate;
+            border-spacing: 10px 10px;
+
+        }
+ 
+
+
     </style>
 
     <script src="/js/sign-up.js" defer></script>
@@ -118,10 +129,31 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="address" id="user_address" class="form-control tooltipstered"
-                                            maxlength="30" required="required" aria-required="true"
-                                            style="margin-bottom: 25px; width: 100%; height: 40px; border: 1px solid #d9d9de"
-                                            placeholder=""></td>
+                                    <td>
+                                        <input type="text" name="address" id="user_address" hidden />
+                                        <div id="callBackDiv" class="form-control tooltipstered" style="margin-bottom: 10px; border: 1px solid #d9d9de;">
+                                            <table class="address-table">
+                                                <tr>
+                                                    <td><strong>우편번호</strong></td>
+                                                    <td><input type="text" style="width:70px;" id="zipNo" name="zipNo" readonly value="기본" />
+                                                        <input type="button" id="jusoCallBack" value="주소 검색" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>도로명주소</strong> </td>
+                                                    <td><input type="text" style="width:500px;" id="roadAddrPart1" name="roadAddrPart1" readonly /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>지번</strong></td>
+                                                    <td><input type="text" style="width:500px;" id="jibunAddr" name="jibunAddr" readonly /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>고객입력 상세주소</strong></td>
+                                                    <td><input type="text" style="width:500px;" id="addrDetail" name="addrDetail" /></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>

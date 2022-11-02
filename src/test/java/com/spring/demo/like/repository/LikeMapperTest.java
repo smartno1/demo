@@ -75,4 +75,21 @@ class LikeMapperTest {
 
     }
 
+
+    @Test
+    @DisplayName("계정찾기")
+    void findAccountTest() {
+
+        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 1L);
+
+        String account = likeMapper.findAccount(like);
+
+        System.out.println();
+        System.out.println("계정 : "+ account);
+
+
+
+    }
+
+
 }

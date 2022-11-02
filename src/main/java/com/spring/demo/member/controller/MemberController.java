@@ -5,6 +5,7 @@ import com.spring.demo.member.dto.LoginDTO;
 import com.spring.demo.member.dto.MyPageDTO;
 import com.spring.demo.member.service.LoginFlag;
 import com.spring.demo.member.service.MemberService;
+import com.spring.demo.util.LoginUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import static com.spring.demo.util.LoginUtils.getCurrentMemberAccount;
+import static com.spring.demo.util.LoginUtils.isLogin;
 
 @Controller
 @Log4j2
@@ -60,12 +64,12 @@ public class MemberController {
     @ResponseBody
     public MyPageDTO MyPageInfo(HttpSession session) {
 
-        if (session.getAttribute("loginUser") != null) {
+        if (isLogin(session)){
 
-            Member m = (Member)session.getAttribute("loginUser");
+            String account = getCurrentMemberAccount(session);
 
-            log.info("Member: {}", m);
-            MyPageDTO myPage = memberService.getMyPageInfo(m.getAccount());
+            log.info("login account : {}", account);
+            MyPageDTO myPage = memberService.getMyPageInfo(account);
 
             return myPage;
         }

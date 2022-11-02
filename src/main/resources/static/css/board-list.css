@@ -1,0 +1,202 @@
+.wrap{
+    background-color: #222;
+}
+.board-list {
+    width: 70%;
+    margin: 230px auto 0;
+}
+
+.board-list .articles {
+    margin: 10px auto 100px;
+    border-collapse: collapse;
+    font-size: 1.5em;
+    border-radius: 10px;
+}
+
+/* 목록 개수별 보기 스타일 */
+.board-list .amount {
+    display: flex;
+    /* background: skyblue; */
+    justify-content: flex-end;
+}
+
+.board-list .amount li {
+    width: 8%;
+
+}
+.board-list .amount li a {
+    width: 100%;
+}
+
+
+.trlect1 th{
+    background-color: #6965c3;
+  
+    padding: 10px 5px;
+    color: #fff;
+}
+.trlect2 td{
+    background-color: #b4b2e0;
+    padding: 10px 5px;
+    color: #fff;
+}
+.form-select{
+ border-radius: 3px;
+ border: 3px solid #6965c3;
+ background-color: #b4b2e0;
+ color:#333;
+ font-weight: 400;
+
+}
+.btn-primary{
+ display: block;
+ margin-left:10px;
+ background-color: #6965c3;
+ }
+ .btn-primary i{
+    width: 20px;
+    padding: 0.375rem 0.75rem;
+    color: #6965c3;  
+}
+.btn-primary img{
+    width: 15px;
+    margin-top: 5px;
+}
+.form-control{
+    border-radius: 3px;
+    border: 3px solid #6965c3;
+   }
+head {
+    background: #6965c3;
+    border-bottom: 1px solid #6965c3;
+    height: 300px;
+}
+
+
+/* pagination style */
+.bottom-section {
+    margin-top: -50px;
+    margin-bottom: 100px;
+    display: flex;
+}
+
+.bottom-section nav {
+    flex: 9;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.bottom-section .btn-write {
+    flex: 1;
+}
+.btn-write{
+    text-align: center;
+
+}
+.btn-write a{
+    background-color:#6965c3;
+    border-radius: 5px;
+    width: 50px;
+    color: #fff;
+    padding: 5px 10px 5px;
+    margin-top: 10px;
+}
+.bottom-section li {
+    color: #fff;
+    background-color: #6965c3;
+    margin: 0 5px 0;
+    display:block;
+    width: 50px;
+    height: 30px;
+    border-radius: 2px;
+    text-align: center;
+
+}
+
+
+.pagination-custom a {
+    color: #444 !important;
+}
+
+.pagination-custom li.active a,
+.pagination-custom li:hover a {
+    background: #333 !important;
+    color: #fff !important;
+}
+
+/* 검색창 */
+.board-list .top-section {
+    display: flex;
+    justify-content: space-between;
+}
+.search form{
+    margin-top: 16px;    
+}
+.board-list .top-section .search {
+    flex: 4;
+}
+.board-list .top-section .amount {
+    flex: 4;
+}
+.board-list .top-section .search form {
+    display: flex;
+}
+.board-list .top-section .search form #search-type {
+    flex: 1;
+    margin-right: 10px;
+}
+.board-list .top-section .search form input[name=keyword] {
+    flex: 3;
+}
+ .amount li {
+    width: 8%;
+    margin-right: 5px;
+    list-style:none;
+    display: block;
+    border-radius: 10px;
+}
+.btn-danger {
+    color: #fff;
+    background-color: #6965c3;
+    border-color: #6965c3;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    
+    font-size: 1rem;
+    border-radius: 0.25rem;
+}
+.board-list .amount li a {
+    width: 100%;
+}
+.btn-danger {
+    text-decoration: none;
+  
+}
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}
+
+.pagination-lg .page-item:first-child .page-link {
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+}
+
+/* 00 */

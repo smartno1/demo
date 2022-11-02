@@ -26,9 +26,11 @@
           </a>
         </li>
         <li>
+        <a href="/profile">
           PROFILE
         </li>
         <li>
+        <a href="/schedule">
           SCHEDULE
         </li>
         <li>
@@ -38,6 +40,7 @@
           <span>logo</span>
         </li>
         <li>
+        <a href="/board/list">
           BOARD
         </li>
         <li>

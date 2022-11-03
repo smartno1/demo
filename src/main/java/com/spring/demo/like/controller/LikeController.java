@@ -4,6 +4,7 @@ package com.spring.demo.like.controller;
 import com.spring.demo.like.dto.LikeTypeDTO;
 import com.spring.demo.like.service.LikeService;
 import com.spring.demo.util.LoginUtils;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @Log4j2
@@ -29,10 +31,12 @@ public class LikeController {
     // 추천 확인
     @GetMapping("/check")
     @ResponseBody
-    public ResponseEntity<Boolean> LikeChk(LikeTypeDTO like, HttpSession session) {
+    public ResponseEntity<Boolean> LikeChk(LikeTypeDTO like, HttpServletRequest request) {
         log.info("/check {} GET!! ASYNC", like );
 
-        boolean flag = likeService.isLike(like);
+        LikeTypeDTO like1 = (LikeTypeDTO) request.getAttribute("like");
+
+        boolean flag = likeService.isLike(like1);
 
         return new ResponseEntity<>(flag, HttpStatus.OK);
     }
@@ -42,10 +46,13 @@ public class LikeController {
     // 추천 업데이트
     @GetMapping("/update")
     @ResponseBody
-    public int updateLike(LikeTypeDTO like, HttpSession session) {
+    public int updateLike(LikeTypeDTO like, HttpServletRequest request) {
 
         log.info("/update {} GET!! ASYNC", like );
-        return likeService.updateLike(like);
+
+        LikeTypeDTO like1 = (LikeTypeDTO) request.getAttribute("like");
+        log.info("/update {} GET!! ASYNC", like1 );
+        return likeService.updateLike(like1);
 
     }
 

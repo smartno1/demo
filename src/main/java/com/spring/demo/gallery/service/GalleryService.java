@@ -27,10 +27,10 @@ public class GalleryService {
     }
 
     @Transactional
-    public Gallery findOneService (Long id){
-        log.info("findOneService start - id : {}",id);
+    public Gallery findOneService (Long galleryNo){
+        log.info("findOneService start - id : {}",galleryNo);
 
-        return galleryMapper.findOne(id);
+        return galleryMapper.findOne(galleryNo);
     }
 
     public Map<String, Object> findAllService(Page page) {

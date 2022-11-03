@@ -41,7 +41,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         // 비포 라이크 인터셉터 설정
         registry.addInterceptor(beforeLikeInterceptor)
-                .addPathPatterns("/like");
+                .addPathPatterns("/like/**");
 
 
         // 게시판 인터셉터 설정

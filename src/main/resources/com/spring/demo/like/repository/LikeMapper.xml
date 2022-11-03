@@ -58,6 +58,9 @@
         <if test="type=='boardNo'">
             board_no
         </if>
+        <if test="type=='galleryNo'">
+            gallery_no
+        </if>
         = #{no}
 
     </select>
@@ -73,6 +76,10 @@
 
         <if test="type=='boardNo'">
             (board_no , account)
+        </if>
+
+        <if test="type=='galleryNo'">
+            (gallery_no , account)
         </if>
         VALUES
         (#{no}, #{account})
@@ -90,6 +97,9 @@
         </if>
         <if test="type=='boardNo'">
             board_no
+        </if>
+        <if test="type=='galleryNo'">
+            gallery_no
         </if>
         = #{no}
         AND
@@ -109,6 +119,9 @@
         <if test="type=='boardNo'">
             board_no
         </if>
+        <if test="type=='galleryNo'">
+            gallery_no
+        </if>
         = #{no}
         AND
         account = #{account}
@@ -127,6 +140,11 @@
             tbl_board
             WHERE
             board_no
+        </if>
+        <if test="type=='galleryNo'">
+            gallery
+            WHERE
+            gallery_no
         </if>
         = #{no}
 

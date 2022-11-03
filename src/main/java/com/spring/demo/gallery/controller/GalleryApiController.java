@@ -34,8 +34,8 @@ public class GalleryApiController {
     @Value("${UPLOAD_PATH}")
     private String UPLOAD_PATH;
     @Transactional
-    @PutMapping("api/gallery/mod/{galleryId}")
-    public String modify(@PathVariable("galleryId") Long gid, @RequestBody Gallery gallery) {
+    @PutMapping("api/gallery/mod/{galleryNo}")
+    public String modify(@PathVariable("galleryNo") Long gid, @RequestBody Gallery gallery) {
         log.info("/api/gallery/mod POST! - {}",gallery);
         boolean flag = galleryService.modifyService( gallery);
 
@@ -43,10 +43,11 @@ public class GalleryApiController {
     }
 
     @GetMapping("gallery/api/loadFile")
-    public void download(@RequestParam("id") Long id, HttpServletRequest request, HttpServletResponse response) {
-        Gallery gallery = galleryService.findOneService(id);
+    public void download(@RequestParam("galleryNo") Long galleryNo, HttpServletRequest request, HttpServletResponse response) {
+        Gallery gallery = galleryService.findOneService(galleryNo);
         String filePath = gallery.getSrc();
         String fileName = filePath.substring(filePath.indexOf("_") + 1);
+        log.info(filePath);
         try {
             byte[] fileByte = FileUtils.readFileToByteArray(new File(UPLOAD_PATH + filePath));
             log.info("fileByte = {}",fileByte);

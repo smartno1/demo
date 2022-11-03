@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+
 import static com.spring.demo.util.LoginUtils.getCurrentMemberAccount;
 import static com.spring.demo.util.LoginUtils.isLogin;
 
@@ -40,6 +42,9 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
 
         String replyType = request.getParameter("replyNo");
 
+        String galleryType = request.getParameter("galleryNo");
+        log.info("galleryType == {}",galleryType);
+
         if(boardType !=null){
             Long boardNo = Long.parseLong(boardType);
             like.setAccount(account);
@@ -53,11 +58,17 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
             like.setAccount(account);
             like.setType("replyNo");
             like.setNo(replyNo);
+        }else if(galleryType !=null){
+
+            Long galleryNo = Long.parseLong(galleryType);
+            like.setAccount(account);
+            like.setType("galleryNo");
+            like.setNo(galleryNo);
         }
-
+        log.info("like == {}",like);
         String writeUser= likeMapper.findAccount(like);
-
-        if(account.equals((writeUser))){
+        // 본인이 작성한 게시물에는 추천 안되도록 배제
+        if(account.equals(writeUser)){
             log.info("동일계정");
             request.setAttribute("message","match-account");
             return false;
@@ -66,4 +77,5 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
         request.setAttribute("like",like);
         return true;
     }
+
 }

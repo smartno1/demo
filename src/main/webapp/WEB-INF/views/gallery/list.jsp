@@ -91,7 +91,7 @@
             height: 20%;
             /*padding: 5px 10px;*/
         }
-        #gallery-ul li div .user-id {
+        #gallery-ul li div .writer {
             /*background-color: rgba(10,10,10,0.5);*/
             /*width: inherit;*/
             /*z-index: 1;*/
@@ -106,7 +106,7 @@
             float: right;
             margin-right: 10px;
             margin-top: 10px;
-            border: 1px solid yellow;
+            /*border: 1px solid yellow;*/
         }
         #gallery-ul li div .likeImg{
             width: 30px;
@@ -116,13 +116,17 @@
         }
 
         #gallery-ul li div .text {
-            /*background-color: rgba(10,10,10,0.5);*/
-            width: inherit;
+            /*background-color: red;*/
+            width: 190px;
+            height: 20px;
             z-index: 1;
             position: absolute;
-            bottom: 0;
+            bottom: 5px;
             color: aliceblue;
-            margin: 5px;
+            margin: 0 5px;
+            word-break: break-all;
+            overflow: hidden;
+            line-height: 20px;
         }
 
         #gallery-ul li img.img {
@@ -158,8 +162,8 @@
 
        #galleryWrap .close-up {
            position: absolute;
-           background-color: rgba(0,0,0,0.9);
-           top: 0px;
+           background-color: rgba(0,0,0,0.8);
+           top: 0;
            height:inherit;
            width: inherit;
            z-index: -2;
@@ -177,7 +181,8 @@
             }
         }
         #galleryWrap .close-up .up-in-box{
-            height: 700px;
+            /*background: red;*/
+            height: 760px;
             width: 1000px;
             position: absolute;
             top: 50%;
@@ -185,12 +190,12 @@
             transform: translate(-50%,-50%);
         }
         #galleryWrap .close-up .up-in-box .close-div {
-            position: relative;
-            height: 600px;
+            /*position: relative;*/
+            height: 560px;
             width: inherit;
-            padding-bottom: 20px;
+            padding-bottom: 10px;
             border-bottom: 3px solid rgb(244, 245, 254);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         #galleryWrap .close-up .up-in-box .close-div img{
             height: inherit;
@@ -200,37 +205,75 @@
 
         #galleryWrap .close-up .up-in-box .down-div{
             display: flex;
+            /*border: 1px solid blue;*/
+            height: 120px;
+            width: 96%;
+            margin: 0 auto;
 
         }
         #galleryWrap .close-up .up-in-box .down-div .down-user{
             /*background-color: yellow;*/
             position: relative;
+            height: 100px;
         }
         #galleryWrap .close-up .up-in-box .down-div .down-user p{
             font-size: 30px;
             color: aqua;
             /*background-color: blue;*/
+            width: 200px;
+            /*height: 100px;*/
             position: relative;
-            top: -30%;
+            /*top: -10%;*/
 
+            text-align: center;
         }
         #galleryWrap .close-up .up-in-box .down-div .down-text{
             /*background-color: orange;*/
+            width: 500px;
             position: relative;
             margin-left: 40px;
             margin-right: 20px;
         }
         #galleryWrap .close-up .up-in-box .down-div .down-text .in-text{
-            width: 700px;
-            height: 80px;
+            width: 490px;
+            height: 110px;
             position: relative;
-            top: -20%;
-            background-color: red;
+            /*top: -20%;*/
+            background-color: rgba(0,0,0,0);
             color: #ffffff;
             font-size: 20px;
-        }
-        #galleryWrap .close-up .up-in-box .down-div{
+            font-weight: bold;
+            word-break: break-all;
 
+            resize: none;
+            border: none;
+        }
+        #galleryWrap .close-up .up-in-box .down-div .down-btn{
+            width: 100px;
+        }
+        #galleryWrap .close-up .up-in-box .down-div .up-like{
+            width: 100px;
+            height: 100px;
+        }
+        #galleryWrap .close-up .up-in-box .down-div .up-likeCnt {
+            /*background: yellow;*/
+            height: 30px;
+            width: 100px;
+
+            text-align: center;
+            font-size: 30px;
+            color: yellow;
+
+        }
+        #galleryWrap .close-up .up-in-box .down-div .up-likeCnt img {
+            width: 30px;
+            height: 30px;
+        }
+        #galleryWrap .close-up .up-in-box .down-div .likeBtn button{
+            width: 100px;
+            height: 50px;
+            font-size: 35px;
+            margin-top: 10px;
         }
 
 
@@ -243,7 +286,7 @@
         <div class="gallery-board">
             <h1 id="title"> Gallery </h1>
             <div>
-                <c:if test="${!empty loginUser}">
+                <c:if test="${loginUser != null}">
                     <a href="/upload-form"><button>upload</button></a>
                 </c:if>
             </div>
@@ -251,12 +294,12 @@
                 <ul id="gallery-ul" class="clear-box">
                     <c:forEach var="i" items="${galleries}">
                         <li>
-                            <img src="${i.src}"  class="img" data-id=${i.galleryNo} alt="">
+                            <img src="${i.src}"  class="img" data-galleryno=${i.galleryNo} alt="">
                             <div >
-                                <p class="user-id">#${i.nickname}</p>
+                                <p class="writer" data-account="">#${i.nickname}</p>
                                 <p><img class="likeImg" src="/img/like.jpg" alt=""></p>
                                 <p class="likeCnt">${i.likeCnt}</p>
-
+                                <input type="hidden" name="account" value="${i.account}">
                                 <p class="text">${i.text}</p>
                             </div>
 
@@ -297,9 +340,10 @@
                 <div class="down-div">
                     <div class="down-user">
                         <p ></p>
+                        <input type="hidden" name="account" value="">
                     </div>
                     <div class="down-text" >
-                        <p class="in-text"></P>
+                        <textarea class="in-text" maxlength="50" readonly="readonly"></textarea>
                     </div>
                     <div class="down-btn">
 
@@ -310,6 +354,15 @@
                             다운로드
                         </button>
                     </div>
+                    <div class="up-like">
+                        <div class="up-likeCnt">
+                            <span></span> <img src="/img/like.jpg">
+                        </div>
+                        <div class ="likeBtn">
+                            <button >Like!!</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -321,12 +374,59 @@
 
     <script>
         <%
+           // WAS session에 있는 값 가져오기
           Member loginUser = (Member) request.getSession().getAttribute("loginUser");
           System.out.println(loginUser);
-          String nick = loginUser.getNickname();
-          %>
-        const loginNick = "<%=nick%>"
+          String nick ="";
+          if(loginUser != null){ // null얼 배제해줘야 ErrorMvcAutoConfiguration$StaticView 에러가 안남.
+            nick = loginUser.getNickname();
+          }
+        %>
+        const loginNick = "<%=nick%>";
         console.log(loginNick);
+
+        // like 이벤트
+        function likeEvent(){
+            const $likeBtn = document.querySelector('.likeBtn');
+            $likeBtn.onclick = e => {
+
+                if(!e.target.matches('.likeBtn button')) return;
+
+                likeUpdate();
+            }
+        }
+        function likeUpdate(){
+
+            const galleryNo = document.querySelector('.down-text').dataset.galleryno;
+            let writer = document.querySelector(".writer").textContent;
+            writer = writer.substring(1) ;
+
+            fetch("/like/update?galleryNo="+galleryNo)
+                .then(res => res.text())
+                .then(cnt => {
+
+                    let likeCnt = parseInt(cnt);
+
+                    if(${empty loginUser}){
+                        if(confirm("로그인이 필요합니다 로그인하시겠습나까?")){
+                            location.href="/member/sign-in";
+                        }
+                    }else if(cnt >= likeCnt) {
+                        const $like = document.querySelector('.likeBtn').firstElementChild;
+                        const preLikeCnt = document.querySelector('.up-likeCnt').firstElementChild.textContent;
+                        document.querySelector('.up-likeCnt').firstElementChild.textContent = likeCnt;
+                        if(preLikeCnt > likeCnt){
+                            $like.textContent = "likeIt!";
+                        }else{
+                            $like.textContent = "liking";
+                        }
+                    }else {
+                        alert("본인의 갤러리엔 좋아요가 안되요");
+                    }
+                });
+        }
+
+
         // 모달창 띄우기 이벤트
         function upEvent(){
             document.getElementById('gallery-ul').onclick = e => {
@@ -342,24 +442,30 @@
         }
         // 모달창에 값넣고 띄우기
         function closeUp(e){
-
-            const $downBtn = document.querySelector('.down-btn');
-
             // 노드를 복사
             // const cloneE = e.cloneNode(true)
             // 타겟 이미지의 src 와 data-id 가져오기
+            // const e = document.querySelector('.img').parentElement;
             const src = ''+e.firstElementChild.getAttribute('src');
-            const id = e.firstElementChild.dataset.id;
+            const galleryNo = e.firstElementChild.dataset.galleryno;
             const text = e.lastElementChild.lastElementChild.textContent;
-            let nickName = e.lastElementChild.firstElementChild.textContent;
+            const writer = e.lastElementChild.children[3].value;
             let like = e.lastElementChild.children[2].textContent;
+            let nickName = e.lastElementChild.firstElementChild.textContent;
             nickName = nickName.substring(1) ;
-            console.log(nickName);
+
+            // console.log(nickName);
+            // console.log(src);
             document.querySelector('.close-div').firstElementChild.setAttribute('src', src);
             document.querySelector('.down-user').firstElementChild.textContent = nickName;
-            document.querySelector('.down-text').setAttribute('data-id',id);
+            document.querySelector('.down-user').lastElementChild.setAttribute("value",writer)
+            document.querySelector('.down-text').setAttribute('data-galleryno',galleryNo);
             document.querySelector('.in-text').textContent = text;
-            if(loginNick && loginNick === nickName) {
+            document.querySelector('.up-likeCnt').firstElementChild.textContent=like;
+
+            const $downBtn = document.querySelector('.down-btn');
+
+            if(loginNick == nickName) {
                 $downBtn.innerHTML = `
 
                                     <button class="down-btn-mod" style="display: inline-block">
@@ -376,6 +482,15 @@
                                         다운로드
                                     </button>`;
             }
+            // 라이크 확인
+            fetch("/like/check?galleryNo="+galleryNo)
+                .then(res => res.text())
+                .then(msg => {
+                    if(msg == "true") {
+                        document.querySelector('.likeBtn').firstElementChild.textContent = "Liking";
+                    }
+                })
+
             document.querySelector('.close-up').classList.add('up');
 
             // 바뀐 모달창에 수정버튼 이벤트걸기
@@ -385,6 +500,7 @@
             }
             goListEvent();
             downloadEvent();
+            likeEvent();
         }
         // 모달창 없애는 이벤트걸기
         function downEvent(){
@@ -404,7 +520,8 @@
             $closeUp.classList.remove('up')
             document.querySelector('.close-div').firstElementChild.setAttribute('src', '');
             document.querySelector('.down-user').firstElementChild.textContent = '';
-            document.querySelector('.down-text').setAttribute('data-id','');
+            document.querySelector('.down-user').lastElementChild.removeAttribute("value");
+            document.querySelector('.down-text').setAttribute('data-galleryno','');
             document.querySelector('.in-text').textContent = '';
         //     document.querySelector('.down-btn').innerHTML = `
         //                                             <button class="down-btn-mod" style="display: inline-block">
@@ -433,11 +550,9 @@
         function mod(ee){
 
             const $text = document.querySelector('.down-text');
-            const id = $text.dataset.id
+            const galleryNo = $text.dataset.galleryno
             const text = $text.firstElementChild.textContent;
-            $text.innerHTML=`
-                            <textarea class="in-text" name="text">`+text+`</textarea>
-                            `;
+            document.querySelector('.in-text').removeAttribute("readonly");
 
             const $downBtn = document.querySelector('.down-btn');
             $downBtn.innerHTML=`<button type="button" class="confirm-mod" style="display: inline-block">
@@ -480,10 +595,9 @@
                                             다운로드
                                     </button>
                                 `;
-            const $text = document.querySelector('.down-text');
-            $text.innerHTML=`
-                            <p class="in-text">`+text+`</P>
-                            `;
+            const $text = document.querySelector('.in-text');
+            $text.setAttribute("readonly","readonly");
+            $text.textContent = text;
             // 취소 이후 버튼에 이벤트 다시걸기
             modEvent();
             delEvent();
@@ -505,7 +619,7 @@
             const newText = document.querySelector('.in-text').value;
             // console.log(newText)
             const $downText = document.querySelector('.down-text');
-            const galleryNo = $downText.dataset.id
+            const galleryNo = $downText.dataset.galleryno
             const reqInfo = {
                 method: 'PUT',
                 headers: {
@@ -541,7 +655,7 @@
             }
         }
         function goList(){
-            const galleryNo = document.querySelector('.down-text').dataset.id;
+            const galleryNo = document.querySelector('.down-text').dataset.galleryno;
 
             closeUpDel();
             location.href = "/gallery/list?galleryNo=" + galleryNo +
@@ -559,7 +673,7 @@
                     const index = url.indexOf("pageNum");
                     const pageNumAmount = url.substring(index);
 
-                    const galleryNo = document.querySelector('.down-text').dataset.id;
+                    const galleryNo = document.querySelector('.down-text').dataset.galleryno;
                     location.href = "/gallery/del?galleryNo=" + galleryNo +
                                     "&pageNum=" + ${pm.page.pageNum}+
                                     "&amount=" + ${pm.page.amount};
@@ -577,11 +691,14 @@
         }
         // 다운로드 기능
         function downLoad() {
-            const galleryNo = document.querySelector('.down-text').dataset.id;
-            const ghref = '/gallery/api/loadFile?id='+galleryNo;
-            location.href=ghref;
+            const galleryNo = document.querySelector('.down-text').dataset.galleryno;
+            const ghref = '/gallery/api/loadFile?galleryNo='+galleryNo;
             console.log("location"- {}, location.href);
+            location.href=ghref;
+
         }
+
+
         (function (){
             upEvent();
             downEvent();

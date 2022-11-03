@@ -60,7 +60,7 @@ public class GalleryInterceptor implements HandlerInterceptor {
 
         // 현재 요청 URI 정보 알아내기
         String requestURI = request.getRequestURI();
-        log.info("requestURI - {}", requestURI);
+        log.info("postHandler requestURI - {}", requestURI);
 
         log.info("modelAndView - {}", modelAndView);
         // 현재 요청 메서드 정보 확인
@@ -68,7 +68,7 @@ public class GalleryInterceptor implements HandlerInterceptor {
 
         // postHandle은 uriList 목록에 있는 URI에서만 작동하게 함
         if (uriList.contains(requestURI) && method.equalsIgnoreCase("GET")) {
-            log.info("gallery interceptor postHandle() ! ");
+            log.info("gallery interceptor postHandle() start! ");
 
 
             HttpSession session = request.getSession();
@@ -92,6 +92,7 @@ public class GalleryInterceptor implements HandlerInterceptor {
                 response.sendRedirect("/gallery/list");
             }
         }
+        log.info("postHandle end!");
     }
 
     private boolean isAdmin(HttpSession session) {

@@ -26,7 +26,7 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
 
         log.info("before like interceptor preHandle()");
 
-        LikeTypeDTO like = new LikeTypeDTO();
+
         HttpSession session = request.getSession();
         String account = getCurrentMemberAccount(session);
         if (!isLogin(session)){

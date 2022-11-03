@@ -34,6 +34,8 @@ public class LikeTypeDTO {
 
         String replyNo = request.getParameter("replyNo");
 
+        String galleryNo = request.getParameter("galleryNo");
+
         if(boardNo !=null){
 
             log.info("게시판 추천 기능");
@@ -49,6 +51,13 @@ public class LikeTypeDTO {
             this.account = account;
             this.type = "replyNo";
             this.no = Long.parseLong(replyNo);
+
+        }else if(galleryNo !=null){
+
+            log.info("갤러리 추천 기능");
+            this.account = account;
+            this.type = "galleryNo";
+            this.no = Long.parseLong(galleryNo);
 
         }
 

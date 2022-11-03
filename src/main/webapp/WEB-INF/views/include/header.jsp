@@ -10,10 +10,10 @@
         <span>유투브</span>
       </div>
       <div class="header-top-account">
-        <c:if test="${empty loginUser}">
+        <c:if test="${loginUser == null}">
           <a href="/member/sign-in"><span id="login-btn">로그인</span></a>
         </c:if>
-        <c:if test="${!empty loginUser}">
+        <c:if test="${loginUser != null}">
           <a href="/member/sign-out"><span id="logout-btn">로그아웃</span></a>
         </c:if>
       </div>

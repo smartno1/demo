@@ -4,6 +4,7 @@ import com.spring.demo.like.dto.LikeTypeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -21,6 +22,7 @@ public interface LikeMapper {
     public int likeChk(LikeTypeDTO like);
 
     public String findAccount(LikeTypeDTO like);
+
 
 
 }

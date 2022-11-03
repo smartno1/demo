@@ -2,6 +2,7 @@ package com.spring.demo.gallery.controller;
 
 import com.spring.demo.common.paging.Page;
 import com.spring.demo.common.paging.PageMaker;
+import com.spring.demo.common.search.Search;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.service.GalleryService;
 import com.spring.demo.like.domain.Like;
@@ -38,19 +39,19 @@ public class GalleryController {
 
 
     @GetMapping("/gallery/list")
-    public String list(Page page, Model model, HttpServletRequest request ){
+    public String list(Search search, Model model, HttpServletRequest request ){
         log.info("GalleryController /gallery/list GET!");
 
         // amount 변경.
-        page.setAmount(8);
-        log.info("page - {}",page);
+        search.setAmount(8);
+        log.info("search - {}",search);
 
-        Map<String , Object> galleryMap = galleryService.findAllService(page);
+        Map<String , Object> galleryMap = galleryService.findAllService(search);
         log.info("/galleryImg/list GET! = {}", galleryMap);
 
         // 페이지 정보
         PageMaker pm = new PageMaker(
-                new Page(page.getPageNum(), page.getAmount())
+                new Page(search.getPageNum(), search.getAmount())
                 , (Integer) galleryMap.get("tc")
                 );
         log.info("pm ==> {}",pm);
@@ -120,8 +121,4 @@ public class GalleryController {
 
         return mv;
     }
-
-
-
-
 }

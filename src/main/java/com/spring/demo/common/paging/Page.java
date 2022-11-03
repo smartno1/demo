@@ -16,6 +16,10 @@ public class Page {
         this.amount = 12;
     }
 
+    public int getStart() {
+        return (pageNum - 1) * amount;
+    }
+
     public void setPageNum(int pageNum){
         if(pageNum <= 0 || pageNum > Integer.MAX_VALUE){
             this.pageNum = 1;
@@ -23,6 +27,7 @@ public class Page {
         }
         this.pageNum = pageNum;
     }
+
 
     public void setAmount(int amount){
         if(amount < 6 || amount > 100){

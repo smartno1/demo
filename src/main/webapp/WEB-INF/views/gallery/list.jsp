@@ -169,7 +169,7 @@
            z-index: -2;
 
        }
-        #galleryWrap .close-up.up {
+        #galleryWrap .close-up.up, .upLoad.up {
           z-index: 2;
         }
         @keyframes up {
@@ -247,6 +247,10 @@
 
             resize: none;
             border: none;
+            border-radius: 10px;
+        }
+        #galleryWrap .close-up .up-in-box .down-div .down-text .in-text.border{
+            border: 2px solid white;
         }
         #galleryWrap .close-up .up-in-box .down-div .down-btn{
             width: 100px;
@@ -275,7 +279,64 @@
             font-size: 35px;
             margin-top: 10px;
         }
+        /* ================ 업로드 ===========*/
+        .upLoad {
+            width: 500px;
+            height: 300px;
+            border: 2px solid black;
+            font-size: 30px;
+            text-align: center;
+            background: blueviolet;
 
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            z-index: -1;
+        }
+        #upload-form{
+            width: 400px;
+            height: 260px;
+            /*border: 2px solid red;*/
+            margin: 0 auto;
+
+        }
+        #upload-form #file-input {
+            width: 350px;
+            height: 30px;
+            display: block;
+            margin: 10px;
+            /*border: 2px solid green;*/
+        }
+        #upload-form #checkLog {
+            /*border: 2px solid blue;*/
+            display: block;
+            font-size: 20px;
+            width: 400px;
+            height: 50px;
+        }
+        #upload-form:nth-child(2){
+            display: inline-block;
+            font-size: 30px;
+
+            line-height: 40px;
+            /*background: red;*/
+        }
+        #upload-form #text-input{
+            width: 350px;
+            height: 70px;
+            word-break: break-all;
+            resize: none;
+        }
+        #upload-form #upload-btn {
+            display: block;
+            width: 350px;
+            margin: 0 auto;
+        }
+        #upload-form #upload-btn #upload-submit {
+            width: 150px;
+        }
+        /*===========================================*/
 
     </style>
 </head>
@@ -283,12 +344,19 @@
 <div class="wrap">
     <%@include file="../include/header.jsp"%>
     <div id="galleryWrap">
+        <div class="upLoad">
+
+        </div>
         <div class="gallery-board">
             <h1 id="title"> Gallery </h1>
-            <div>
+            <div class="top-btn">
                 <c:if test="${loginUser != null}">
-                    <a href="/upload-form"><button>upload</button></a>
+                    <button onclick="uploadEvent()" id="upload-button">upload</button>
+                    <a href="/gallery/list?type=like&keyword=${sessionScope.loginUser.account}"><button id="liking-btn">Liking</button></a>
+                    <a href="/gallery/list?type=account&keyword=${sessionScope.loginUser.account}"><button id="mine-btn">mine</button></a>
                 </c:if>
+                    <a href="/gallery/list?type=best&keyword=n"><button id="best-btn">best</button></a>
+                    <a href="/gallery/list"><button id="all-btn">all</button></a>
             </div>
             <div>
                 <ul id="gallery-ul" class="clear-box">
@@ -343,7 +411,7 @@
                         <input type="hidden" name="account" value="">
                     </div>
                     <div class="down-text" >
-                        <textarea class="in-text" maxlength="50" readonly="readonly"></textarea>
+                        <textarea class="in-text" onkeypress="Check()" maxlength="50" readonly="readonly"></textarea>
                     </div>
                     <div class="down-btn">
 
@@ -378,11 +446,14 @@
           Member loginUser = (Member) request.getSession().getAttribute("loginUser");
           System.out.println(loginUser);
           String nick ="";
+          String account="";
           if(loginUser != null){ // null얼 배제해줘야 ErrorMvcAutoConfiguration$StaticView 에러가 안남.
             nick = loginUser.getNickname();
+            account = loginUser.getAccount();
           }
         %>
         const loginNick = "<%=nick%>";
+        const loginAccount = "<%=account%>";
         console.log(loginNick);
 
         // like 이벤트
@@ -522,6 +593,7 @@
             document.querySelector('.down-user').firstElementChild.textContent = '';
             document.querySelector('.down-user').lastElementChild.removeAttribute("value");
             document.querySelector('.down-text').setAttribute('data-galleryno','');
+            document.querySelector('.in-text').classList.remove("border");
             document.querySelector('.in-text').textContent = '';
         //     document.querySelector('.down-btn').innerHTML = `
         //                                             <button class="down-btn-mod" style="display: inline-block">
@@ -552,7 +624,9 @@
             const $text = document.querySelector('.down-text');
             const galleryNo = $text.dataset.galleryno
             const text = $text.firstElementChild.textContent;
+
             document.querySelector('.in-text').removeAttribute("readonly");
+            document.querySelector('.in-text').classList.add("border");
 
             const $downBtn = document.querySelector('.down-btn');
             $downBtn.innerHTML=`<button type="button" class="confirm-mod" style="display: inline-block">
@@ -598,6 +672,7 @@
             const $text = document.querySelector('.in-text');
             $text.setAttribute("readonly","readonly");
             $text.textContent = text;
+            document.querySelector('.in-text').classList.remove("border");
             // 취소 이후 버튼에 이벤트 다시걸기
             modEvent();
             delEvent();
@@ -643,6 +718,7 @@
                         alert('수정 실패!!');
                     }
                 });
+            document.querySelector('.in-text').classList.remove("border");
             backMod(newText);
 
 
@@ -698,10 +774,126 @@
 
         }
 
+        //============================= 업로드 =====================
+        function uploadEvent(){
+                const $upLoad = document.querySelector('.upLoad');
+                $upLoad.innerHTML = `
+                                    <h1>이미지를 올려주세요!</h1>
+                                    <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+                                        <input type="file" name="file" id="file-input">
+                                        <div id="checkLog"></div>
+                                        <p>코멘트 </p> <textarea id="text-input" onkeypress="Check()" type="text" name="fileText" maxlength="50"></textarea>
+                                        <div id="upload-btn">
+                                            <button id="upload-submit" type="submit">업로드</button>
+                                            <button type="button" id="upload-cancel">취소</button>
+                                        </div>
+                                    </form>
+                                    `;
+
+                document.querySelector('.upLoad').classList.add('up');
+                fileCheckEvent();
+                uploadCancelEvent();
+
+        }
+
+        let check= false;
+
+        function fileCheckEvent() {
+
+            document.getElementById('file-input').onchange = e => {
+                check= false;
+                console.log(e.target);
+                const $checkLog = document.getElementById("checkLog");
+                // 파일 업로드 확장자 체크
+                console.log(e.target.value);
+                if (e.target.value !== "") {
+                    const ext = e.target.value.split('.').pop().toLowerCase();
+                    const list = ['gif', 'png', 'jpg', 'jpeg', ]
+                    // console.log(ext);
+                    // console.log(list[0]);
+                    // 파일확장자 비교
+                    for (let i in list) {
+                        // console.log(list[i]);
+                        if (ext === list[i]) {
+                            check = true;
+
+                        }
+                    }
+                    console.log(check);
+                    // 확장자 체크
+                    if (check !== true) {
+                        $checkLog.innerHTML =
+                            `<b class="c-red" style="color: red">[파일확장자를 확인하세요]<br>[gif, png, jpg, jpeg]</b>`;
+                        return;
+                    } else {
+                        // 파일용량 체크
+                        if (e.target.files[0].size > 10 * 1024 * 1024) {
+                            $checkLog.innerHTML =
+                                `<b class="c-red" style="color: red">[파일용량 초과 (최대:10MB) ]</b>`;
+                            check = false;
+                            return;
+                        } else {
+                            e.target.style.borderColor = 'skyblue';
+                            $checkLog.innerHTML = `<b class="c-blue" style="color: limegreen">[업로드가능한 파일입니다.]</b>`;
+                        }
+                    }
+                }
+
+                const $uploadBtn = document.getElementById('upload-submit');
+                const $uploadForm = document.getElementById('upload-form');
+                $uploadBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (check === true) {
+                        $uploadForm.submit();
+                    } else {
+                        alert('파일을 다시 확인하세요');
+                    }
+                });
+            }
+        }
+        // 코멘트 줄 수 제한.
+        let enter = 0;
+        function Check() {
+            if(event.keyCode===13){
+                enter = enter + 1
+            }
+            if(enter > 2){
+                alert("3줄로 제한됩니다.")
+                event.returnValue=false;
+                enter = 0;
+            }
+        }
+        function uploadCancelEvent(){
+            document.getElementById("upload-cancel").onclick = e => {
+
+                if(!e.target.matches("#upload-cancel")) return;
+                const $upLoad = document.querySelector('.upLoad');
+                $upLoad.classList.remove('up');
+                $upLoad.innerHTML=``;
+            }
+        }
+
+        //=====================================================================
+       // ========== liking 목록 가져오기 ============================
+        function likeListEvent (){
+            document.getElementById('liking-btn').onclick = e =>{
+                if(!e.target.matches('#liking-btn')) return;
+                    console.log(e.target);
+                location.href = "/gallery/list?type=like&keyword="+loginAccount;
+
+
+
+            }
+        }
+
+
 
         (function (){
             upEvent();
             downEvent();
+
+
+
         })();
     </script>
 

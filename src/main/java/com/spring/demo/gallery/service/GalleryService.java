@@ -1,6 +1,7 @@
 package com.spring.demo.gallery.service;
 
 import com.spring.demo.common.paging.Page;
+import com.spring.demo.common.search.Search;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.repository.GalleryMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 @Service
@@ -33,14 +35,23 @@ public class GalleryService {
         return galleryMapper.findOne(galleryNo);
     }
 
-    public Map<String, Object> findAllService(Page page) {
-        log.info("findAllService start ");
+    public Map<String, Object> findAllService(Search search) {
+        log.info("findAllService start , search -- {}", search);
 
         Map<String, Object> findDataMap = new HashMap<>();
         // gallery 리스트
-        List<Gallery> galleries = galleryMapper.findAll(page);
+
+        List<Gallery> galleries = galleryMapper.findAll2(search);
+
+        log.info("getType -------- {} ", search.getType());
+        if(search.getType().equals("best")){
+            galleries.clear();
+            galleries = galleryMapper.findAll3(search);
+        }
+
+        log.info(galleries);
         // 토탈 카운트
-        int totalCount = galleryMapper.getTotalCount();
+        int totalCount = galleryMapper.getTotalCount2(search);
 
         findDataMap.put("galleries", galleries);
         findDataMap.put("tc", totalCount);

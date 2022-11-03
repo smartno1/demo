@@ -6,17 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <style>
+        a {color: #fff; text-decoration: none; outline: none}
+        a:hover, a:active {text-decoration: none; }
+
+        body{
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+
+    </style>
 </head>
 <body>
-<h1>upload-form</h1>
+<div class="upLoad">
+    <h1>이미지를 올려주세요!</h1>
 
-<form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
-    파일 : <input type="file" name="file" id="file-input">
-    파일 설명 : <input type="text" name="fileText"><br>
-    <button id="upload-btn" type="submit">업로드</button>
-</form>
-<span id="checkLog"></span><br>
-
+    <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+         <input type="file" name="file" id="file-input">
+        <div id="checkLog"></div>
+        <p>코멘트 </p> <textarea id="text-input" onkeypress="Check()" type="text" name="fileText" maxlength="50"></textarea>
+        <button id="upload-btn" type="submit">업로드</button>
+    </form>
+</div>
 
 <script>
 
@@ -47,7 +63,7 @@
                 // 확장자 체크
                 if (check !== true) {
                     $checkLog.innerHTML =
-                        `<b class="c-red" style="color: red">[파일확장자를 확인하세요][gif, png, jpg, jpeg]</b>`;
+                        `<b class="c-red" style="color: red">[파일확장자를 확인하세요]<br>[gif, png, jpg, jpeg]</b>`;
                     return;
                 } else {
                     // 파일용량 체크
@@ -58,35 +74,39 @@
                         return;
                     } else {
                         e.target.style.borderColor = 'skyblue';
-                        $checkLog.innerHTML = `<b class="c-blue" style="color: yellowgreen">[업로드가능한 파일입니다.]</b>`;
+                        $checkLog.innerHTML = `<b class="c-blue" style="color: limegreen">[업로드가능한 파일입니다.]</b>`;
                     }
                 }
             }
 
+            const $uploadBtn = document.getElementById('upload-btn');
+            const $uploadForm = document.getElementById('upload-form');
+            $uploadBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (check === true) {
+                    $uploadForm.submit();
+                } else {
+                    alert('파일을 다시 확인하세요');
+                }
+            });
         }
-        const $uploadBtn = document.getElementById('upload-btn');
-        const $uploadForm = document.getElementById('upload-form');
-        $uploadBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (check === true) {
-                $uploadForm.submit();
-            } else {
-                alert('파일을 다시 확인하세요');
-            }
-
-            // fileCheckEvent();
-        });
     }
-
-
+let enter = 0;
+    function Check() {
+        if(event.keyCode===13){
+            enter = enter + 1
+        }
+        if(enter > 2){
+            alert("3줄로 제한됩니다.")
+            event.returnValue=false;
+            enter = 0;
+        }
+    }
 
     (function (){
 
-
-
         fileCheckEvent();
         console.log(check);
-
 
     })();
 

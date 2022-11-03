@@ -23,20 +23,52 @@
     </select>
 
     <select id="findAll" resultMap="galleryMap">
-        WITH v_gallery AS
-                 (
-                     SELECT
-                         ROW_NUMBER() OVER (ORDER BY gallery_no DESC) AS RowNumber, gallery.*
-                     FROM gallery
-                 )
-        SELECT *
-        FROM v_gallery
-        WHERE RowNumber BETWEEN ((#{pageNum} - 1) * #{amount} + 1) AND (#{pageNum} * #{amount})
+        SELECT  *
+        FROM gallery
+        ORDER BY gallery_no DESC
+        LIMIT --(#{pageNum} - 1) * #{amount}, (#{pageNum} * #{amount}) 에러남.
+                #{start}, #{amount} -- LIMIT 는 연산이 안됨. 계산된값을 넣어줘야됨.
+    </select>
+
+    <select id="findAll2" resultMap="galleryMap">
+        SELECT  *
+        FROM gallery
+        <include refid="search" />
+        ORDER BY gallery.gallery_no DESC
+        LIMIT #{start}, #{amount}
+    </select>
+
+    <sql id="search">
+        <if test="type == 'title'">WHERE title LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'writer'">WHERE writer LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'content'">WHERE content LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'tc'">
+            WHERE title LIKE CONCAT('%', #{keyword}, '%')
+            OR content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="type == 'like'">
+            INNER JOIN ( SELECT gallery_no FROM tbl_like WHERE account = #{keyword}) AS b
+            WHERE gallery.gallery_no = b.gallery_no
+        </if>
+        <if test="type == 'account'">
+            WHERE account = #{keyword}
+        </if>
+    </sql>
+
+    <select id="findAll3" resultMap="galleryMap">
+        SELECT * FROM gallery
+        ORDER BY like_cnt DESC
     </select>
 
     <select id="getTotalCount" resultType="int">
         SELECT COUNT(*)
         FROM gallery
+    </select>
+
+    <select id="getTotalCount2" resultType="int">
+        SELECT COUNT(*)
+        FROM gallery
+        <include refid="search"/>
     </select>
 
     <update id="modify">

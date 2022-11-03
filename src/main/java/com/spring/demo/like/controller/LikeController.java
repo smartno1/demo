@@ -4,6 +4,7 @@ package com.spring.demo.like.controller;
 import com.spring.demo.like.dto.LikeTypeDTO;
 import com.spring.demo.like.service.LikeService;
 import com.spring.demo.util.LoginUtils;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @Controller
 @Log4j2

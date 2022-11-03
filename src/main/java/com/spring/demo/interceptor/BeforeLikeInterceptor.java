@@ -26,7 +26,7 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
 
         log.info("before like interceptor preHandle()");
 
-
+        LikeTypeDTO like = new LikeTypeDTO();
         HttpSession session = request.getSession();
         String account = getCurrentMemberAccount(session);
         if (!isLogin(session)){
@@ -39,8 +39,8 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
         LikeTypeDTO like = new LikeTypeDTO(request);
 
         String writeUser= likeMapper.findAccount(like);
-
-        if(account.equals((writeUser))){
+        // 본인이 작성한 게시물에는 추천 안되도록 배제
+        if(account.equals(writeUser)){
             log.info("동일계정");
             request.setAttribute("message","match-account");
             response.sendRedirect("/");
@@ -48,6 +48,8 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
         }
         log.info("before like interceptor preHandle() 종료");
 
+        request.setAttribute("like",like);
         return true;
     }
+
 }

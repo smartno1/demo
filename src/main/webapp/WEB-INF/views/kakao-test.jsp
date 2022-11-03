@@ -1,58 +1,87 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kakao-test.jsp</title>
-    <style>
-        .wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .user-box {
-            border: 3px solid #004986;
-            padding: 30px;
-        }
-        .user-box img {
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="wrap">
-
-        <c:if test="${loginUser == null}">
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=${appKey}&redirect_uri=http://localhost:8183${redirectUri}&response_type=code">
-                <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" alt="카카오 로그인">
-            </a>
-        </c:if>
-
-        <c:if test="${loginUser != null}">
-            <div class="user-box">
-                <h1>${loginUser.name}님 카카오 로그인 성공!</h1>
-                <img src="${profile_path}" alt="프로필사진">
-                <br>
-                <p>
-                    # 이메일: ${loginUser.email}
-                </p>
-                <br>
-                <a href="/kakao/logout">카카오 로그아웃</a>
-            </div>
-        </c:if>
-
-    </div>
-
-
-
-</body>
-
-</html>
+<table>
+    <caption><span class="blind">댓글 목록</span></caption>
+    <colgroup>
+        <col>
+        <col style="width: 92px;">
+    </colgroup>
+    <thead>
+        <tr>
+            <th scope="col" colspan="2">
+                댓글
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="td_article">
+                <div class="check_box only_box">
+                    <div class="FormInputCheck"><input id="check_comment_361251328" type="checkbox"
+                            class="input_check"><label for="check_comment_361251328" class="label"><span
+                                class="blind">선택</span></label></div>
+                </div><a href="/ArticleRead.nhn?clubid=10050146&amp;articleid=600705127&amp;commentFocus=true"
+                    target="_blank" class="board-list">
+                    <div class="inner_list"><strong class="article">뒷자석에 실리긴 할거같네요</strong>
+                        <!---->
+                    </div>
+                    <div class="comment_date">
+                        2019.06.07.
+                    </div>
+                    <div class="comment_title">
+                        안단테 전자피아노 SS 88B-1 (서울 중랑구) 팝니다
+                        <span class="cmt">[<em>4</em>]</span>
+                    </div>
+                </a>
+            </td>
+            <td class="td_view">
+                <!---->
+            </td>
+        </tr>
+        <tr>
+            <td class="td_article">
+                <div class="check_box only_box">
+                    <div class="FormInputCheck"><input id="check_comment_360314540" type="checkbox"
+                            class="input_check"><label for="check_comment_360314540" class="label"><span
+                                class="blind">선택</span></label></div>
+                </div><span target="_blank" class="board-list">
+                    <div class="inner_list"><strong class="article">다리부분 분리됩니다
+                            소리도 잘나옵니다~</strong>
+                        <!---->
+                    </div>
+                    <div class="comment_date">
+                        2019.05.29.
+                    </div>
+                    <div class="comment_title">
+                        (삭제된 게시글)
+                        <!---->
+                    </div>
+                </span>
+            </td>
+            <td class="td_view">
+                <!---->
+            </td>
+        </tr>
+        <tr>
+            <td class="td_article">
+                <div class="check_box only_box">
+                    <div class="FormInputCheck"><input id="check_comment_165078321" type="checkbox"
+                            class="input_check"><label for="check_comment_165078321" class="label"><span
+                                class="blind">선택</span></label></div>
+                </div><span target="_blank" class="board-list">
+                    <div class="inner_list"><strong class="article">판매 완료됬습니다</strong>
+                        <!---->
+                    </div>
+                    <div class="comment_date">
+                        2015.04.02.
+                    </div>
+                    <div class="comment_title">
+                        (삭제된 게시글)
+                        <!---->
+                    </div>
+                </span>
+            </td>
+            <td class="td_view">
+                <!---->
+            </td>
+        </tr>
+    </tbody>
+</table>

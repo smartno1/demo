@@ -1,7 +1,7 @@
 
 const currentAccount = '${loginUser.account}';
 const URL = '/api/v1/my-page'
-let type="";
+let type = "board";
 
 //날짜 포맷 변환 함수
 function formatDate(datetime) {
@@ -44,9 +44,9 @@ function makeReplyDOM({
     count,
     maker
 }) {
-    
-    let tag = " <div class='article_reply' >"+
-    "<table>																							" +
+
+    let tag = " <div class='article_reply' >" +
+        "<table>																							" +
         "                           <caption><span class='blind'>댓글 목록</span></caption>                    " +
         "                           <colgroup>                                                             " +
         "                               <col>                                                              " +
@@ -63,66 +63,44 @@ function makeReplyDOM({
 
 
     if (replyList === null || replyList.length === 0) {
-        tag += "<tr><td colspan='4' class='blocked_list'>좋아요 한 게시글이 없습니다.</td></tr>";
+        tag += "<tr><td colspan='4' class='blocked_list'>작성한 댓글이 없습니다.</td></tr>";
 
     } else {
         for (let rep of replyList) {
-            tag += 
+            tag +=
                 "        <tr>                                                                                                   " +
                 "            <td class='td_article'>                                                                            " +
                 "                <div class='check_box only_box'>                                                               " +
                 "                    <div class='FormInputCheck'>                                                               " +
-                "                        <input id='check_reply_"+ rep.replyNo +"' type='checkbox' class='input_check' value="+ rep.replyNo +">               " +
-                "                        <label for='check_reply_"+ rep.replyNo +"class='label'>                                    " +
+                "                        <input id='check_reply_" + rep.replyNo + "' type='checkbox' class='input_check' value=" + rep.replyNo + ">               " +
+                "                        <label for='check_reply_" + rep.replyNo + "class='label'>                                    " +
                 "                            <span class='blind'>선택</span>                                                      " +
                 "                        </label>                                                                               " +
                 "                    </div>                                                                                     " +
                 "                </div>                                                                                         " +
-                "                <a href='/board/content/"+rep.boardNo + "'"+
+                "                <a href='/board/content/" + rep.boardNo + "'" +
                 "                    target='_blank' class='board-list'>                                                        " +
-                "                    <div class='inner_list'><strong class='article'>"+rep.replyText+"</strong>                 " +
+                "                    <div class='inner_list'><strong class='article'>" + rep.replyText + "</strong>                 " +
                 "                    </div>                                                                                     " +
                 "                    <div class='comment_date'>                                                                 " +
-                                             formatDate(rep.boardDate) +
+                formatDate(rep.boardDate) +
                 "                    </div>                                                                                     " +
                 "                    <div class='comment_title'>                                                                " +
-                                                rep.boardTitle +
-                "                        <span class='cmt'>[<em>"+rep.boardReplyCnt+"</em>]</span>                              " +
+                rep.boardTitle +
+                "                        <span class='cmt'>[<em>" + rep.boardReplyCnt + "</em>]</span>                              " +
                 "                    </div>                                                                                     " +
                 "                </a>                                                                                           " +
                 "            </td>                                                                                              " +
                 "            <td class='td_view'>                                                                               " +
                 "            </td>                                                                                              " +
                 "        </tr>                                                                                                  ";
- 
-        }   
-        tag +=    "</tbody>" +
-             "</table>" +
-        "</div>" +
-        "<div class='post_btns' style=''>																			" +
-        "    <div class='fl'>                                                                                       " +
-        "        <div class='check_box'>                                                                            " +
-        "            <div class='FormInputCheck check_all FormInputCheck--skin'><input id='chk_all' type='checkbox' " +
-        "                    class='input_check'><label for='chk_all' class='label'>                                " +
-        "                    전체선택                                                                                   " +
-        "                </label></div>                                                                             " +
-        "        </div>                                                                                             " +
-        "    </div>                                                                                                 " +
-        "    <div class='fr'>                                                                                       " +
-        "        <button role='button' id='delBtn' class='BaseButton BaseButton--skinGray size_default' type='button'>   " +
-        "            <span class='BaseButton__txt'>                                                          " +
-        "                삭제                                                                                         " +
-        "            </span>                                                                                        " +
-        "        </button><a href='/board/write' role='button'                              " +
-        "            class='BaseButton BaseButton--skinGray size_default'>                                          " +
-        "            <span class='BaseButton__txt'>                                                          " +
-        "                글쓰기                                                                                        " +
-        "            </span>                                                                                        " +
-        "        </a>                                                                                               " +
-        "    </div>                                                                                                 " +
-        "</div>                                                                                                     " ;
-        
-        
+
+        }
+        tag += "</tbody>" +
+            "</table>" +
+            "</div>" ;
+
+
 
     }
 
@@ -143,30 +121,30 @@ function makeBoardDOM({
     maker
 }) {
 
-    let tag = " <div class='article_board' >"+
-    "<table>																								" +
-    "    <caption><span class='blind'>게시물 목록</span></caption>                                               " +
-    "    <colgroup>                                                                                         " +
-    "        <col>                                                                                          " +
-    "        <col style='width: 120px;'>                                                                    " +
-    "        <col style='width: 80px;'>                                                                     " +
-    "    </colgroup>                                                                                        " +
-    "    <thead>                                                                                            " +
-    "        <tr>                                                                                           " +
-    "            <th scope='col'>                                                                           " +
-    "                제목                                                                                     " +
-    "            </th>                                                                                      " +
-    "            <!---->                                                                                    " +
-    "            <th scope='col'>                                                                           " +
-    "                작성일                                                                                    " +
-    "            </th>                                                                                      " +
-    "            <th scope='col'>                                                                           " +
-    "                조회                                                                                     " +
-    "            </th>                                                                                      " +
-    "            <!---->                                                                                    " +
-    "        </tr>                                                                                          " +
-    "    </thead>                                                                                           " +
-    "    <tbody>                                                                                            " ;
+    let tag = " <div class='article_board' >" +
+        "<table>																								" +
+        "    <caption><span class='blind'>게시물 목록</span></caption>                                               " +
+        "    <colgroup>                                                                                         " +
+        "        <col>                                                                                          " +
+        "        <col style='width: 120px;'>                                                                    " +
+        "        <col style='width: 80px;'>                                                                     " +
+        "    </colgroup>                                                                                        " +
+        "    <thead>                                                                                            " +
+        "        <tr>                                                                                           " +
+        "            <th scope='col'>                                                                           " +
+        "                제목                                                                                     " +
+        "            </th>                                                                                      " +
+        "            <!---->                                                                                    " +
+        "            <th scope='col'>                                                                           " +
+        "                작성일                                                                                    " +
+        "            </th>                                                                                      " +
+        "            <th scope='col'>                                                                           " +
+        "                조회                                                                                     " +
+        "            </th>                                                                                      " +
+        "            <!---->                                                                                    " +
+        "        </tr>                                                                                          " +
+        "    </thead>                                                                                           " +
+        "    <tbody>                                                                                            ";
 
     if (boardList === null || boardList.length === 0) {
         tag += "<tr><td colspan='4' class='blocked_list'>작성 한 게시글이 없습니다.</td></tr>";
@@ -174,73 +152,53 @@ function makeBoardDOM({
     } else {
         for (let boa of boardList) {
             tag += "        <tr>                                                                                           " +
-            "            <td class='td_article'>                                                                    " +
-            "                <div class='check_box only_box'>                                                       " +
-            "                    <div class='FormInputCheck'>                                                       " +
-            "                        <input id='check_article_"+ boa.boardNo +"' type='checkbox'class='input_check' value="+boa.boardNo+">        " +
-            "                            <label for='check_article_"+ boa.boardNo +"' class='label'>                        " +
-            "                                <span class='blind'>선택</span></label></div>                            " +
-            "                </div>                                                                                 " +
-            "                <div class='board-number'>                                                             " +
-            "                    <div class='inner_number'>                                                         " +
-                                      boa.boardNo  +
-            "                    </div>                                                                             " +
-            "                </div>                                                                                 " +
-            "                <div class='board-list'>                                                               " +
-            "                    <div class='inner_list'>                                                           " +
-            "                        <a href='/board/content/"+ boa.boardNo +"' target='_blank' class='article'>                     " +
-                                        boa.shortTitle +
-            "                        </a>                                                                           " +
-            "                        <a href='/board/content/"+ boa.boardNo +"' target='_blank' class='cmt'>                         " +
-            "                            [<em>"+boa.replyCount+"</em>]                                                             " +
-            "                        </a>                                                                           " +
-            "                                                                                                       " +
-            "                    </div>                                                                             " +
-            "                </div>                                                                                 " +
-            "            </td>                                                                                      " +
-            "            <td class='td_date'>                                                                       " +
-                                formatDate(boa.regDate)+
-            "            </td>                                                                                      " +
-            "            <td class='td_view'>                                                                       " +
-                                boa.viewCnt +
-            "            </td>                                                                                      " +
-            "        </tr>                                                                                          " ;
+                "            <td class='td_article'>                                                                    " +
+                "                <div class='check_box only_box'>                                                       " +
+                "                    <div class='FormInputCheck'>                                                       " +
+                "                        <input id='check_article_" + boa.boardNo + "' type='checkbox'class='input_check' value=" + boa.boardNo + ">        " +
+                "                            <label for='check_article_" + boa.boardNo + "' class='label'>                        " +
+                "                                <span class='blind'>선택</span></label></div>                            " +
+                "                </div>                                                                                 " +
+                "                <div class='board-number'>                                                             " +
+                "                    <div class='inner_number'>                                                         " +
+                boa.boardNo +
+                "                    </div>                                                                             " +
+                "                </div>                                                                                 " +
+                "                <div class='board-list'>                                                               " +
+                "                    <div class='inner_list'>                                                           " +
+                "                        <a href='/board/content/" + boa.boardNo + "' target='_blank' class='article'>                     " +
+                boa.shortTitle +
+                "                        </a>                                                                           " +
+                "                        <a href='/board/content/" + boa.boardNo + "' target='_blank' class='cmt'>       " +
+                "                            [<em>" + boa.replyCount + "</em>]                                            " +
+                "                        </a>                                                                           " +
+                "                                                                                                       " +
+                "                    </div>                                                                             " +
+                "                </div>                                                                                 " +
+                "            </td>                                                                                      " +
+                "            <td class='td_date'>                                                                       " +
+                formatDate(boa.regDate) +
+                "            </td>                                                                                      " +
+                "            <td class='td_view'>                                                                       " +
+                boa.viewCnt +
+                "            </td>                                                                                      " +
+                "        </tr>                                                                                          ";
 
 
-        }   
-        tag +=    "</tbody>" +
-             "</table>" +
-        "</div>" +
-        "<div class='post_btns' style=''>																			" +
-        "    <div class='fl'>                                                                                       " +
-        "        <div class='check_box'>                                                                            " +
-        "            <div class='FormInputCheck check_all FormInputCheck--skin'><input id='chk_all' type='checkbox' " +
-        "                    class='input_check'><label for='chk_all' class='label'>                                " +
-        "                    전체선택                                                                                   " +
-        "                </label></div>                                                                             " +
-        "        </div>                                                                                             " +
-        "    </div>                                                                                                 " +
-        "    <div class='fr'>                                                                                       " +
-        "        <button role='button' id='delBtn' class='BaseButton BaseButton--skinGray size_default' type='button'>   " +
-        "            <span class='BaseButton__txt'>                                                          " +
-        "                삭제                                                                                         " +
-        "            </span>                                                                                        " +
-        "        </button>"
-        "       <a href='/board/write' role='button'                              " +
-        "            class='BaseButton BaseButton--skinGray size_default'>                                          " +
-        "            <span class='BaseButton__txt'>                                                          " +
-        "                글쓰기                                                                                        " +
-        "            </span>                                                                                        " +
-        "        </a>                                                                                               " +
-        "    </div>                                                                                                 " +
-        "</div>                                                                                                     " ;
-        
-        
+        }
+        tag += "</tbody>" +
+            "</table>" +
+            "</div>";
+
+
+
 
     }
 
     // 목록에 생성된 게시판 DOM 추가
     document.getElementById("member_profile").innerHTML = tag;
+
+    document.getElementById("post_btns").style.display = "block";
 
 
     // 페이지 렌더링
@@ -297,64 +255,71 @@ function makePageButtonClickEvent() {
         // console.log(pageNum);
 
         // 페이지 번호에 맞는 목록 비동기 요청
-        showReplies(pageNum);
+        if (type === "reply") showReplies(pageNum);
+        else if (type === "board") showBoardList(pageNum);
     };
 }
 
 function openRemoveEvent() {
 
-    
-    const $delBtn = document.querySelector(".fr");
 
-    if($delBtn!=null){
-    $delBtn.onclick = e => makeDelHandler(e);}
-    else{
-        console.log("삭제버튼없음");
-    }
+    const $delBtn = document.getElementById("delBtn");
+    $delBtn.onclick = e => makeDelHandler(e);
+
 }
 
 function makeDelHandler(e) {
 
-    $checkList = document.querySelectorAll(".input_check")
-
-    var delArray = [];
-
+    console.log("makeDelHandler 실행")
+    
     e.preventDefault();
+    if (!e.target.matches('#delBtn')){return;}
+     
 
-
-    if (e.target.matches('#delBtn')) {
-        if (!confirm('진짜로 삭제합니까??')) return;
-
-        if($checkList != null){
-
-        $checkList.forEach(function (array){
-            
-            if(array != null)delArray.push(array.value);
-
-        });
-
-        for(let dNo of delArray){
-           let msgList = processRemove(dNo);
-
-           
-           if(!msgList.includes("del-fail")){
-                alert('삭제 성공!!');
-                if(type==="reply")showReplies;
-                else if(type==="board")showBoardList;
-           }else{
-                alert('삭제 실패!!');
-                if(type==="reply")showReplies;
-                else if(type==="board")showBoardList;
-           }
-        }
         
 
-    }else{
-        alert("체크한 목록이 없습니다.");
-        return;
-    }
- 
-    }
+        $checkList = document.querySelectorAll(".input_check")
+        
+        var delArray = [];
+        let msgList=[];
+
+
+        if (!confirm('진짜로 삭제합니까??')) return;
+
+        if ($checkList != null) {
+
+            $checkList.forEach(function (array) {
+                console.log(array)
+
+
+                if (array.checked) delArray.push(array.value);
+
+            });
+
+            for (let dNo of delArray) {
+                
+                msgList.push(processRemove(dNo));
+
+            }
+            if (!msgList.includes("del-fail")) {
+                alert('삭제 성공!!');
+                console.log(type)
+                if (type === "reply") showReplies();
+                else if (type === "board") showBoardList();
+            } else {
+                alert('삭제 실패!!');
+                console.log(type)
+                if (type === "reply") showReplies();
+                else if (type === "board") showBoardList();
+            }
+
+
+        } else {
+            alert("체크한 목록이 없습니다.");
+            return;
+        }
+
+    
 
 
 }
@@ -362,27 +327,27 @@ function makeDelHandler(e) {
 function processRemove(dNo) {
 
     let msgList = [];
-    if(type==="reply"){
-        fetch( "/api/v1/replies/" + dNo, {
-                method: 'DELETE'
-            })
-            .then(res => res.text())
-            .then(msg => { 
-                msgList.push(msg);
-                return msgList;
-    
-            });
-    }else if(type==="board"){
-
-        fetch("/board/"+dNo,{
+    if (type === "reply") {
+        fetch("/api/v1/replies/" + dNo, {
             method: 'DELETE'
         })
-        .then(res => res.text())
-        .then(msg => { 
-            msgList.push(msg);
-            return msgList;
+            .then(res => res.text())
+            .then(msg => {
+                msgList.push(msg);
+                return msgList;
 
-        });
+            });
+    } else if (type === "board") {
+
+        fetch("/board/" + dNo, {
+            method: 'DELETE'
+        })
+            .then(res => res.text())
+            .then(msg => {
+                msgList.push(msg);
+                return msgList;
+
+            });
 
     }
 }
@@ -402,7 +367,7 @@ function showReplies(pageNum = 1) {
 
 // 게시글 목록을 서버로부터 비동기요청으로 불러오는 함수
 function showBoardList(pageNum = 1) {
-    
+
     console.log("showBoardLis 호출")
 
     fetch(URL + '/board' + '?pageNum=' + pageNum)
@@ -432,7 +397,7 @@ function MemberReplies() {
 }
 
 function MemberBoardList() {
-    
+
     console.log("MemberBoardLis 호출")
 
     // 초기 화면 렌더링시 댓글 1페이지 렌더링
@@ -448,23 +413,23 @@ function MemberBoardList() {
 
 }
 
-function MemberEvent(){
+function MemberEvent() {
 
     $nav = document.getElementById("myPageNav");
 
     $nav.onclick = e => {
-        if (e.target.matches('.myBoard')){
+        if (e.target.matches('.myBoard')) {
             e.preventDefault();
-            type="board";
-             MemberBoardList();
-        }else if(e.target.matches('.myReply')){
+            type = "board";
+            MemberBoardList();
+        } else if (e.target.matches('.myReply')) {
             e.preventDefault();
-            type="reply";
-             MemberReplies();
-        }else if (e.target.matches('.myProfile')){ 
-                e.preventDefault();
-                type="profile";
-                return;
+            type = "reply";
+            MemberReplies();
+        } else if (e.target.matches('.myProfile')) {
+            e.preventDefault();
+            type = "profile";
+            return;
         }
 
 
@@ -490,9 +455,6 @@ function MemberEvent(){
 
 
 
-    console.log(document.querySelector(".fr"));
-
-    console.log(document.getElementById("delBtn"));
 })();
 
 

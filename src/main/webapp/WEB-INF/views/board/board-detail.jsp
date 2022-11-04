@@ -62,6 +62,35 @@
             width: 100px;
             height: 100px;
         }
+        
+
+        #replyLikeBtn{
+            width: 40px;
+
+        }
+        
+        #replyImg{
+            
+            width: 50%;
+            height: 100%;
+        }
+
+        .replyWriter{
+            flex-grow: 1;
+
+        }
+        .user-block{
+            display: flexbox;
+        }
+        .dateForm{
+
+
+        }
+
+        #LikeAndDate{
+                width: 40%;
+        }
+
     </style>
 </head>
 
@@ -94,10 +123,7 @@
 
             </div>
 
-            <!-- 파일 첨부 영역 -->
-            <div class="form-group">
-                <ul class="uploaded-list"></ul>
-            </div>
+
 
             <div class="btn-group btn-group-lg custom-btn-group" role="group">
 
@@ -348,11 +374,13 @@
                 for (let rep of replyList) {
                     tag += "<div id='replyContent' class='card-body' data-replyId='" + rep.replyNo + "'>" +
                         "    <div class='row user-block'>" +
-                        "       <span class='col-md-3'>" +
+                        "       <span class='col-md-3 replyWriter'>" +
                         "         <b>" + rep.replyWriter + "</b>" +
                         "       </span>" +
-                        "       <span class='offset-md-6 col-md-3 text-right'><b>" + formatDate(rep.replyDate) +
-                        "</b></span>" +
+                        "<div id='LikeAndDate'>" +
+                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' href='#'><img id='replyImg'>"+rep.likeCnt +"</a> "+
+                        "       <span class='offset-md-1 col-md-3 text-right dateForm'><b>" + formatDate(rep.replyDate) +
+                        "</b></span></div>" +
                         "    </div><br>" +
                         "    <div class='row'>" +
                         "       <div class='col-md-6'>" + rep.replyText + "</div>" +
@@ -579,80 +607,7 @@
         })();
     </script>
 
-    <script>
-        // start JQuery 
-        $(document).ready(function () {
-
-            function isImageFile(originFileName) {
-                //정규표현식
-                const pattern = /jpg$|gif$|png$/i;
-                return originFileName.match(pattern);
-            }
-
-            // 파일의 확장자에 따른 렌더링 처리
-            function checkExtType(fileName) {
-
-                //원본 파일 명 추출
-                let originFileName = fileName.substring(fileName.indexOf("_") + 1);
-
-                //확장자 추출후 이미지인지까지 확인
-                if (isImageFile(originFileName)) { // 파일이 이미지라면
-
-                    const $img = document.createElement('img');
-                    $img.classList.add('img-sizing');
-                    $img.setAttribute('src', '/loadFile?fileName=' + fileName);
-                    $img.setAttribute('alt', originFileName);
-                    $('.uploaded-list').append($img);
-                }
-
-                // 이미지가 아니라면 다운로드 링크를 생성
-                else {
-
-                    const $a = document.createElement('a');
-                    $a.setAttribute('href', '/loadFile?fileName=' + fileName);
-
-                    const $img = document.createElement('img');
-                    $img.classList.add('img-sizing');
-                    $img.setAttribute('src', '/img/file_icon.jpg');
-                    $img.setAttribute('alt', originFileName);
-
-                    $a.append($img);
-                    $a.innerHTML += '<span>' + originFileName + '</span>';
-
-                    $('.uploaded-list').append($a);
-
-                }
-
-
-            }
-
-
-            // 드롭한 파일을 화면에 보여주는 함수
-            function showFileData(fileNames) {
-
-                // 이미지인지? 이미지가 아닌지에 따라 구분하여 처리
-                // 이미지면 썸네일을 렌더링하고 아니면 다운로드 링크를 렌더링한다.
-                for (let fileName of fileNames) {
-                    checkExtType(fileName);
-                }
-            }
-
-            // 파일 목록 불러오기
-            function showFileList() {
-                fetch('/board/file/' + bno)
-                    .then(res => res.json())
-                    .then(fileNames => {
-                        showFileData(fileNames);
-                    });
-            }
-
-            showFileList();
-
-
-
-        });
-        // end jQuery
-    </script>
+ 
 
 </body>
 

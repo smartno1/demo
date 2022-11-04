@@ -12,6 +12,9 @@
                 .wrap {
                     margin: 50px auto;
                 }
+                #post_btns{
+                    display:none;
+                }
             </style>
 
             
@@ -46,6 +49,30 @@
                        
 
                     </div>
+                    <div class="post_btns" id="post_btns">
+                        <div class='fl'>                                                                                       
+                            <div class='check_box'>                                                                            
+                                <div class='FormInputCheck check_all FormInputCheck--skin'><input id='chk_all' type='checkbox' 
+                                        class='input_check'><label for='chk_all' class='label'>                                
+                                        전체선택                                                                                  
+                                    </label></div>                                                                             
+                            </div>                                                                                             
+                        </div>                                                                                                 
+                        <div class='fr'>                                                                                       
+                            <button role='button' id='delBtn' class='BaseButton BaseButton--skinGray size_default' type='button'>                                                        
+                                    삭제                                                                                         
+                                                                                                                   
+                            </button>                                                                                         
+                           <a href='/board/write' role='button'                                                          
+                                class='BaseButton BaseButton--skinGray size_default'>                                          
+                                <span class='BaseButton__txt'>                                                          
+                                    글쓰기                                                                                       
+                                </span>                                                                                        
+                            </a>                                                                                               
+                        </div>                                                                                                 
+                 
+
+                    </div>
                     <div class="paginate_area">
                         <div class="pagination">
                             
@@ -59,7 +86,7 @@
 
 
             </div>
-      
+       
 
         </body>
 

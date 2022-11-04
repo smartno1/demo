@@ -1499,7 +1499,6 @@ A VERTICAL event
 .fc-theme-bootstrap5-shaded {
   background-color: var(--bs-gray-200);
 }
-
 .wrap{
   width: 100%;
   background-color: black;
@@ -1508,19 +1507,22 @@ A VERTICAL event
 .callen{
   width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 .photo{
-  display: flex;
-  justify-content: center; 
+  display:flex;
+  justify-content: center;
   align-self:center;
   margin-bottom: 20px;
+  float: left;
 
 }
 #calendar {
+
 
   max-width: 1100px;
   margin: 0 auto;
 
 
 }
+

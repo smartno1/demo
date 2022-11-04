@@ -28,23 +28,29 @@
         <li>
         <a href="/profile">
           PROFILE
+          </a>
         </li>
         <li>
         <a href="/schedule">
           SCHEDULE
         </li>
         <li>
+        <a href="/">
           NEWS
+          </a>
         </li>
         <li id="header-logo">
-          <span>logo</span>
+          <img src="/img/ci-b.png">
         </li>
         <li>
         <a href="/board/list">
           BOARD
+         </a>
         </li>
         <li>
+        <a href="/">
           TOUR
+        </a>
         </li>
         <li>
           <a href="/gallery/list">
@@ -52,7 +58,9 @@
           </a>
         </li>
         <li>
+         <a href="/">
           SHOP
+          </a>
         </li>
       </ul>
     </nav>

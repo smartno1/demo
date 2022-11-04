@@ -18,6 +18,7 @@
     width: 1200px;
     margin: 0 auto;
     margin-bottom: 3px;
+    background-color:#
 }
 .section-body .main-photo #photo {
     height: 400px;
@@ -112,7 +113,10 @@
     background: rgb(93, 110, 232);
     height: 80px;
 }
+#photo-bottom{
+text-align: center;
 
+}
 .section-body .main-album {
     /* background: orange; */
     width: 1200px;
@@ -232,6 +236,10 @@
 
     z-index: 3;
 }
+.menubox img{
+white:300px;
+height:300px;
+}
 .section-body .main-menu .menubox div:hover{
     animation: pointer 0.3s linear forwards
 }
@@ -241,3 +249,8 @@
         box-shadow:  5px 5px 10px 20px rgb(196, 191, 191);
     }
 }
+
+
+.wrap{
+    background-color: #282828;
+    }

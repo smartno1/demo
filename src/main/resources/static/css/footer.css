@@ -6,12 +6,12 @@
 }
 
 .footer {
-    /* background: red; */
+     background-color: black;
     height: 100px;
 }
 
 .footer .footer-wrp {
-    /* background: green; */
+     /*background: red;*/
 
     width: 1200px;
     height: 100px;
@@ -74,10 +74,11 @@
 .footer .footer-wrp .footer-copyright {
     /* background: skyblue; */
     float: right;
-
     margin-top: 20px;
     margin-right: 40px;
     height: 60px;
+
+    color: #ffffff;
     line-height: 60px;
 
 }

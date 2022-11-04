@@ -103,6 +103,7 @@ section p{
     display: block;
     justify-content: center;
     height: 360px;
+    position: relative;
 }
 .billin div{
     float: left;
@@ -117,9 +118,7 @@ section p{
     height: 360px;
     
 }
-.blackout{
-    background-color: #000000;
-}
+
 h3{
     font-size: 45px;
     letter-spacing: -0.02em;

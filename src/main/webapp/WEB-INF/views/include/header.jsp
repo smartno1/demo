@@ -35,7 +35,7 @@
           SCHEDULE
         </li>
         <li>
-        <a href="/">
+        <a href="/news">
           NEWS
           </a>
         </li>

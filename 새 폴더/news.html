@@ -1,0 +1,72 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <style>
+        a {color: #fff; text-decoration: none; outline: none}
+        a:hover, a:active {text-decoration: none; }
+    </style>
+    <!-- custom css -->
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+
+    <style>
+
+    </style>
+</head>
+<div class="wrap">
+    <section class="news-wrap">
+        <div class="news-box">
+            <ul class="news-ul">
+                <c:forEach var="i" items="${arr}">
+               <li class="news-li">
+                    <div class="logo">
+                        <a href="${i.newsCompanyUrl}">
+                            <img src="{i.newsCompanyImg}">${i.newsCompanyName}
+                        </a>
+                    </div>
+                    <div class="newsTime">
+                        ${i.newsTime}
+                    </div>
+                    <div class="news-title">
+                        <a href="${i.titleUrl}">
+                            ${i.titleText}
+                        </a>
+                    </div>
+                    <div class="news-content">
+                        <a href="${i.contentUrl}">
+                            ${contentText}
+                        </a>
+                    </div>
+                    <div class="video">
+                        <a href="${i.videoUrl}">
+                            <img src="${i.videoImg}">
+                        </a>
+                    </div>
+               </li> 
+                </c:forEach>
+            </ul>
+            
+        </div>
+    </section>
+</div>
+
+<body>
+
+    <script>
+        $div = document.createElement('div');
+        $div.innerHTML = `${blogOption}`;
+        document.querySelector('body').appendChild($div);
+</script>
+
+</body>
+
+
+</html>

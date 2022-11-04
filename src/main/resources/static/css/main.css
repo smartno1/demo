@@ -154,27 +154,31 @@ text-align: center;
     overflow: hidden;
     margin-top: 50px;
     margin-bottom: 50px;
-    margin-right: 100px;
+    margin-right: 85px;
+    margin-left: 10px;
 }
 .album-slide .slidelist > li > a {
     display:block;
     position:relative;
     cursor: pointer;
 }
+.album-slide .slidelist > li > a > img {
+    width: 200px;
+    height: 200px;
+}
 .album-slide .slidelist > li:hover{
-    animation: select  0.3s linear forwards
+    animation: select  0.2s linear forwards
 }
 @keyframes select {
-    100%{ scale: 10.5;
-        max-width:1100px;
-        height: 300px;}
+    100%{
+        box-shadow: 0px 10px 10px 0px plum;
+    }
 }
 .album-slide .slidelist > li:active {
-    animation: selected 0.3s linear forwards;
+    animation: selected 5ms linear forwards;
 }
 @keyframes selected {
-    100% { scale: 1;
-        z-index: 5;}
+    100% { scale: 0.95;}
 }
 /* 좌우로 넘기는 LABEL버튼에 대한 스타일 */
 .album-slide .slide-control {
@@ -211,10 +215,13 @@ text-align: center;
     transform:translateX(0%);
 }
 .album-slide [id="slide02"]:checked ~ .slidewrap .slidelist > li {
-    transform:translateX(-150%);
+    transform:translateX(-147%);
 }
 .album-slide [id="slide03"]:checked ~ .slidewrap .slidelist > li {
-    transform:translateX(-300%);
+    transform:translateX(-294%);
+}
+.album-slide [id="slide04"]:checked ~ .slidewrap .slidelist > li {
+    transform:translateX(-441%);
 }
 
 
@@ -228,6 +235,14 @@ text-align: center;
 .album-slide [id="slide03"]:checked ~ .slidewrap .control03 {
     display:block;
 }
+.album-slide [id="slide04"]:checked ~ .slidewrap .control04 {
+    display:block;
+}
+
+.left:hover { scale: 1.1;}
+.left:active {scale: 1;}
+.right:hover {scale: 1.1;}
+.right:active {scale: 1;}
 
 
 .section-body .main-menu{
@@ -264,7 +279,7 @@ height:300px;
 @keyframes pointer {
     100%{
         scale: 1.05;
-        box-shadow:  5px 5px 10px 20px rgb(196, 191, 191);
+        box-shadow:  5px 5px 10px 20px  #6965c3;
     }
 }
 .section-body .main-menu .menubox div:active{

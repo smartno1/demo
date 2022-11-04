@@ -81,6 +81,24 @@
             overflow: hidden;
             position: relative;
         }
+        #gallery-ul li:hover {
+            animation: select  0.2s linear forwards
+        }
+        #gallery-ul li:active{
+            animation: selected 2ms linear forwards;
+        }
+        @keyframes select {
+            100%{
+                scale: 1.1;
+
+            }
+        }
+        .album-slide .slidelist > li:active {
+            animation: selected 2ms linear forwards;
+        }
+        @keyframes selected {
+            100% { scale: 0.95;}
+        }
         #gallery-ul li div {
             background-color: rgba(10,10,10,0.5);
             width: inherit;
@@ -100,15 +118,19 @@
             color: aqua;
             float: left;
             margin-left: 10px;
-            margin-top: 10px
+            margin-top: 5px
         }
         #gallery-ul li div .likeCnt {
             float: right;
-            margin-right: 10px;
-            margin-top: 10px;
+            margin-right: 5px;
+            margin-top: 5px;
+            font-size: 20px;
+
+            color: yellow;
             /*border: 1px solid yellow;*/
         }
         #gallery-ul li div .likeImg{
+            margin-top: 2px;
             width: 30px;
             height: 30px;
             object-fit: contain;
@@ -369,9 +391,10 @@
                             <img src="${i.src}"  class="img" data-galleryno=${i.galleryNo} alt="">
                             <div >
                                 <p class="writer" data-account="">#${i.nickname}</p>
-                                <p><img class="likeImg" src="/img/like.jpg" alt=""></p>
+                                <p><img class="likeImg" src="/img/like.png" alt=""></p>
                                 <p class="likeCnt">${i.likeCnt}</p>
                                 <input type="hidden" name="account" value="${i.account}">
+
                                 <p class="text">${i.text}</p>
                             </div>
 
@@ -476,29 +499,31 @@
             let writer = document.querySelector(".writer").textContent;
             writer = writer.substring(1) ;
 
-            fetch("/like/update?galleryNo="+galleryNo)
-                .then(res => res.text())
-                .then(cnt => {
+            if(${empty loginUser}){
+                if(confirm("로그인이 필요합니다 로그인하시겠습나까?")){
+                    location.href="/member/sign-in";
+                }
+            }else {
+                fetch("/like/update?galleryNo=" + galleryNo)
+                    .then(res => res.text())
+                    .then(cnt => {
 
-                    let likeCnt = parseInt(cnt);
+                        let likeCnt = parseInt(cnt);
 
-                    if(${empty loginUser}){
-                        if(confirm("로그인이 필요합니다 로그인하시겠습나까?")){
-                            location.href="/member/sign-in";
+                        if (cnt >= likeCnt) {
+                            const $like = document.querySelector('.likeBtn').firstElementChild;
+                            const preLikeCnt = document.querySelector('.up-likeCnt').firstElementChild.textContent;
+                            document.querySelector('.up-likeCnt').firstElementChild.textContent = likeCnt;
+                            if (preLikeCnt > likeCnt) {
+                                $like.textContent = "likeIt!";
+                            } else {
+                                $like.textContent = "liking";
+                            }
+                        } else {
+                            alert("본인의 갤러리엔 좋아요가 안되요");
                         }
-                    }else if(cnt >= likeCnt) {
-                        const $like = document.querySelector('.likeBtn').firstElementChild;
-                        const preLikeCnt = document.querySelector('.up-likeCnt').firstElementChild.textContent;
-                        document.querySelector('.up-likeCnt').firstElementChild.textContent = likeCnt;
-                        if(preLikeCnt > likeCnt){
-                            $like.textContent = "likeIt!";
-                        }else{
-                            $like.textContent = "liking";
-                        }
-                    }else {
-                        alert("본인의 갤러리엔 좋아요가 안되요");
-                    }
-                });
+                    });
+            }
         }
 
 
@@ -558,13 +583,15 @@
                                     </button>`;
             }
             // 라이크 확인
-            fetch("/like/check?galleryNo="+galleryNo)
-                .then(res => res.text())
-                .then(msg => {
-                    if(msg == "true") {
-                        document.querySelector('.likeBtn').firstElementChild.textContent = "Liking";
-                    }
-                })
+            if(${!empty loginUser}) {
+                fetch("/like/check?galleryNo=" + galleryNo)
+                    .then(res => res.text())
+                    .then(msg => {
+                        if (msg == "true") {
+                            document.querySelector('.likeBtn').firstElementChild.textContent = "Liking";
+                        }
+                    })
+            }
 
             document.querySelector('.close-up').classList.add('up');
 

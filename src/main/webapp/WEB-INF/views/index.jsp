@@ -68,45 +68,45 @@
       <div class="slidewrap">
         <ul class="slidelist">
           <li>
-            <a>
+            <a href="https://ibighit.com/bts/kor/discography/detail/dynamite.html" target="_blank">
               <img src="./img/allbem01.jpg">
             </a>
           </li>
           <li>
-            <a>
-              <img src="./img/allbem01.jpg">
+            <a href="https://ibighit.com/bts/kor/discography/detail/butter-2.html" target="_blank">
+              <img src="./img/album-butter-o.jpg">
             </a>
           </li>
           <li>
-            <a>
-              <img src="./img/allbem01.jpg">
+              <a href="https://ibighit.com/bts/kor/discography/detail/be.html" target="_blank">
+              <img src="./img/album-be.jpg">
+              </a>
+          </li>
+          <li>
+              <a href="https://ibighit.com/bts/kor/discography/detail/butter.html" target="_blank">
+                  <img src="./img/album-butter-Y.jpg">
+              </a>
+          </li>
+          <li>
+            <a href="https://ibighit.com/bts/kor/discography/detail/proof/index.html" target="_blank">
+              <img src="./img/album-proof.jpg">
             </a>
           </li>
           <li>
-            <a>
-              <img src="./img/allbem01.jpg">
+            <a href="https://ibighit.com/bts/kor/discography/detail/map_of_the_soul-7.html" target="_blank">
+              <img src="./img/album-7.jpg">
             </a>
           </li>
           <li>
-            <a>
-              <img src="./img/allbem01.jpg">
-            </a>
-          </li>
-          <li>
-            <a>
-              <img src="./img/allbem01.jpg">
-            </a>
-          </li>
-          <li>
-                      <a>
-                        <img src="./img/sallbem01.jpg">
-                      </a>
-                    </li>
+              <a href="https://ibighit.com/bts/kor/discography/detail/map_of_the_soul-persona.html" target="_blank">
+                <img src="./img/album-persona.jpg">
+              </a>
+            </li>
         </ul>
 
         <div class="slide-control">
           <div class="control01">
-            <label for="slide03" class="left"></label>
+            <label for="slide04" class="left"></label>
             <label for="slide02" class="right"></label>
           </div>
           <div class="control02">
@@ -115,8 +115,12 @@
           </div>
           <div class="control03">
             <label for="slide02" class="left"></label>
-            <label for="slide01" class="right"></label>
+            <label for="slide04" class="right"></label>
           </div>
+            <div class="control04">
+                <label for="slide03" class="left"></label>
+                <label for="slide01" class="right"></label>
+            </div>
         </div>
       </div>
     </div>

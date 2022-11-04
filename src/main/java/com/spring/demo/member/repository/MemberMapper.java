@@ -21,9 +21,7 @@ public interface MemberMapper {
     Member findUser(String account);
 
 
-    int findBoardCount(String account);
 
-    int findReplyCount(String account);
 
     // 자동로그인 쿠키정보 저장
     void saveAutoLoginValue(AutoLoginDTO dto);

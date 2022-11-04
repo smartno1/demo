@@ -39,17 +39,15 @@ public class GalleryService {
         log.info("findAllService start , search -- {}", search);
 
         Map<String, Object> findDataMap = new HashMap<>();
-        // gallery 리스트
 
+        // gallery 리스트
         List<Gallery> galleries = galleryMapper.findAll2(search);
 
-        log.info("getType -------- {} ", search.getType());
-        if(search.getType().equals("best")){
-            galleries.clear();
+        if(Objects.equals(search.getType(), "best" )){
             galleries = galleryMapper.findAll3(search);
+            log.info("Type = best galleries -- {}",galleries);
         }
 
-        log.info(galleries);
         // 토탈 카운트
         int totalCount = galleryMapper.getTotalCount2(search);
 

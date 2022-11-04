@@ -39,7 +39,7 @@ public class GalleryController {
 
 
     @GetMapping("/gallery/list")
-    public String list(Search search, Model model, HttpServletRequest request ){
+    public String list(@ModelAttribute("search") Search search, Model model, HttpServletRequest request ){
         log.info("GalleryController /gallery/list GET!");
 
         // amount 변경.

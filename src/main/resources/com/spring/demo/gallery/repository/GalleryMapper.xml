@@ -58,6 +58,7 @@
     <select id="findAll3" resultMap="galleryMap">
         SELECT * FROM gallery
         ORDER BY like_cnt DESC
+        LIMIT #{start}, #{amount}
     </select>
 
     <select id="getTotalCount" resultType="int">

@@ -382,19 +382,19 @@
                     <ul class="bottom-ul">
                         <%-- 이전 버튼 --%>
                         <c:if test="${pm.prev}">
-                            <li><a href="/gallery/list?pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}">prev</a></li>
+                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}">prev</a></li>
                         </c:if>
 
                         <%-- 페이지 버튼 --%>
                         <c:forEach var="i" begin="${pm.beginPage}" end="${pm.endPage}" step="1">
                             <li>
-                                <a href="/gallery/list?pageNum=${i}&amount=${pm.page.amount}">${i}</a>
+                                <a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${i}&amount=${pm.page.amount}">${i}</a>
                             </li>
                         </c:forEach>
 
                         <%--다음 버튼--%>
                         <c:if test="${pm.next}">
-                            <li><a href="/gallery/list?pageNum=${pm.endPage + 1}&amount=${pm.page.amount}">next</a></li>
+                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.endPage + 1}&amount=${pm.page.amount}">next</a></li>
                         </c:if>
                     </ul>
                 </div>

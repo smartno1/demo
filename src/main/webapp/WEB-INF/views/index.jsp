@@ -40,10 +40,10 @@
         <input type="radio" name="slide1" id="slide3">
         <input type="radio" name="slide1" id="slide4">
         <ul id="imgholder" class="imgs">
-          <li><img src="./img/slide1.jpg"></li>
-          <li><img src="./img/slide1.jpg"></li>
-          <li><img src="./img/slide01.jpg"></li>
-          <li><img src="./img/slide03.jpg"></li>
+          <li><img src="./img/bbo1.jpg"></li>
+          <li><img src="./img/bbo2.jpg"></li>
+          <li><img src="./img/bbo3.jpg"></li>
+          <li><img src="./img/bbo4.jpg"></li>
         </ul>
         <div class="bullets">
           <label for="slide1">&nbsp;</label>
@@ -54,6 +54,7 @@
       </div>
     </div>
     <div id="photo-bottom">
+         <img src="./img/ci-b.png">
     </div>
   </div>
   <div class="main-album">
@@ -68,34 +69,39 @@
         <ul class="slidelist">
           <li>
             <a>
-              <img src="./img/slide01.jpg">
+              <img src="./img/allbem01.jpg">
             </a>
           </li>
           <li>
             <a>
-              <img src="./img/slide02.jpg">
+              <img src="./img/allbem01.jpg">
             </a>
           </li>
           <li>
             <a>
-              <img src="./img/slide03.jpg">
+              <img src="./img/allbem01.jpg">
             </a>
           </li>
           <li>
             <a>
-              <img src="./img/slide04.jpg">
+              <img src="./img/allbem01.jpg">
             </a>
           </li>
           <li>
             <a>
-              <img src="./img/slide05.jpg">
+              <img src="./img/allbem01.jpg">
             </a>
           </li>
           <li>
             <a>
-              <img src="./img/slide06.jpg">
+              <img src="./img/allbem01.jpg">
             </a>
           </li>
+          <li>
+                      <a>
+                        <img src="./img/sallbem01.jpg">
+                      </a>
+                    </li>
         </ul>
 
         <div class="slide-control">
@@ -119,14 +125,46 @@
   <div class="main-menu">
     <div class="menuwrap">
       <div class="menubox clear-fix">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div>
+             <a>
+             <img src="./img/01.jpeg">
+             </a>
+        </div>
+        <div>
+            <a>
+                <img src="./img/04.jpg">
+            </a>
+        </div>
+        <div>
+                    <a>
+                        <img src="./img/05.jpg">
+                    </a>
+                </div>
+        <div>
+                    <a>
+                        <img src="./img/06.jpg">
+                    </a>
+                </div>
+        <div>
+                    <a>
+                        <img src="./img/07.jpg">
+                    </a>
+                </div>
+      <div>
+                  <a>
+                      <img src="./img/08.jpg">
+                  </a>
+              </div>
+        <div>
+                    <a>
+                        <img src="./img/09.jpg">
+                    </a>
+                </div>
+       <div>
+                   <a>
+                       <img src="./img/03.jpg">
+                   </a>
+               </div>
       </div>
 
     </div>

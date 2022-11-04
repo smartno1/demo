@@ -2,8 +2,8 @@
     background-color: #222;
 }
 .board-list {
-    width: 70%;
-    margin: 230px auto 0;
+    width: 1000px;
+    margin: 20px auto 0;
 }
 
 .board-list .articles {
@@ -27,7 +27,9 @@
 .board-list .amount li a {
     width: 100%;
 }
-
+table{
+width:1000px;
+}
 
 .trlect1 th{
     background-color: #6965c3;
@@ -39,6 +41,7 @@
     background-color: #b4b2e0;
     padding: 10px 5px;
     color: #fff;
+    text-align:center;
 }
 .form-select{
  border-radius: 3px;

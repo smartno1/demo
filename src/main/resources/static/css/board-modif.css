@@ -1,0 +1,31 @@
+.content-container {
+    width: 60%;
+    margin: 150px auto;
+    position: relative;
+}
+
+.content-container .main-title {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    border-bottom: 2px solid rgb(75, 73, 73);
+    padding: 0 20px 15px;
+    width: fit-content;
+    margin: 20px auto 30px;
+}
+
+.content-container .main-content {
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 25px;
+    font-size: 1.1em;
+    text-align: justify;
+    min-height: 400px;
+}
+
+.content-container .custom-btn-group {
+    position: absolute;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+}

@@ -24,7 +24,7 @@ class LikeMapperTest {
     void updateLikeTest() {
 
 
-        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 1L);
+        LikeTypeDTO like = new LikeTypeDTO("peach", "replyNo", 210L);
 
 
         boolean flag = likeMapper.updateLike(like);

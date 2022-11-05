@@ -12,8 +12,9 @@ REFERENCES tbl_board (board_no) ON DELETE CASCADE,
 CONSTRAINT fk_like_reply
 FOREIGN KEY (reply_no)
 REFERENCES tbl_reply (reply_no) ON DELETE CASCADE,
+CONSTRAINT fk_like_gallery
 FOREIGN KEY (gallery_no)
-REFERENCES tbl_gallery (gallery_no) ON DELETE CASCADE,
+REFERENCES gallery (gallery_no) ON DELETE CASCADE,
 CONSTRAINT fk_like_user
 FOREIGN KEY (account)
 REFERENCES tbl_user (account)ON DELETE CASCADE

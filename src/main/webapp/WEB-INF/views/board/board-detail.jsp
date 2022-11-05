@@ -526,8 +526,9 @@
                 function processLike(rno) {
 
                   
-                    if(loginUser.account=b.account){
+                    if("${loginUser.account}"==="${b.account}"){
                         alert("작성자는 추천할 수 없습니다.")
+                        return;
                     }
                     fetch("/like/check?replyNo=" + rno)
                         .then(res => res.text())

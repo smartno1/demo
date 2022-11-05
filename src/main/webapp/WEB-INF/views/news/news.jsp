@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
-<%--    <link rel="stylesheet" type="text/css" href="/css/news.css"/>--%>
+     <link rel="stylesheet" type="text/css" href="/css/news.css"/>
     <style>
 
         .news-wrap{

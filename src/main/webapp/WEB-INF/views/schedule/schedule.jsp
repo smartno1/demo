@@ -14,6 +14,11 @@
          <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
         <link rel="stylesheet" type="text/css" href="/css/header.css"/>
 
+         <script>
+         var calendar = new Calendar(calendarEl, {
+           events: '/schedule?start=2022-12-01T00:00:00-05:00&end=2023-01-12T00:00:00-05:00'
+         });
+         </scrpt>
         <script src="/js/main.js"></script>
         <script src="/js/ko.js"></script>
        <style>
@@ -72,7 +77,7 @@
             <%@ include file= "../include/header.jsp"%>
             <div class="callen">
                 <div class="photo">
-                    <img src="/img/maxresdefault.jpg">
+                     <img src="/img/maxresdefault.jpg">
                </div>
             </div>
               <div class="calen-on">
@@ -82,6 +87,7 @@
           </div>
             <%@ include file= "../include/footer.jsp" %>
         </div>
+
     </body>
     </html>
     

@@ -23,29 +23,6 @@ class MemberMapperTest {
     BCryptPasswordEncoder encoder;
 
 
-    @Test
-    @DisplayName("회원가입에 성공해야 한다.")
-    void registerTest() {
-
-        Member m = new Member();
-
-        m.setAccount("gogo");
-        m.setPassword("1234");
-        m.setFavorite(FavoriteMember.V);
-        m.setNickname("apple");
-        m.setName("하하");
-        m.setPhoneNum("010-2114-1234");
-        m.setBirth("010101");
-        m.setAddress("서울시 중구");
-        m.setEmail("hello3@gmail.com");
-        m.setGender(Gender.M);
-
-        m.setAuth(Auth.ADMIN);
-
-        boolean flag = mapper.register(m);
-
-        assertTrue(flag);
-    }
 
 
     @Test
@@ -76,23 +53,18 @@ class MemberMapperTest {
 
         Member m = new Member();
 
-        m.setName("천도복숭아");
-        m.setEmail("peach@gmail.com");
-        m.setAuth(Auth.ADMIN);
-
-
-        m.setAccount("peach");
+        m.setAccount("gugu");
         m.setPassword(new BCryptPasswordEncoder().encode("1234"));
         m.setFavorite(FavoriteMember.V);
-        m.setNickname("천도복숭아");
+        m.setNickname("gugu");
         m.setName("김복숭아");
-        m.setPhoneNum("010-3333-1112");
+        m.setPhoneNum("010-3533-1112");
         m.setBirth("010201");
         m.setAddress("서울시 동대문구");
-        m.setEmail("peach@gmail.com");
+        m.setEmail("peach31@gmail.com");
         m.setGender(Gender.F);
 
-        m.setAuth(Auth.ADMIN);
+        m.setAuth(Auth.COMMON);
 
         boolean flag = mapper.register(m);
 

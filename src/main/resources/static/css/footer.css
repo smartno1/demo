@@ -8,6 +8,8 @@
 .footer {
      background-color: black;
     height: 100px;
+
+
 }
 
 .footer .footer-wrp {
@@ -34,7 +36,10 @@
 
 }
 .footer .footer-wrp .footer-family .family-list{
+    position:relative;
+    z-index:500!important;
     margin-bottom: 50px;
+    z-index:1000;
 }
 .footer .footer-wrp .footer-family .family-list div{
     background: rgba(0, 0, 0, 0.574);
@@ -43,7 +48,6 @@
     border: 1px solid rgb(0, 0, 0);
     text-align: center;
     line-height: 50px;
-
 
     color: rgba(231, 231, 231, 0.354);
 }

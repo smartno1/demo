@@ -31,7 +31,7 @@ class ReplyMapperTest {
             reply.setBoardNo(bno);
             reply.setReplyText("댓글" + i);
             reply.setReplyWriter("메롱이"+ i);
-            reply.setAccount("hello");
+            reply.setAccount("gaga");
 
             replyMapper.save(reply);
         }

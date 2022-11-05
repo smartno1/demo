@@ -113,8 +113,11 @@
         if (msg === 'reg-success') {
             alert('축하합니다. 회원가입에 성공했습니다.');
 
-        }
-
+        }else if(msg==='mod-success'){
+        alert('회원정보가 수정되었습니다. 다시 로그인하세요');
+            }else if(msg==='mod-failed'){
+              alert('회원정보 수정이 실패하였습니다.');
+            }
         const loginMsg = '${loginMsg}';
         if (loginMsg === 'NO_ACC') {
             alert('존재하지 않는 회원입니다.');

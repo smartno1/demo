@@ -175,6 +175,14 @@
   </div>
 
 </div>
+<script>
+  
+\
+
+
+
+
+</script>
 
 <%@ include file= "include/footer.jsp" %>
 </div>

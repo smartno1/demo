@@ -160,7 +160,7 @@ function makeBoardDOM({
 
     if (boardList === null || boardList.length === 0) {
         tag += "<tr><td colspan='4' class='blocked_list'>작성 한 게시글이 없습니다.</td></tr>";
-        document.getElementById("post_btns").style.display = "hidden";
+        document.getElementById("post_btns").style.display = "none";
 
     } else {
         for (let boa of boardList) {
@@ -432,8 +432,19 @@ function MemberBoardList() {
 }
 function MemberProfile(){
 
+    $pwChk= document.getElementById("validatePasswordForm");
 
-    
+    $pwChk.parentElement.style.display = "block";
+
+  
+
+    document.getElementById("checkPw-btn").onclick = e => {
+        e.preventDefault();
+
+        $pwChk.submit();
+
+    }
+
     
 }
 
@@ -442,6 +453,9 @@ function MemberEvent() {
     $nav = document.getElementById("myPageNav");
    
     $nav.onclick = e => {
+
+        document.getElementById("member_profile").innerHTML =""
+        document.getElementById("post_btns").style.display = "none";
 
         e.preventDefault();
 
@@ -504,7 +518,7 @@ function checkkAll(){
     $chk_all= document.getElementById("chk_all");
     $checkList = document.querySelectorAll(".input_check");
 
-    console.log($checkList);
+  
 
     $chk_all.onclick = e =>{ 
 

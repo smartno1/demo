@@ -19,6 +19,13 @@
         (#{account}, #{password}, #{favorite}, #{nickname}, #{name}, #{phoneNum}, #{birth}, #{address}, #{email}, #{gender})
     </insert>
 
+    <!-- 회원 가입 기능   -->
+    <insert id="update">
+        UPDATE tbl_user SET
+        favorite = #{favorite}, nickname = #{nickname} , name = #{name}, phone_num = #{phoneNum}, birth = #{birth}, address = #{address}, email =#{email}, gender =#{gender}
+        WHERE account=#{account}
+    </insert>
+
     <!-- 중복체크 기능 (아이디, 이메일, 전화번호)   -->
     <select id="isDuplicate" resultType="int">
 

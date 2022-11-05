@@ -272,6 +272,9 @@
 
             <!-- 댓글관련 script -->
             <script>
+                location.href = "/board/content/" 
+                        + "?pageNum="+${pm.page.pageNum};+
+                         "&amount="+${pm.page.amount};
 
                 // 로그인한 회원 계정명
                 const currentAccount = '${loginUser.account}';

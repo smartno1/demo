@@ -1,30 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Title</title>
-  <!-- reset css -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-  <style>
-    a {color: #fff; text-decoration: none; outline: none}
-    a:hover, a:active {text-decoration: none; }
-  </style>
-  <!-- custom css -->
-  <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/header.css"/>
-   <link rel="stylesheet" type="text/css" href="/css/board-list.css"/>
 
-   <script src="/js/board-list.js" defer></script>
+<head>
+    <%@ include file="../include/static-head.jsp" %>
+
+    <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+     <link rel="stylesheet" type="text/css" href="/css/board-list.css"/>
+
+     <script src="/js/board-list.js" defer>
+
+     </script>
+
 </head>
 
 <body>
+
     <div class="wrap">
-    <%@ include file= "../include/header.jsp"%>
+
+        
+
         <div class="board-list">
 
             <div class="top-section">
@@ -39,11 +36,10 @@
                             <option value="tc">제목+내용</option>
                         </select>
 
-                        <input type="text" class="form-control" name="keyword" value="">
+                        <input type="text" class="form-control" name="keyword" value="${s.keyword}">
 
                         <button class="btn btn-primary" type="submit">
-                            <!-- <i class="fa-sharp fa-solid fa-magnifying-glass"></i> -->
-                            <img src="/img/do.png">
+                            <i class="fas fa-search"></i>
                         </button>
 
                     </form>
@@ -58,17 +54,16 @@
             </div>
 
             <table class="table table-dark table-striped table-hover articles">
-                <tbody>
-                    <tr class="trlect1">
-                        <th>번호</th>
-                        <th>작성자</th>
-                        <th>제목</th>
-                        <th>조회수</th>
-                        <th>작성시간</th>
-                    </tr>
+                <tr>
+                    <th>번호</th>
+                    <th>작성자</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>작성시간</th>
+                </tr>
 
                 <c:forEach var="b" items="${bList}">
-                    <tr class="trlect2">
+                    <tr>
                         <td>${b.boardNo}</td>
                         <td>${b.writer}</td>
                         <td title="${b.title}">
@@ -111,16 +106,26 @@
                 </nav>
 
                 <!-- 글쓰기 버튼 영역 -->
-                <c:if test="${loginUser != null}">
-                    <div class="btn-write">
-                        <a class="btn btn-outline-danger btn-lg" href="/board/write">글쓰기</a>
-                    </div>
-                </c:if>
-            </div><!-- 게시글 목록 하단 영역 -->
-        </div> <!-- 목록 개수별 보기 영역 -->
+                <div class="btn-write">
+                    <a class="btn btn-outline-danger btn-lg" href="/board/write">글쓰기</a>
+                </div>
+            </div>
+        </div>
 
-    <%@ include file= "../include/footer.jsp" %>
+
+
     </div>
+
+    <script>
+
+        var msg = "${msg}";
+        var pageNum = "${pm.page.pageNum}";
+        var amount = "${pm.page.amount}";
+        var sType = "${s.type}";
+        var sKeyword = "${s.keyword}";
+    </script>
+
+      
 
 </body>
 

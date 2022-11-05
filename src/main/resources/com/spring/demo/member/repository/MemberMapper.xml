@@ -14,9 +14,9 @@
     <!-- 회원 가입 기능   -->
     <insert id="register">
         INSERT INTO tbl_user
-        (account, password, favorite, nickname, name, phone_num, birth, address, email, gender)
+        (account, password, favorite, nickname, name, phone_num, birth, address, email, gender, auth)
         VALUES
-        (#{account}, #{password}, #{favorite}, #{nickname}, #{name}, #{phoneNum}, #{birth}, #{address}, #{email}, #{gender})
+        (#{account}, #{password}, #{favorite}, #{nickname}, #{name}, #{phoneNum}, #{birth}, #{address}, #{email}, #{gender}, #{auth})
     </insert>
 
     <!-- 중복체크 기능 (아이디, 이메일, 전화번호)   -->

@@ -388,7 +388,17 @@
             width: 150px;
         }
         /*===========================================*/
+        /*===== 페이징 =============================*/
+        .bottom-section .bottom-ul li {
+            width:30px;
+            height:25px;
 
+        .bottom-section .bottom-ul li.currentPage{
+            background: #fff;
+        }
+
+
+        /*===========================================*/
         .blackout{
             background-color: #000000;
         }
@@ -524,7 +534,10 @@
                 console.log(e.target);
                 if( pe.nextElementSibling) {
                     closeUp(pe.nextElementSibling);
-                }<%--else (${pm.page.pageNum != pm.endPage}{--%>
+                }else{
+                closeUp(pe.parentElement.firstElementChild);
+
+                <%--else (${pm.page.pageNum != pm.endPage}{--%>
                 <%--    --%>
                 <%--    &lt;%&ndash;let i = pe.dataset.no;&ndash;%&gt;--%>
                 <%--    --%>
@@ -533,6 +546,7 @@
                 <%--}--%>
             }
         }
+    }
         function prevEvent(pe){
             document.getElementById('pre-btn').onclick = e => {
                 if(!e.target.matches("#pre-btn")) return;
@@ -650,8 +664,8 @@
 
 
             const $downBtn = document.querySelector('.down-btn');
-
-            if(loginNick == nickName) {
+             console.log(${loginUser.auth});
+            if(loginNick == nickName || "${loginUser.auth}" == "ADMIN") {
                 $downBtn.innerHTML = `
 
                                     <button class="down-btn-mod" style="display: inline-block">
@@ -742,7 +756,7 @@
         function mod(ee){
 
             const $text = document.querySelector('.down-text');
-            const galleryNo = $text.dataset.galleryno
+            const galleryNo = $text.dataset.galleryno;
             const text = $text.firstElementChild.textContent;
 
             document.querySelector('.in-text').removeAttribute("readonly");

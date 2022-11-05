@@ -29,15 +29,15 @@ class MemberMapperTest {
 
         Member m = new Member();
 
-        m.setAccount("apple123");
-        m.setPassword("12345");
+        m.setAccount("gogo");
+        m.setPassword("1234");
         m.setFavorite(FavoriteMember.V);
         m.setNickname("apple");
-        m.setName("사과왕");
-        m.setPhoneNum("010-1234-1234");
+        m.setName("하하");
+        m.setPhoneNum("010-2114-1234");
         m.setBirth("010101");
         m.setAddress("서울시 중구");
-        m.setEmail("apple@gmail.com");
+        m.setEmail("hello3@gmail.com");
         m.setGender(Gender.M);
 
         m.setAuth(Auth.ADMIN);

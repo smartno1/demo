@@ -14,6 +14,7 @@
           <a href="/member/sign-in"><span id="login-btn">로그인</span></a>
         </c:if>
         <c:if test="${loginUser != null}">
+          <a href="/member/myPage">마이 페이지</a>
           <a href="/member/sign-out"><span id="logout-btn">로그아웃</span></a>
         </c:if>
       </div>

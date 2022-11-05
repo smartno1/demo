@@ -138,7 +138,7 @@
                                             <table class="address-table">
                                                 <tr>
                                                     <td><strong>우편번호</strong></td>
-                                                    <td><input type="text" style="width:70px;" id="zipNo" name="zipNo" readonly value="기본" />
+                                                    <td><input type="text" style="width:70px;" id="zipNo" name="zipNo" readonly value="" />
                                                         <input type="button" id="jusoCallBack" value="주소 검색" />
                                                     </td>
                                                 </tr>

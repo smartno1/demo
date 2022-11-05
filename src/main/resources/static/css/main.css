@@ -4,12 +4,9 @@
     content: "";
     clear: both;
 }
-
 .section-body {
     /* background: red; */
-
     width: inherit;
-
 }
 
 .section-body .main-photo{
@@ -23,7 +20,6 @@
 .section-body .main-photo #photo {
     height: 400px;
 }
-
 .section-body .main-photo #photo .photo-slider{
     background: rgb(220, 150, 150);
     width: 1200px;
@@ -31,7 +27,6 @@
     position: relative;
     margin: 0 auto;
     overflow: hidden;
-
 }
 .section-body .main-photo #photo .photo-slider input[type=radio]{
     display: none;
@@ -249,7 +244,6 @@ height:300px;
         box-shadow:  5px 5px 10px 20px rgb(196, 191, 191);
     }
 }
-
 
 .wrap{
     background-color: #282828;

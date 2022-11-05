@@ -279,7 +279,7 @@
 
             <!-- 댓글관련 script -->
             <script>
-              
+
 
                 // 로그인한 회원 계정명
                 const currentAccount = '${loginUser.account}';
@@ -505,7 +505,7 @@
 
                     // 모달에 해당 댓글내용을 배치한다.
                     document.getElementById('modReplyText').value = replyText;
-
+                    
                     // 모달을 띄울 때 다음 작업(수정완료처리)을 위해 댓글번호를 모달에 달아두자.
                     const $modal = document.querySelector('.modal');
                     $modal.dataset.rno = rno;
@@ -574,14 +574,16 @@
                             // 서버에 수정 비동기 요청 보내기
                             const rno = e.target.closest('.modal').dataset.rno;
                             console.log('mod post rno', rno);
-
+                            const modText = document.getElementById('modReplyText').value
+                            
+                            console.log(modText)
                             const reqInfo = {
                                 method: 'PUT',
                                 headers: {
                                     'content-type': 'application/json'
                                 },
                                 body: JSON.stringify({
-                                    replyText: $('#modReplyText').val(),
+                                    replyText: modText,
                                     replyNo: rno
                                 })
                             };
@@ -591,9 +593,11 @@
                                 .then(res => res.text())
                                 .then(msg => {
                                     if (msg === 'mod-success') {
-                                        alert('수정 성공!!');
-                                        $modal.modal('hide'); // 모달창 닫기
+                                        $modal.style.display="none"; // 모달창 닫기
+                                        
                                         showReplies(); // 댓글 새로불러오기
+                                        alert('수정 성공!!');
+
                                     } else {
                                         alert('수정 실패!!');
                                     }

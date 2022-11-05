@@ -93,6 +93,7 @@ public class BoardService {
             substringTitle(b);
             checkNewArticle(b);
             setReplyCount(b);
+
         }
     }
 
@@ -116,8 +117,11 @@ public class BoardService {
         // 신규 게시물 제한시간
         long limitTime = 60 * 5 * 1000;
 
+
         if (diff < limitTime) {
             b.setNewArticle(true);
+
+
         }
 
     }

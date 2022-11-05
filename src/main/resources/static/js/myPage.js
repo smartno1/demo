@@ -148,6 +148,7 @@ function makeBoardDOM({
 
     if (boardList === null || boardList.length === 0) {
         tag += "<tr><td colspan='4' class='blocked_list'>작성 한 게시글이 없습니다.</td></tr>";
+        document.getElementById("post_btns").style.display = "hidden";
 
     } else {
         for (let boa of boardList) {
@@ -190,7 +191,7 @@ function makeBoardDOM({
             "</table>" +
             "</div>";
 
-
+            document.getElementById("post_btns").style.display = "block";
 
 
     }
@@ -198,7 +199,7 @@ function makeBoardDOM({
     // 목록에 생성된 게시판 DOM 추가
     document.getElementById("member_profile").innerHTML = tag;
 
-    document.getElementById("post_btns").style.display = "block";
+    
 
 
     // 페이지 렌더링
@@ -416,7 +417,7 @@ function MemberBoardList() {
 function MemberEvent() {
 
     $nav = document.getElementById("myPageNav");
-
+   
     $nav.onclick = e => {
         if (e.target.matches('.myBoard')) {
             e.preventDefault();

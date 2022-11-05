@@ -1,5 +1,5 @@
 function alertServerMessage() {
-    // console.log('msg: ', msg);
+     console.log('new: ', newArticle);
 
     if (msg === 'reg-success') {
         alert('게시물이 정상 등록되었습니다.');

@@ -111,7 +111,7 @@ public class BoardController {
     }
 
 
-    // 게시물 삭제 확정 요청
+    // 게시물 삭제  요청
     @GetMapping("/delete")
     public String delete(@ModelAttribute("boardNo") Long boardNo, Model model) {
 
@@ -146,7 +146,10 @@ public class BoardController {
         Board board = boardService.findOneService(boardNo, response, request);
         log.info("find article: {}", board);
 
+
         model.addAttribute("board", board);
+
+        model.addAttribute("validate", boardService.getMember(boardNo));
 
         return "board/board-modify";
     }

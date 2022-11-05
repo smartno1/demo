@@ -125,6 +125,8 @@
         if(amount===null){amount=10;}
         var sType = "${s.type}";
         var sKeyword = "${s.keyword}";
+        var newArticle=" ${b.newArticle}";
+
     </script>
 
       

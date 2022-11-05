@@ -1,4 +1,5 @@
 <%@ page import="com.spring.demo.member.domain.Member" %>
+<%@ page import="com.spring.demo.gallery.domain.Gallery" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -64,22 +65,43 @@
 
             height: 680px;
             margin: 10px 0;
-            padding-left: 7%;
+            padding-left: 0;
             position: relative;
             box-sizing: border-box;
         }
 
         #gallery-ul li {
-            margin-right: 7%;
-            margin-top: 10px;
-            margin-bottom: 20px;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0x;
             /*border-radius: 10px;*/
 
             float: left;
             height: 300px;
-            width: 200px;
+            width: 400px;
             overflow: hidden;
             position: relative;
+        }
+        #gallery-ul li img:hover {
+            animation: select  0.2s linear forwards
+        }
+        #gallery-ul li img:active{
+            animation: selected 2ms linear forwards;
+        }
+        @keyframes select {
+
+            0%{ z-index: 20;}
+            100%{
+                scale: 1.1;
+                position: fixed;
+                z-index:20;
+            }
+        }
+        .album-slide .slidelist > li:active {
+            animation: selected 2ms linear forwards;
+        }
+        @keyframes selected {
+            100% { scale: 0.95;}
         }
         #gallery-ul li div {
             background-color: rgba(10,10,10,0.5);
@@ -100,15 +122,19 @@
             color: aqua;
             float: left;
             margin-left: 10px;
-            margin-top: 10px
+            margin-top: 5px
         }
         #gallery-ul li div .likeCnt {
             float: right;
-            margin-right: 10px;
-            margin-top: 10px;
+            margin-right: 5px;
+            margin-top: 5px;
+            font-size: 20px;
+
+            color: yellow;
             /*border: 1px solid yellow;*/
         }
         #gallery-ul li div .likeImg{
+            margin-top: 2px;
             width: 30px;
             height: 30px;
             object-fit: contain;
@@ -131,7 +157,7 @@
 
         #gallery-ul li img.img {
             height: 300px;
-            width: 200px;
+            width: 400px;
             object-fit: cover;
             cursor: pointer;
 
@@ -279,6 +305,31 @@
             font-size: 35px;
             margin-top: 10px;
         }
+        #galleryWrap .close-up #pre-btn {
+            position: absolute;
+            top: 35%;
+            left: 15%;
+            transform: translate(-50%,-50%);
+
+        }
+        #galleryWrap .close-up #next-btn {
+            position: absolute;
+            top: 35%;
+            right: 2%;
+            transform: translate(-50%,-50%);
+        }
+        #galleryWrap .close-up #pre-btn:hover{
+            top:32%;
+        }
+        #galleryWrap .close-up #pre-btn:active{
+            top:35%
+        }
+        #galleryWrap .close-up #next-btn:hover{
+            top:32%;
+        }
+        #galleryWrap .close-up #next-btn:active{
+            top:35%
+        }
         /* ================ 업로드 ===========*/
         .upLoad {
             width: 500px;
@@ -364,18 +415,20 @@
             </div>
             <div>
                 <ul id="gallery-ul" class="clear-box">
+                    <% int i = 0; %>
                     <c:forEach var="i" items="${galleries}">
-                        <li>
+                        <li data-no="<%=i%>">
                             <img src="${i.src}"  class="img" data-galleryno=${i.galleryNo} alt="">
                             <div >
                                 <p class="writer" data-account="">#${i.nickname}</p>
-                                <p><img class="likeImg" src="/img/like.jpg" alt=""></p>
+                                <p><img class="likeImg" src="/img/like.png" alt=""></p>
                                 <p class="likeCnt">${i.likeCnt}</p>
                                 <input type="hidden" name="account" value="${i.account}">
+
                                 <p class="text">${i.text}</p>
                             </div>
-
                         </li>
+                        <% i += 1;%>
                     </c:forEach>
                 </ul>
             </div>
@@ -407,7 +460,7 @@
         <div class="close-up">
             <div class="up-in-box">
                 <div class="close-div">
-                    <img alt="">
+                    <img id="close-picture" alt="">
                 </div>
                 <div class="down-div">
                     <div class="down-user">
@@ -437,6 +490,10 @@
 
                 </div>
             </div>
+            <div>
+                <div ><img id="pre-btn" src="/img/left.png" ></div>
+                <div ><img id="next-btn" src="/img/right.png" ></div>
+            </div>
         </div>
     </div>
     <%@include file="../include/footer.jsp"%>
@@ -460,6 +517,54 @@
         const loginAccount = "<%=account%>";
         console.log(loginNick);
 
+        //클로즈 갤러리 버튼으로 옆으로 넘기기
+        function nextEvent(pe){
+            document.getElementById('next-btn').onclick = e => {
+                if(!e.target.matches("#next-btn")) return;
+                console.log(e.target);
+                if( pe.nextElementSibling) {
+                    closeUp(pe.nextElementSibling);
+                }<%--else (${pm.page.pageNum != pm.endPage}{--%>
+                <%--    --%>
+                <%--    &lt;%&ndash;let i = pe.dataset.no;&ndash;%&gt;--%>
+                <%--    --%>
+                <%--    &lt;%&ndash;fetch("/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${i}&amount=${pm.page.amount}")&ndash;%&gt;--%>
+                <%--    &lt;%&ndash;closeUp(pe.parentElement.firstElementChild);&ndash;%&gt;--%>
+                <%--}--%>
+            }
+        }
+        function prevEvent(pe){
+            document.getElementById('pre-btn').onclick = e => {
+                if(!e.target.matches("#pre-btn")) return;
+                console.log(e.target);
+                if( pe.previousElementSibling){
+                    closeUp(pe.previousElementSibling);
+                }else{
+                    fetch("/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}")
+
+                    closeUp(pe.parentElement.lastElementChild);
+                }
+            }
+        }
+
+
+
+        // 이미지 전체화면 띄우기
+        function fullSizeEvent(){
+            document.getElementById('close-picture').onclick = e => {
+                if(!e.target.matches("#close-picture")) return;
+                if (e.target.requestFullscreen) {
+                    e.target.requestFullscreen();
+                } else if (e.target.mozRequestFullScreen) { /* Firefox */
+                    e.target.mozRequestFullScreen();
+                } else if (e.target.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    e.target.webkitRequestFullscreen();
+                } else if (e.target.msRequestFullscreen) { /* IE/Edge */
+                    e.target.msRequestFullscreen();
+                }
+            }
+        }
+
         // like 이벤트
         function likeEvent(){
             const $likeBtn = document.querySelector('.likeBtn');
@@ -476,29 +581,31 @@
             let writer = document.querySelector(".writer").textContent;
             writer = writer.substring(1) ;
 
-            fetch("/like/update?galleryNo="+galleryNo)
-                .then(res => res.text())
-                .then(cnt => {
+            if(${empty loginUser}){
+                if(confirm("로그인이 필요합니다 로그인하시겠습나까?")){
+                    location.href="/member/sign-in";
+                }
+            }else {
+                fetch("/like/update?galleryNo=" + galleryNo)
+                    .then(res => res.text())
+                    .then(cnt => {
 
-                    let likeCnt = parseInt(cnt);
+                        let likeCnt = parseInt(cnt);
 
-                    if(${empty loginUser}){
-                        if(confirm("로그인이 필요합니다 로그인하시겠습나까?")){
-                            location.href="/member/sign-in";
+                        if (cnt >= likeCnt) {
+                            const $like = document.querySelector('.likeBtn').firstElementChild;
+                            const preLikeCnt = document.querySelector('.up-likeCnt').firstElementChild.textContent;
+                            document.querySelector('.up-likeCnt').firstElementChild.textContent = likeCnt;
+                            if (preLikeCnt > likeCnt) {
+                                $like.textContent = "likeIt!";
+                            } else {
+                                $like.textContent = "liking";
+                            }
+                        } else {
+                            alert("본인의 갤러리엔 좋아요가 안되요");
                         }
-                    }else if(cnt >= likeCnt) {
-                        const $like = document.querySelector('.likeBtn').firstElementChild;
-                        const preLikeCnt = document.querySelector('.up-likeCnt').firstElementChild.textContent;
-                        document.querySelector('.up-likeCnt').firstElementChild.textContent = likeCnt;
-                        if(preLikeCnt > likeCnt){
-                            $like.textContent = "likeIt!";
-                        }else{
-                            $like.textContent = "liking";
-                        }
-                    }else {
-                        alert("본인의 갤러리엔 좋아요가 안되요");
-                    }
-                });
+                    });
+            }
         }
 
 
@@ -521,6 +628,9 @@
             // const cloneE = e.cloneNode(true)
             // 타겟 이미지의 src 와 data-id 가져오기
             // const e = document.querySelector('.img').parentElement;
+            let index = e.dataset.no;
+            index *= 1; //인트로 변환
+
             const src = ''+e.firstElementChild.getAttribute('src');
             const galleryNo = e.firstElementChild.dataset.galleryno;
             const text = e.lastElementChild.lastElementChild.textContent;
@@ -528,15 +638,16 @@
             let like = e.lastElementChild.children[2].textContent;
             let nickName = e.lastElementChild.firstElementChild.textContent;
             nickName = nickName.substring(1) ;
-
             // console.log(nickName);
             // console.log(src);
-            document.querySelector('.close-div').firstElementChild.setAttribute('src', src);
+            document.querySelector('.close-div').firstElementChild.setAttribute('src',src);
+            document.querySelector('.close-div').setAttribute('data-index', index);
             document.querySelector('.down-user').firstElementChild.textContent = nickName;
             document.querySelector('.down-user').lastElementChild.setAttribute("value",writer)
             document.querySelector('.down-text').setAttribute('data-galleryno',galleryNo);
             document.querySelector('.in-text').textContent = text;
             document.querySelector('.up-likeCnt').firstElementChild.textContent=like;
+
 
             const $downBtn = document.querySelector('.down-btn');
 
@@ -558,13 +669,15 @@
                                     </button>`;
             }
             // 라이크 확인
-            fetch("/like/check?galleryNo="+galleryNo)
-                .then(res => res.text())
-                .then(msg => {
-                    if(msg == "true") {
-                        document.querySelector('.likeBtn').firstElementChild.textContent = "Liking";
-                    }
-                })
+            if(${!empty loginUser}) {
+                fetch("/like/check?galleryNo=" + galleryNo)
+                    .then(res => res.text())
+                    .then(msg => {
+                        if (msg == "true") {
+                            document.querySelector('.likeBtn').firstElementChild.textContent = "Liking";
+                        }
+                    })
+            }
 
             document.querySelector('.close-up').classList.add('up');
 
@@ -576,6 +689,9 @@
             goListEvent();
             downloadEvent();
             likeEvent();
+            fullSizeEvent();
+            nextEvent(e);
+            prevEvent(e);
         }
         // 모달창 없애는 이벤트걸기
         function downEvent(){

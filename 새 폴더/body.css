@@ -138,7 +138,9 @@
         position:relative;
     }
 	.album-slide .slidelist {
-        white-space:nowrap;font-size:0;
+        white-space:nowrap;
+        font-size:0;
+        
     }
 	.album-slide .slidelist > li {
         display:inline-block;
@@ -149,12 +151,33 @@
         overflow: hidden;
         margin-top: 50px; 
         margin-bottom: 50px;
-        margin-right: 100px;
+        margin-right: 85px;
+        margin-left: 10px;   
+        box-sizing: border-box;
     }
 	.album-slide .slidelist > li > a {
         display:block;
         position:relative;
         cursor: pointer;
+    }
+    .album-slide .slidelist > li > a > img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+    .album-slide .slidelist > li:hover{
+        animation: select  5ms linear forwards
+    }
+    @keyframes select {
+        100%{
+            box-shadow: 0px 10px 10px 0px plum;
+        }
+    }
+    .album-slide .slidelist > li:active {
+        animation: selected 5ms linear forwards;
+    }
+    @keyframes selected {
+        100% { scale: 0.95;}
     }
 
 	/* 좌우로 넘기는 LABEL버튼에 대한 스타일 */
@@ -190,10 +213,10 @@
         transform:translateX(0%);
     }
 	.album-slide [id="slide02"]:checked ~ .slidewrap .slidelist > li {
-        transform:translateX(-150%);
+        transform:translateX(-147%);
     }
 	.album-slide [id="slide03"]:checked ~ .slidewrap .slidelist > li {
-        transform:translateX(-300%);
+        transform:translateX(-294%);
     }
    
 	

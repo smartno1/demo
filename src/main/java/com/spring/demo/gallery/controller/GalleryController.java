@@ -43,7 +43,7 @@ public class GalleryController {
         log.info("GalleryController /gallery/list GET!");
 
         // amount 변경.
-        search.setAmount(8);
+        search.setAmount(6);
         log.info("search - {}",search);
 
         Map<String , Object> galleryMap = galleryService.findAllService(search);

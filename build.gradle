@@ -55,7 +55,11 @@ dependencies {
 	//이미지 썸네일 라이브러리
 	implementation 'org.imgscalr:imgscalr-lib:4.2'
 
+	//jsoup 라이브러리 크롤링
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation 'org.jsoup:jsoup:1.13.1'
 
+	// 카카오
 	implementation 'com.google.code.gson:gson:2.8.5'
 
 }

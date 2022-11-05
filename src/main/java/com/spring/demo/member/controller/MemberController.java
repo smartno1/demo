@@ -82,6 +82,7 @@ public class MemberController {
         LoginFlag flag = memberService.login(inputData, session, response);
 
         log.info("memberService.login 종료");
+        log.info(flag);
         if (flag == LoginFlag.SUCCESS) {
             log.info("login success!!");
 
@@ -90,7 +91,7 @@ public class MemberController {
 
         }
         model.addAttribute("loginMsg", flag);
-        return "gallery/list";
+        return "member/sign-in";
 
     }
 

@@ -38,6 +38,7 @@ public class BoardService {
         // 게시물 내용 DB에 저장
         boolean flag = boardMapper.save(board);
 
+        log.info("save service end - {}", flag);
 
         return flag;
     }
@@ -77,11 +78,13 @@ public class BoardService {
         Map<String, Object> findDataMap = new HashMap<>();
 
         List<Board> boardList = boardMapper.findAll2(search);
+
         // 목록 중간 데이터 처리
         processConverting(boardList);
 
         findDataMap.put("bList", boardList);
         findDataMap.put("tc", boardMapper.getTotalCount2(search));
+        log.info("findAll service End");
 
         return findDataMap;
     }

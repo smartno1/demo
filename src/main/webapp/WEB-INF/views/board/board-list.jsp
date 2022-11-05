@@ -6,7 +6,13 @@
 <head>
     <!-- 부트스트랩-->
     <%@ include file="../include/static-head.jsp" %> 
+    
+            <!-- reset css -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
+   <!-- 부트스트랩-->
+   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+             
     <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css"/>
      <link rel="stylesheet" type="text/css" href="/css/board-list.css"/>
@@ -19,6 +25,10 @@
         .header-wrraper .nav .nav-ul li{
                 list-style: none;
             }
+        .wrap{
+                      padding-bottom: 150px;
+                  }
+
   
       </style>
 
@@ -133,14 +143,14 @@
         var msg = "${msg}";
         var pageNum = "${pm.page.pageNum}";
         var amount = "${pm.page.amount}";
-        if(amount===null){amount=10;}
         var sType = "${s.type}";
         var sKeyword = "${s.keyword}";
         var newArticle=" ${b.newArticle}";
 
     </script>
 
-      
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
 
 </body>
 

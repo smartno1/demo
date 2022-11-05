@@ -9,20 +9,45 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Title</title>
   <!-- reset css -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-  <style>
-    a {color: #fff; text-decoration: none; outline: none}
-    a:hover, a:active {text-decoration: none; }
-  </style>
-  <!-- custom css -->
-  <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
-   <%@ include file="../include/static-head.jsp" %>
+              <!-- 부트스트랩-->
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+              <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+              <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+
+              <style>
+                  a {color: #fff; text-decoration: none; outline: none}
+                  a:hover, a:active {text-decoration: none; }
+                  .header-wrraper .nav .nav-ul{
+                          padding: 0; 
+                      }
+                  .header-wrraper .nav .nav-ul li{
+                          list-style: none;
+                      }
+                  .wrap{
+                      padding-bottom: 150px;
+                  }
+                  
+  
+  
+                </style>
+
+                <style>
+                    div.content-container{
+                        padding: 5% 25% 0%;
+
+                    }
+
+                </style>
 </head>
-<!-- custom css -->
+
 <body>
 
+                  
+  
+  
+                </style>
     <div class="wrap">
         <%@ include file="../include/header.jsp" %>
 
@@ -32,7 +57,7 @@
 
                 <input type="hidden" name="boardNo" value="${board.boardNo}">
 
-                <h1 class="main-title">${board.boardNo}번 게시물</h1>
+                <h1 class="main-title">새 게시물</h1>
 
                 <div class="mb-3 box-ttj ">
                     <label for="writer-input" class="form-label ">작성자</label>
@@ -59,10 +84,9 @@
             </form>
 
         </div>
-     <%@ include file="../include/footer.jsp" %>
-    </div>
+     
+        
      </div>
-
 
         <script>
             // 게시물 등록 입력값 검증 함수
@@ -108,6 +132,7 @@
                 location.href = '/board/list';
             };
         </script>
+        <%@ include file="../include/footer.jsp" %>
 </body>
 
 </html>

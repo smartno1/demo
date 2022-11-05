@@ -90,7 +90,7 @@ public class BoardInterceptor implements HandlerInterceptor {
             }
         }
 
-        log.info("board interceptor postHandle() - missMatch ENd! ");
+        log.info("board interceptor postHandle() - missMatch End! ");
 
     }
 

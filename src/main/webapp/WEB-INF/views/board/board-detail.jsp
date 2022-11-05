@@ -4,6 +4,8 @@
         <html lang="ko">
 
         <head>
+              <!-- reset css -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
             <!-- 부트스트랩-->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -22,9 +24,7 @@
                     padding-bottom: 150px;
                 }
                 
-                .btn-group.btn-group-lg.custom-btn-group{
-                    margin-bottom: 30px;
-                }
+
 
               </style>
                 <style>
@@ -59,12 +59,12 @@
                         position: fixed;
                         width: 60px;
                         height: 120px;
-                        bottom: 35%;
+                        bottom: 40%;
                         right: 5%;
                         transform: translateX(-50%);
                         box-sizing: border-box;
                         border-radius: 0.5rem ;
-                        background: red;
+                  
                         overflow: hidden;
                         margin: 0;
                     }
@@ -186,7 +186,7 @@
 
                             </p>
 
-                            <a id="boardLikeBtn" href='#'><img id="boardLikeImg"><span id="boardLikeCnt">추천${b.likeCnt}</span></a>
+                            <a id="boardLikeBtn" class="page-link" href='#'><img id="boardLikeImg"><span id="boardLikeCnt">추천${b.likeCnt}</span></a>
 
                         </div>
 
@@ -210,7 +210,7 @@
                                     <div class="card-body">
 
                                         <c:if test="${empty loginUser}">
-                                            <a href="/member/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
+                                            <a class="page-link" href="/member/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
                                         </c:if>
 
                                         <c:if test="${not empty loginUser}">
@@ -308,7 +308,17 @@
 
             <!-- 게시글 상세보기 관련 script -->
             <script>
-                // const [$modBtn, $delBtn, $listBtn] = [...document.querySelector('div[role=group]').children];
+                
+                function alertServerMessage() {
+                        const msg ="${msg}";
+                    if (msg=== 'mod-success') {
+                                 
+                        alert('게시물이 정상 수정되었습니다.');
+                         
+                    }else if(msg==="mod-failed"){
+                       alert('게시물 수정을 실패 하였습니다.');
+                    }
+                }
 
                 const $modBtn = document.getElementById('mod-btn');
                 const $delBtn = document.getElementById('del-btn');
@@ -447,7 +457,7 @@
                                 "         <b>" + rep.replyWriter + "</b>" +
                                 "       </span>" +
                                 "<div id='LikeAndDate'>" +
-                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' data-account="+rep.accoun +"href='#'><img id='replyLikeImg'>" + rep.likeCnt + "</a> " +
+                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' data-account="+rep.account +"href='#'><img id='replyLikeImg'>" + rep.likeCnt + "</a> " +
                                 "       <span class='offset-md-1 col-md-3 text-right dateForm'><b>" + formatDate(rep.replyDate) +
                                 "</b></span></div>" +
                                 "    </div><br>" +
@@ -510,13 +520,18 @@
                 // 댓글 등록 이벤트 처리 핸들러 등록 함수
                 function makeReplyRegisterClickEvent() {
 
-                    // console.log(document.getElementById('replyAddBtn'));
-                    document.getElementById('replyAddBtn').onclick = makeReplyRegisterClickHandler;
+   
+                    
+                    document.querySelector('.card-body').onclick = makeReplyRegisterClickHandler;
+                    
                 }
+
 
 
                 // 댓글 등록 이벤트 처리 핸들러 함수
                 function makeReplyRegisterClickHandler(e) {
+                    
+                    if(!e.target.matches("#replyAddBtn"))return;
 
                     const $writerInput = document.getElementById('newReplyWriter');
                     const $contentInput = document.getElementById('newReplyText');
@@ -681,8 +696,14 @@
                 }
                 function processLike(rno, e) {
 
+                    if("${loginUser}"===null){
+                        alert("로그인 후 추천 가능합니다.");
+                        return;
+                    }
+                    console.log(e.target.dataset.account);
+
                   
-                    if("${loginUser.account}"===e.dataset.account){
+                    if("${loginUser.account}"===e.target.dataset.account){
                         alert("작성자는 추천할 수 없습니다.")
                         return;
                     }
@@ -724,7 +745,12 @@
 
 
                 function processBoardLike(e){
-                    e.preventDefault();
+                    
+                    console.log("${loginUser}"!==null);
+                    if("${loginUser}"===null){
+                        alert("로그인 후 추천 가능합니다.");
+                        return;
+                    }
                     var boardNo = "${b.boardNo}";
                     if("${loginUser.account}"==="${b.account}"){
                         alert("작성자는 추천할 수 없습니다.");

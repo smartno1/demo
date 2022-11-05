@@ -104,6 +104,8 @@ public class BoardController {
         board.setAccount(LoginUtils.getCurrentMemberAccount(session));
 
         boolean flag = boardService.saveService(board);
+        log.info("글쓰기 플래그 - {}",flag);
+
         // 게시물 등록에 성공하면 클라이언트에 성공메시지 전송
         if (flag) ra.addFlashAttribute("msg", "reg-success");
 
@@ -156,10 +158,15 @@ public class BoardController {
 
     // 수정 처리 요청
     @PostMapping("/modify")
-    public String modify(Board board) {
+    public String modify(Board board, RedirectAttributes ra) {
         log.info("controller request /board/modify POST! - {}", board);
         boolean flag = boardService.modifyService(board);
-        return flag ? "redirect:/board/content/" + board.getBoardNo() : "redirect:/";
+
+        if (!flag) ra.addFlashAttribute("msg", "mod-failed");
+        else ra.addFlashAttribute("msg", "mod-success");
+        return  "redirect:/board/content/" + board.getBoardNo();
+
+
     }
 
 

@@ -8,16 +8,39 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Title</title>
-  <!-- reset css -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-  <style>
-    a {color: #fff; text-decoration: none; outline: none}
-    a:hover, a:active {text-decoration: none; }
-  </style>
-  <!-- custom css -->
-  <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
-  <link rel="stylesheet" type="text/css" href="/css/header.css"/>
-   <link rel="stylesheet" type="text/css" href="/css/board-modif.css"/>
+              <!-- reset css -->
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+              <!-- 부트스트랩-->
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+              <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+              <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+
+              <style>
+                  a {color: #fff; text-decoration: none; outline: none}
+                  a:hover, a:active {text-decoration: none; }
+                  .header-wrraper .nav .nav-ul{
+                          padding: 0; 
+                      }
+                  .header-wrraper .nav .nav-ul li{
+                          list-style: none;
+                      }
+                  .wrap{
+                      padding-bottom: 150px;
+                  }
+                  
+  
+  
+                </style>
+
+
+                <style>
+                    div.content-container{
+                        padding: 5% 25% 0%;
+
+                    }
+
+                </style>
 </head>
 <!-- custom css -->
 <body>
@@ -26,7 +49,7 @@
 
     <div class="content-container">
 
-        <form action="/board/modify" method="post">
+        <form action="/board/modify" id="modify_orm" method="post">
 
             <input type="hidden" name="boardNo" value="${board.boardNo}">
 
@@ -52,16 +75,33 @@
 
             <div class="btn-group btn-group-lg custom-btn-group" role="group">
                 <button id="mod-btn" type="submit" class="btn btn-warning">완료</button>
-                <button type="button" class="btn btn-dark">목록</button>
+                <button type="button" id="listBtn"  class="btn btn-dark">목록</button>
             </div>
 
         </form>
 
     </div>
 
-
-    <%@ include file="../include/footer.jsp" %>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+
+    (function(){
+
+        $listBtn = document.getElementById("listBtn");
+        
+        $listBtn.onclick = e =>{
+            
+            history.go(-2);
+
+        }
+
+
+    })();
+
+
+</script>
+<%@ include file="../include/footer.jsp" %>
 </body>
 
 </html>

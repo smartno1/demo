@@ -36,7 +36,7 @@ public class BoardInterceptor implements HandlerInterceptor {
 //        RequestDispatcher dispatcher
 //                = request.getRequestDispatcher("/WEB-INF/views/member/sign-in.jsp");
 
-        log.info("board interceptor preHandle()");
+        log.info("board interceptor preHandle() Start");
         if (!isLogin(session)) {
             log.info("this request deny!! 집에 가");
             // dispatcher.forward(request, response);
@@ -44,7 +44,7 @@ public class BoardInterceptor implements HandlerInterceptor {
             response.sendRedirect("/member/sign-in?message=no-login");
             return false;
         }
-
+        log.info("board interceptor preHandle() END");
         return true;
     }
 
@@ -52,6 +52,7 @@ public class BoardInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
+        log.info("board interceptor postHandle() Start");
         // postHandle이 작동해야 하는 URI 목록
         List<String> uriList = Arrays.asList("/board/modify", "/board/delete");
 
@@ -64,7 +65,7 @@ public class BoardInterceptor implements HandlerInterceptor {
 
         // postHandle은 uriList 목록에 있는 URI에서만 작동하게 함
         if (uriList.contains(requestURI) && method.equalsIgnoreCase("GET")) {
-            log.info("board interceptor postHandle() ! ");
+            log.info("board interceptor postHandle() - match modify,delete,GET! ");
 
             HttpSession session = request.getSession();
 
@@ -88,6 +89,9 @@ public class BoardInterceptor implements HandlerInterceptor {
                 response.sendRedirect("/board/list");
             }
         }
+
+        log.info("board interceptor postHandle() - missMatch ENd! ");
+
     }
 
     private boolean isAdmin(HttpSession session) {

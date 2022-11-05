@@ -12,20 +12,24 @@
             <style>
                 a {color: #fff; text-decoration: none; outline: none}
                 a:hover, a:active {text-decoration: none; }
+                .header-wrraper .nav .nav-ul{
+                        padding: 0; 
+                    }
+                .header-wrraper .nav .nav-ul li{
+                        list-style: none;
+                    }
+                .wrap{
+                    padding-bottom: 150px;
+                }
+                
+                .btn-group.btn-group-lg.custom-btn-group{
+                    margin-bottom: 30px;
+                }
+
               </style>
                 <style>
 
-                    body{
-                        width: 1200px;
-                    }
-                    div.wrap{
-                        width: 1200px;
-                    }
-                    .header-wrraper .nav .nav-ul{
-                        padding-left: 0;
-                        /* padding-right: 0; */
-                    }
-          
+                 
                     .content-container {
                         width: 60%;
                         margin: 0px auto;
@@ -52,11 +56,50 @@
                     }
 
                     .content-container .custom-btn-group {
-                        position: absolute;
-                        bottom: -10%;
-                        left: 50%;
+                        position: fixed;
+                        width: 60px;
+                        height: 120px;
+                        bottom: 35%;
+                        right: 5%;
                         transform: translateX(-50%);
+                        box-sizing: border-box;
+                        border-radius: 0.5rem ;
+                        background: red;
+                        overflow: hidden;
+                        margin: 0;
                     }
+                    .content-container .custom-btn-group .btn{
+                        position: absolute;
+
+                        height: 40px;
+                        width: 60px;
+                        border-radius: 0;
+                        box-sizing: border-box;
+                        
+                        text-align: center;
+                        line-height: 40px;
+                        
+                    }
+
+                    #mod-btn{
+                        margin: 0;
+                        padding: 0;
+                        transform: translateY(-0%);
+
+                    }
+                    #del-btn{
+                        margin: 0;
+                        padding: 0;
+                        transform: translateY(200%);
+
+                    }
+                    #list-btn{
+                        margin: 0;
+                        padding: 0;
+                        transform: translateY(100%);
+
+                    }
+
 
                     /* 페이지 액티브 기능 */
                     .pagination .page-item.p-active a {
@@ -117,9 +160,9 @@
         </head>
 
         <body>
-
+            <%@ include file="../include/header.jsp" %>
             <div class="wrap">
-                <%@ include file="../include/header.jsp" %>
+                
 
                     <div class="content-container">
 
@@ -149,7 +192,7 @@
 
 
 
-                        <div class="btn-group btn-group-lg custom-btn-group" role="group">
+                        <div class="btn-group btn-group-lg custom-btn-group clear-fix" role="group">
 
                             <c:if test="${loginUser.account == b.account || loginUser.auth == 'ADMIN'}">
                                 <button id="mod-btn" type="button" class="btn btn-warning">수정</button>
@@ -259,7 +302,7 @@
                     </div>
 
 
-                    <%@ include file="../include/footer.jsp" %>
+                  
             </div>
 
 
@@ -758,7 +801,7 @@
             </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-
+            <%@ include file="../include/footer.jsp" %>
         </body>
 
         </html>

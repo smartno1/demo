@@ -10,6 +10,17 @@
     <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css"/>
      <link rel="stylesheet" type="text/css" href="/css/board-list.css"/>
+     <style>
+        a {color: #fff; text-decoration: none; outline: none}
+        a:hover, a:active {text-decoration: none; }
+        .header-wrraper .nav .nav-ul{
+                padding: 0; 
+            }
+        .header-wrraper .nav .nav-ul li{
+                list-style: none;
+            }
+  
+      </style>
 
      <script src="/js/board-list.js" defer>
 
@@ -20,7 +31,7 @@
 <body>
 
     <div class="wrap">
-
+        <%@ include file="../include/header.jsp" %>
         
 
         <div class="board-list">
@@ -114,7 +125,7 @@
         </div>
 
 
-
+        <%@ include file="../include/footer.jsp" %>
     </div>
 
     <script>

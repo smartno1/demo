@@ -4,8 +4,11 @@
         <html lang="ko">
 
         <head>
-            <%@ include file="../include/static-head.jsp" %>
 
+            <!-- 부트스트랩-->
+            <%@ include file="../include/static-head.jsp" %>
+            <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+            <link rel="stylesheet" type="text/css" href="/css/header.css"/>
                 <style>
                     .content-container {
                         width: 60%;
@@ -90,6 +93,8 @@
                         width: 40%;
                     }
                 </style>
+
+
         </head>
 
         <body>
@@ -118,6 +123,8 @@
                                 ${b.content}
 
                             </p>
+
+                            <a id="boardLikeBtn" href='#'><img id="boardLikeImg"><span id="boardLikeCnt">추천${b.likeCnt}</span></a>
 
                         </div>
 
@@ -272,9 +279,7 @@
 
             <!-- 댓글관련 script -->
             <script>
-                location.href = "/board/content/" 
-                        + "?pageNum="+${pm.page.pageNum};+
-                         "&amount="+${pm.page.amount};
+              
 
                 // 로그인한 회원 계정명
                 const currentAccount = '${loginUser.account}';
@@ -380,7 +385,7 @@
                                 "         <b>" + rep.replyWriter + "</b>" +
                                 "       </span>" +
                                 "<div id='LikeAndDate'>" +
-                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' href='#'><img id='replyImg'>" + rep.likeCnt + "</a> " +
+                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' data-account="+rep.accoun +"href='#'><img id='replyLikeImg'>" + rep.likeCnt + "</a> " +
                                 "       <span class='offset-md-1 col-md-3 text-right dateForm'><b>" + formatDate(rep.replyDate) +
                                 "</b></span></div>" +
                                 "    </div><br>" +
@@ -526,49 +531,7 @@
 
                 // 댓글 추천 상세처리
 
-                function processLike(rno) {
-
-                  
-                    if("${loginUser.account}"==="${b.account}"){
-                        alert("작성자는 추천할 수 없습니다.")
-                        return;
-                    }
-                    fetch("/like/check?replyNo=" + rno)
-                        .then(res => res.text())
-                        .then(flag => {
-
-
-
-                            if(flag==="true"){
-                                if (!confirm('추천을 취소하시겠습니까???'))return;
-                            }else if(flag==="false"){
-                                if (!confirm('추천하시겠습니까?'))return;
-  
-                            }else if(flag==="match-account"){
-                                alert("작성자는 추천할 수 없습니다.");
-                                return;
-                            }else{
-                                alert("잘못된 입력")
-                                return;
-                            }
-                            console.log("추천 업데이트");
-
-                            fetch("/like/update?replyNo=" + rno)
-                                .then(res => res.text())
-                                 .then(cnt => {
-
-                                    if(cnt!=="null"){
-                                        showReplies();
-                                    }else{
-                                        alert("추천실패");
-                                        return;
-                                    }
-                                });
-                            
-
-                        });
-                    }
-
+         
 
 
 
@@ -588,12 +551,12 @@
                     } else if (e.target.matches('#replyDelBtn')) {
                         processRemove(rno);
                     } else if (e.target.matches('#replyLikeBtn')) {
-                        processLike(rno);
+                        processLike(rno, e);
                     }
                 }
 
                 // 댓글 수정 화면 열기, 삭제, 추천 이벤트 처리
-                function openModifyModalAndRemoveEvent() {
+                function openModifyModalAndRemoveAndLikeEvent() {
 
                     const $replyData = document.getElementById('replyData');
                     $replyData.onclick = makeReplyModAndDelHandler;
@@ -639,6 +602,106 @@
                 }
 
 
+                function openBoardLikeEvent(){
+
+                    $boardLikeBtn = document.getElementById("boardLikeBtn");
+
+                    $boardLikeBtn.onclick = processBoardLike;
+
+
+
+                }
+                function processLike(rno, e) {
+
+                  
+                    if("${loginUser.account}"===e.dataset.account){
+                        alert("작성자는 추천할 수 없습니다.")
+                        return;
+                    }
+                    fetch("/like/check?replyNo=" + rno)
+                        .then(res => res.text())
+                        .then(flag => {
+
+
+
+                            if(flag==="true"){
+                                if (!confirm('추천을 취소하시겠습니까???'))return;
+                            }else if(flag==="false"){
+                                if (!confirm('추천하시겠습니까?'))return;
+  
+                            }else if(flag==="match-account"){
+                                alert("작성자는 추천할 수 없습니다.");
+                                return;
+                            }else{
+                                alert("잘못된 입력")
+                                return;
+                            }
+                            console.log("추천 업데이트");
+
+                            fetch("/like/update?replyNo=" + rno)
+                                .then(res => res.text())
+                                 .then(cnt => {
+
+                                    if(cnt!=="null"){
+                                        showReplies();
+                                    }else{
+                                        alert("추천실패");
+                                        return;
+                                    }
+                                });
+                            
+
+                        });
+                    }
+
+
+                function processBoardLike(e){
+                    e.preventDefault();
+                    var boardNo = "${b.boardNo}";
+                    if("${loginUser.account}"==="${b.account}"){
+                        alert("작성자는 추천할 수 없습니다.");
+                        return;
+                    }
+
+                    fetch("/like/check?boardNo=" +boardNo)
+                    .then(res => res.text())
+                    .then(flag => {
+
+
+                        if(flag==="true"){
+                            if (!confirm('추천을 취소하시겠습니까???'))return;
+                        }else if(flag==="false"){
+                            if (!confirm('추천하시겠습니까?'))return;
+
+                        }else if(flag==="match-account"){
+                            alert("작성자는 추천할 수 없습니다.");
+                            return;
+                        }else{
+                            alert("잘못된 입력")
+                            return;
+                        }
+                        console.log("게시글 추천 업데이트");
+
+                        fetch("/like/update?boardNo=" +boardNo)
+                            .then(res => res.text())
+                             .then(cnt => {
+
+                                console.log(cnt);
+
+                                if(cnt!=="null"){
+                                    document.getElementById("boardLikeCnt").innerHTML = cnt;
+                                }else{
+                                    alert("추천실패");
+                                    return;
+                                }
+                            });
+                        
+
+                    });
+                }
+                    
+                
+
 
                 // 메인 실행부
                 (function () {
@@ -646,14 +709,19 @@
                     // 초기 화면 렌더링시 댓글 1페이지 렌더링
                     showReplies();
 
+                    //게시글 추천 이벤트 처리
+                    openBoardLikeEvent();
+
                     // 댓글 페이지 버튼 클릭이벤트 처리
                     makePageButtonClickEvent();
 
                     // 댓글 등록 버튼 클릭이벤트 처리
                     makeReplyRegisterClickEvent();
 
-                    // 댓글 수정 모달 오픈, 삭제 이벤트 처리
-                    openModifyModalAndRemoveEvent();
+                    // 댓글 수정 모달 오픈, 삭제, 추천 이벤트 처리
+                    openModifyModalAndRemoveAndLikeEvent();
+
+                    
 
                     // 댓글 수정 완료 버튼 이벤트 처리
                     replyModifyEvent();

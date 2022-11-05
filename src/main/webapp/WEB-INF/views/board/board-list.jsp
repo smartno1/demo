@@ -4,7 +4,8 @@
 <html lang="ko">
 
 <head>
-    <%@ include file="../include/static-head.jsp" %>
+    <!-- 부트스트랩-->
+    <%@ include file="../include/static-head.jsp" %> 
 
     <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
     <link rel="stylesheet" type="text/css" href="/css/header.css"/>
@@ -121,6 +122,7 @@
         var msg = "${msg}";
         var pageNum = "${pm.page.pageNum}";
         var amount = "${pm.page.amount}";
+        if(amount===null){amount=10;}
         var sType = "${s.type}";
         var sKeyword = "${s.keyword}";
     </script>

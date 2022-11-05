@@ -22,8 +22,12 @@ function detailEvent() {
         let bn = e.target.parentElement.firstElementChild.textContent;
         console.log('글번호: ' + bn);
 
-        location.href = '/board/content/' + bn 
-                        + "?pageNum="+pageNum+"&amount="+amount+"&type="+sType+"&keyword="+sKeyword;
+        if(sType!==null && sKeyword!==null){
+        location.href = "/board/content/" + bn + "?pageNum=" + pageNum + "&amount=" + amount + "&type=" + sType + "&keyword=" + sKeyword;
+        }else{
+         location.href = "/board/content/" + bn + "?pageNum=" + pageNum + "&amount=" + amount;
+        }
+
     });
 }
 

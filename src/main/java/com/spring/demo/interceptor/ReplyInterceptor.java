@@ -28,8 +28,10 @@ public class ReplyInterceptor implements HandlerInterceptor {
 
         String method = request.getMethod();
 
+        log.info("메소드 확인 {}",method);
+
         //GET(리스트조회)을 제외한 나머지 메서드에서 로그인 확인 및 계정 확인
-        if(!method.equalsIgnoreCase("GET")) {
+        if(!(method.equalsIgnoreCase("GET") || method.equalsIgnoreCase("POST"))) {
             if (!isLogin(session)) {
 
                 log.info("로그인 정보 없음");
@@ -38,11 +40,20 @@ public class ReplyInterceptor implements HandlerInterceptor {
                 return false;
             }
 
-            Long replyNo= (Long)request.getAttribute("rno");
+            Long replyNo= (Long)request.getAttribute("bno");
 
             ValidateMemberDTO dto = replyService.getMember(replyNo);
+
+            boolean Admin = isAdmin(session);
+            log.info(" 권한 확인 {}",Admin);
+            log.info(" 아이디 {}",dto.getAccount());
+
+
+
+            boolean myReply = isMine(session,dto.getAccount());
+            log.info(" 주인 확인 {}",myReply);
             // 세션에 저장된 계정명과 댓글의 계정명 정보가 같거나 세션계정이 관리자 권한이라면 접근허용
-            if (isAdmin(session)||isMine(session,dto.getAccount())) return true;
+            if (Admin||myReply) return true;
 
             log.info("계정다름");
 

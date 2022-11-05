@@ -37,8 +37,6 @@
         console.log(   location.pathname     );
     </script>
     <script src="/js/sign-up.js" defer>
-
-
     </script>
 </head>
 

@@ -37,8 +37,6 @@ public class LikeController {
 
         LikeTypeDTO like = new LikeTypeDTO(request);
 
-
-
         log.info("/check {} GET!! ASYNC", like );
 
         if(like!=null) {

@@ -42,8 +42,13 @@ public class BeforeLikeInterceptor implements HandlerInterceptor {
         // 본인이 작성한 게시물에는 추천 안되도록 배제
         if(account.equals(writeUser)){
             log.info("동일계정");
-            request.setAttribute("message","match-account");
-            response.sendRedirect("/");
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+//            request.setAttribute("flag","match-account");
+//            response.getWriter().write("{\"flag\":\"match-account\"}");
+            response.getWriter().write("match-account");
+
             return false;
         }
         log.info("before like interceptor preHandle() 종료");

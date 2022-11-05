@@ -2,10 +2,8 @@ package com.spring.demo.member.controller;
 
 import com.spring.demo.member.domain.Member;
 import com.spring.demo.member.dto.LoginDTO;
-import com.spring.demo.member.dto.MyPageDTO;
 import com.spring.demo.member.service.LoginFlag;
 import com.spring.demo.member.service.MemberService;
-import com.spring.demo.util.LoginUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -21,9 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import static com.spring.demo.util.LoginUtils.getCurrentMemberAccount;
-import static com.spring.demo.util.LoginUtils.isLogin;
 
 @Controller
 @Log4j2
@@ -59,22 +54,6 @@ public class MemberController {
         return new ResponseEntity<>(flag, HttpStatus.OK);
     }
 
-    // 마이페이지 비동기 처리
-    @GetMapping("/myPageInfo")
-    @ResponseBody
-    public MyPageDTO MyPageInfo(HttpSession session) {
-
-        if (isLogin(session)){
-
-            String account = getCurrentMemberAccount(session);
-
-            log.info("login account : {}", account);
-            MyPageDTO myPage = memberService.getMyPageInfo(account);
-
-            return myPage;
-        }
-        return null;
-    }
 
     // 로그인 화면을 열어주는 요청처리
     @GetMapping("/sign-in")
@@ -129,5 +108,11 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/myPage")
+    public String viewMyPage() {
+
+        return "myPage";
+
+    }
 
 }

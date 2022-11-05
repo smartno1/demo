@@ -29,19 +29,22 @@ public class BoardInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        HttpSession session = request.getSession();
-//
-////        RequestDispatcher dispatcher
-////                = request.getRequestDispatcher("/WEB-INF/views/member/sign-in.jsp");
-//
-//        log.info("board interceptor preHandle()");
-//        if (!isLogin(session)) {
-//            log.info("this request deny!! 집에 가");
-//            // dispatcher.forward(request, response);
-//
-//            response.sendRedirect("/member/sign-in?message=no-login");
-//            return false;
-//        }
+
+
+        HttpSession session = request.getSession();
+
+//        RequestDispatcher dispatcher
+//                = request.getRequestDispatcher("/WEB-INF/views/member/sign-in.jsp");
+
+        log.info("board interceptor preHandle()");
+        if (!isLogin(session)) {
+            log.info("this request deny!! 집에 가");
+            // dispatcher.forward(request, response);
+
+            response.sendRedirect("/member/sign-in?message=no-login");
+            return false;
+        }
+
         return true;
     }
 

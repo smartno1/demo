@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.demo.myPage.repository.MyPageMapper">
+
+    <resultMap id="boardMap" type="com.spring.demo.board.domain.Board">
+        <result property="boardNo" column="board_no" />
+        <result property="regDate" column="reg_date" />
+        <result property="viewCnt" column="view_cnt" />
+        <result property="likeCnt" column="like_cnt" />
+        <result property="replyCount" column="reply_cnt" />
+    </resultMap>
+
+    <resultMap id="myPageReplyMap" type="com.spring.demo.myPage.dto.MyPageReplyDTO">
+        <result property="replyNo" column="reply_no" />
+        <result property="replyText" column="reply_text" />
+        <result property="replyWriter" column="reply_writer" />
+        <result property="replyDate" column="reply_date" />
+        <result property="boardNo" column="board_no" />
+        <result property="likeCnt" column="like_cnt" />
+        <result property="boardDate" column="reg_date" />
+        <result property="boardTitle" column="title" />
+        <result property="boardReplyCnt" column="reply_cnt" />
+
+
+    </resultMap>
+
+
+    <select id="findBoardByAccount" resultMap="boardMap">
+        SELECT *
+        FROM tbl_board a
+        JOIN
+        (SELECT COUNT(*) AS "reply_cnt", board_no
+        FROM tbl_reply
+        group by board_no) b
+        ON a.board_no = b.board_no
+        WHERE account = #{account}
+        ORDER BY a.board_no DESC
+        LIMIT #{page.pageNum}, #{page.amount}
+
+    </select>
+
+    <select id="findReplyByAccount" resultMap="myPageReplyMap">
+
+        SELECT * FROM
+        tbl_reply a
+        JOIN
+        (SELECT board_no, title, reg_date
+        FROM tbl_board) b
+        INNER JOIN
+        (SELECT COUNT(*) AS "reply_cnt", board_no
+        FROM tbl_reply
+        group by board_no) r
+        ON a.board_no = b.board_no AND b.board_no = r.board_no
+        WHERE a.account = #{account}
+        ORDER BY reply_no DESC
+        LIMIT #{page.pageNum}, #{page.amount}
+
+    </select>
+
+
+    <select id="findBoardCount" resultType="int">
+
+            SELECT COUNT(*)
+            FROM tbl_board
+            WHERE account = #{account}
+
+    </select>
+
+    <select id="findReplyCount" resultType="int">
+
+        SELECT COUNT(*)
+        FROM tbl_reply
+        WHERE account = #{account}
+
+    </select>
+
+
+
+
+</mapper>

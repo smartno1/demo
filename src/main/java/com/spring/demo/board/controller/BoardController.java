@@ -137,6 +137,15 @@ public class BoardController {
     }
     // 수정 화면 요청
 
+    @ResponseBody
+    @DeleteMapping("/{dno}")
+    public String myDelete(@PathVariable Long dno) {
+        log.info("/board DELETE! - {}", dno);
+        boolean flag = boardService.removeService(dno);
+        return flag ? "del-success" : "del-fail";
+
+    }
+
     @GetMapping("/modify")
     public String modify(Long boardNo, Model model, HttpServletRequest request, HttpServletResponse response) {
         log.info("controller request /board/modify GET! - bno: {}", boardNo);

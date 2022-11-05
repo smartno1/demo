@@ -48,25 +48,7 @@
         </if>
     </sql>
 
-<!--    <select id="findAll2" resultMap="boardMap">-->
-<!--        SELECT  *-->
-<!--        FROM (-->
-<!--        SELECT ROWNUM rn, v_board.*-->
-<!--        FROM (-->
-<!--        SELECT *-->
-<!--        FROM tbl_board-->
-<!--        <if test="type == 'title'">WHERE title LIKE '%' || #{keyword} || '%'</if>-->
-<!--        <if test="type == 'writer'">WHERE writer LIKE '%' || #{keyword} || '%'</if>-->
-<!--        <if test="type == 'content'">WHERE content LIKE '%' || #{keyword} || '%'</if>-->
-<!--        <if test="type == 'tc'">-->
-<!--            WHERE title LIKE '%' || #{keyword} || '%'-->
-<!--            OR content LIKE '%' || #{keyword} || '%'-->
-<!--        </if>-->
-<!--        ORDER BY board_no DESC-->
-<!--        ) v_board-->
-<!--        )-->
-<!--        WHERE rn BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND (#{pageNum} * #{amount})-->
-<!--    </select>-->
+
 
 
     <select id="findOne" resultMap="boardMap">
@@ -102,19 +84,14 @@
         WHERE board_no=#{boardNo}
     </update>
 
-    <insert id="addFile">
 
-        INSERT INTO file_upload
-        (file_name, bno)
-        VALUES
-        (#{fileName}, last_insert_id())
 
-    </insert>
 
-    <select id="findFileNames" resultType="string">
-        SELECT file_name
-        FROM file_upload
-        WHERE bno = #{bno}
+
+    <select id="getReplyCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_reply
+        WHERE board_no = #{boardNo}
     </select>
 
 

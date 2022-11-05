@@ -92,13 +92,13 @@ public class BoardService {
             convertDateFormat(b);
             substringTitle(b);
             checkNewArticle(b);
-//            setReplyCount(b);
+            setReplyCount(b);
         }
     }
 
-//    private void setReplyCount(Board b) {
-//        b.setReplyCount(replyMapper.getReplyCount(b.getBoardNo()));
-//    }
+    private void setReplyCount(Board b) {
+        b.setReplyCount(replyMapper.getReplyCount(b.getBoardNo()));
+    }
 
     // 신규 게시물 여부 처리
     private void checkNewArticle(Board b) {

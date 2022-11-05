@@ -57,6 +57,7 @@ public class BoardController {
 
         model.addAttribute("bList", boardMap.get("bList"));
         model.addAttribute("pm", pm);
+        model.addAttribute("s",search);
 
         return "board/board-list";
     }
@@ -68,6 +69,8 @@ public class BoardController {
             , @ModelAttribute("p") Page page
     ) {
         log.info("controller request /board/content GET! - {}", boardNo);
+        log.info("controller request /board/content GET! - Page {}", page);
+
         Board board = boardService.findOneService(boardNo, response, request);
         log.info("return data - {}", board);
         model.addAttribute("b", board);
@@ -95,8 +98,6 @@ public class BoardController {
     ) {
 
         log.info("controller request /board/write POST! - {}", board);
-
-
 
 
         // 현재 로그인 사용자 계정명 추가

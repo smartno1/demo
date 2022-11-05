@@ -1,6 +1,7 @@
 function alertServerMessage() {
     const msg = '${msg}';
-    // console.log('msg: ', msg);
+    console.log('msg: ', msg);
+    
 
     if (msg === 'reg-success') {
         alert('게시물이 정상 등록되었습니다.');
@@ -11,9 +12,14 @@ function alertServerMessage() {
 function detailEvent() {
     //상세보기 요청 이벤트
     const $table = document.querySelector(".articles");
+    
+    console.log("pageNum : "+"${pm.page.pageNum}");
+    console.log("amount : "+"${pm.page.amount}");
+    console.log("sType : "+"${s.type}");
+    console.log("sKeyword : "+"${s.keyword}");
 
     $table.addEventListener('click', e => {
-
+        e.preventDefault();
 
         if (!e.target.matches('.articles td')) return;
 
@@ -21,6 +27,8 @@ function detailEvent() {
 
         let bn = e.target.parentElement.firstElementChild.textContent;
         console.log('글번호: ' + bn);
+
+
 
         location.href = '/board/content/' + bn 
                         + "?pageNum=${pm.page.pageNum}"
@@ -34,7 +42,7 @@ function appendPageActive() {
     // 현재 내가 보고 있는 페이지 넘버
     const curPageNum = '${pm.page.pageNum}';
     // console.log("현재페이지: ", curPageNum);
-
+    console.log("pageNum : "+curPageNum);
     // 페이지 li태그들을 전부 확인해서 
     // 현재 위치한 페이지 넘버와 텍스트컨텐츠가 일치하는
     // li를 찾아서 class active 부여

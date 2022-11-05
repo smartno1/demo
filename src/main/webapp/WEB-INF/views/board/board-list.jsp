@@ -18,6 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
   <link rel="stylesheet" type="text/css" href="/css/header.css"/>
    <link rel="stylesheet" type="text/css" href="/css/board-list.css"/>
+
+   <script src="/js/board-list.js" defer></script>
 </head>
 
 <body>
@@ -65,20 +67,21 @@
                         <th>작성시간</th>
                     </tr>
 
-                <!-- <c:forEach var="b" items="${bList}"> -->
+                <c:forEach var="b" items="${bList}">
                     <tr class="trlect2">
                         <td>${b.boardNo}</td>
                         <td>${b.writer}</td>
                         <td title="${b.title}">
                             ${b.shortTitle} [${b.replyCount}]
-                            <!-- <c:if test="${b.newArticle}"> -->
+                            <c:if test="${b.newArticle}">
                                 <span class="badge rounded-pill bg-danger">new</span>
-                            <!-- </c:if> -->
+                            </c:if>
+                            <b>${b.likeCnt}(추천)</b>
                         </td>
                         <td>${b.viewCnt}</td>
                         <td>${b.prettierDate}</td>
                     </tr>
-                <!-- </c:forEach> -->
+                </c:forEach>
             </table>
 
             <!-- 게시글 목록 하단 영역 -->
@@ -88,31 +91,31 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination pagination-lg pagination-custom">
 
-                        <!-- <c:if test="${pm.prev}"> -->
+                        <c:if test="${pm.prev}">
                             <li class="page-item"><a class="page-link"
                                     href="/board/list?pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}&type=${s.type}&keyword=${s.keyword}">prev</a></li>
-                        <!-- </c:if> -->
+                        </c:if>
 
-                        <!-- <c:forEach var="n" begin="${pm.beginPage}" end="${pm.endPage}" step="1"> -->
+                        <c:forEach var="n" begin="${pm.beginPage}" end="${pm.endPage}" step="1">
                             <li data-page-num="${n}" class="page-item">
                                 <a class="page-link" href="/board/list?pageNum=${n}&amount=${pm.page.amount}&type=${s.type}&keyword=${s.keyword}">${n}</a>
                             </li>
-                        <!-- </c:forEach> -->
+                        </c:forEach>
 
-                        <!-- <c:if test="${pm.next}"> -->
+                        <c:if test="${pm.next}">
                             <li class="page-item"><a class="page-link"
                                     href="/board/list?pageNum=${pm.endPage + 1}&amount=${pm.page.amount}&type=${s.type}&keyword=${s.keyword}">next</a></li>
-                        <!-- </c:if> -->
+                        </c:if>
 
                     </ul>
                 </nav>
 
                 <!-- 글쓰기 버튼 영역 -->
-                <!-- <c:if test="${loginUser != null}"> -->
+                <c:if test="${loginUser != null}">
                     <div class="btn-write">
                         <a class="btn btn-outline-danger btn-lg" href="/board/write">글쓰기</a>
                     </div>
-                <!-- </c:if> -->
+                </c:if>
             </div><!-- 게시글 목록 하단 영역 -->
         </div> <!-- 목록 개수별 보기 영역 -->
 

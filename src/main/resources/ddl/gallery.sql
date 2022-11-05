@@ -7,6 +7,6 @@ CREATE TABLE gallery(
     , text VARCHAR(500) NOT NULL
     , reg_date DATETIME DEFAULT current_timestamp
     , like_cnt INT NOT NULL DEFAULT 0
-    , CONSTRAINT pk_gallery PRIMARY KEY(id)
+    , CONSTRAINT pk_gallery PRIMARY KEY(gallery_no)
 
 );

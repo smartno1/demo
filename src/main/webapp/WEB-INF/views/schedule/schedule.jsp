@@ -38,6 +38,7 @@
               selectable: true,
               selectMirror: true,
               select: function(arg) {
+                if(!("${loginUser.auth}"==="ADMIN"))return;
                 var title = prompt('일정을 적어주세요:');
                 
                 if (title) {
@@ -71,6 +72,7 @@
                 calendar.unselect()
               },
               eventClick: function(arg) {
+                if(!("${loginUser.auth}"==="ADMIN"))return;
                 if (confirm('이 일정을 삭제하시겠습니까?')) {
                     console.log("아이디" + arg.event.id);
 

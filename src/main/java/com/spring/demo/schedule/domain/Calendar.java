@@ -6,10 +6,11 @@ import lombok.*;
 @AllArgsConstructor @NoArgsConstructor
 public class Calendar {
 
-    private int calNo;
+    private int no;
     private String title;
     private String start;
     private String end;
     private String content;
     private String account;
+    private boolean allDay;
 }

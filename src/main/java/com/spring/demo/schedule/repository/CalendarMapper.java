@@ -10,7 +10,9 @@ import java.util.List;
 @Mapper
 public interface CalendarMapper {
 
-    List<Calendar> findall(Dto dto);
+    List<Calendar> findAll();
+
+    Calendar findOne(Dto dto);
 
     boolean insert(Calendar calendar);
 

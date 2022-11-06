@@ -76,9 +76,6 @@ class MemberMapperTest {
 
         Member m = new Member();
 
-
-
-
         m.setAccount("hello");
         m.setPassword(new BCryptPasswordEncoder().encode("1234"));
         m.setFavorite(FavoriteMember.V);

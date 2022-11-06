@@ -454,8 +454,12 @@ function MemberEvent() {
    
     $nav.onclick = e => {
 
+        $pwChk= document.getElementById("validatePasswordForm");
+
+        //스타일 초기화
         document.getElementById("member_profile").innerHTML =""
         document.getElementById("post_btns").style.display = "none";
+        $pwChk.parentElement.style.display = "none";
 
         e.preventDefault();
 

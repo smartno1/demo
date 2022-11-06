@@ -1,6 +1,5 @@
 function alertServerMessage() {
-    const msg = '${msg}';
-    // console.log('msg: ', msg);
+     
 
     if (msg === 'reg-success') {
         alert('게시물이 정상 등록되었습니다.');
@@ -12,6 +11,7 @@ function detailEvent() {
     //상세보기 요청 이벤트
     const $table = document.querySelector(".articles");
 
+
     $table.addEventListener('click', e => {
 
 
@@ -22,9 +22,12 @@ function detailEvent() {
         let bn = e.target.parentElement.firstElementChild.textContent;
         console.log('글번호: ' + bn);
 
-        location.href = '/board/content/' + bn 
-                        + "?pageNum=${pm.page.pageNum}"
-                        + "&amount=${pm.page.amount}";
+        if(sType!==null && sKeyword!==null){
+        location.href = "/board/content/" + bn + "?pageNum=" + pageNum + "&amount=" + amount + "&type=" + sType + "&keyword=" + sKeyword;
+        }else{
+         location.href = "/board/content/" + bn + "?pageNum=" + pageNum + "&amount=" + amount;
+        }
+
     });
 }
 
@@ -32,7 +35,7 @@ function detailEvent() {
 function appendPageActive() {
 
     // 현재 내가 보고 있는 페이지 넘버
-    const curPageNum = '${pm.page.pageNum}';
+    const curPageNum = pageNum;
     // console.log("현재페이지: ", curPageNum);
 
     // 페이지 li태그들을 전부 확인해서 
@@ -54,7 +57,7 @@ function fixSearchOption() {
     const $select = document.getElementById('search-type');
 
     for (let $opt of [...$select.children]) {
-        if ($opt.value === '${s.type}') {
+        if ($opt.value === sType) {
             $opt.setAttribute('selected', 'selected');
             break;
         }
@@ -70,3 +73,4 @@ function fixSearchOption() {
     fixSearchOption();
 
 })();
+

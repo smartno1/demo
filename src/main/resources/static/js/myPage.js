@@ -4,7 +4,7 @@ const URL = '/api/v1/my-page'
 let type = "board";
 
 //날짜 포맷 변환 함수
-function formatDate(datetime) {
+function formatDate(datetime,flag) {
     //문자열 날짜 데이터를 날짜객체로 변환
     const dateObj = new Date(datetime);
     // console.log(dateObj);
@@ -35,7 +35,10 @@ function formatDate(datetime) {
     (day < 10) ? day = '0' + day : day;
     (hour < 10) ? hour = '0' + hour : hour;
     (minute < 10) ? minute = '0' + minute : minute;
-    return year + "-" + month + "-" + day + " " + ampm + " " + hour + ":" + minute;
+
+    if(flag){}
+    else{}
+    return year + "-" + month + "-" + day;
 }
 
 // 댓글 목록 DOM을 생성하는 함수
@@ -49,13 +52,16 @@ function makeReplyDOM({
         "<table>																							" +
         "                           <caption><span class='blind'>댓글 목록</span></caption>                    " +
         "                           <colgroup>                                                             " +
-        "                               <col>                                                              " +
-        "                               <col style='width: 92px;'>                                         " +
+        "                               <col style='width: 600px;'>                                                              " +
+        "                               <col style='width: 120px;'>                                         " +
         "                           </colgroup>                                                            " +
         "                           <thead>                                                                " +
         "                               <tr>                                                               " +
-        "                                   <th scope='col' colspan='2'>                                   " +
+        "                                   <th scope='col' >                                   " +
         "                                       댓글                                                         " +
+        "                                   </th>                                                          " +
+        "                                   <th scope='col'>                                   " +
+        "                                       추천수                                                         " +
         "                                   </th>                                                          " +
         "                               </tr>                                                              " +
         "                           </thead>                                                               " +
@@ -79,19 +85,21 @@ function makeReplyDOM({
                 "                    </div>                                                                                     " +
                 "                </div>                                                                                         " +
                 "                <a href='/board/content/" + rep.boardNo + "'" +
-                "                    target='_blank' class='board-list'>                                                        " +
-                "                    <div class='inner_list'><strong class='article'>" + rep.replyText + "</strong>                 " +
-                "                    </div>                                                                                     " +
-                "                    <div class='comment_date'>                                                                 " +
-                formatDate(rep.boardDate) +
-                "                    </div>                                                                                     " +
-                "                    <div class='comment_title'>                                                                " +
+                "                    target='_blank' class='reply-list'>                                                        " +
+                "                    <li class='inner_list'><strong class='article'>" + rep.replyText + "</strong>                 " +
+                "                    </li>                                                                                     " +
+                "                    <li class='reply_date'>                                                                 " +
+                formatDate(rep.replyDate) +
+                "                    </li>                                                                                     " +
+                "                    <li class='reply_title'>                                                                " +
                 rep.boardTitle +
                 "                        <span class='cmt'>[<em>" + rep.boardReplyCnt + "</em>]</span>                              " +
-                "                    </div>                                                                                     " +
+                "                    </li>                                                                                     " +
                 "                </a>                                                                                           " +
                 "            </td>                                                                                              " +
-                "            <td class='td_view'>                                                                               " +
+                "            </td>                                                                                      " +
+                "            <td class='td_like'>                                                                               " +
+                                rep.likeCnt +
                 "            </td>                                                                                              " +
                 "        </tr>                                                                                                  ";
 
@@ -127,7 +135,8 @@ function makeBoardDOM({
         "    <colgroup>                                                                                         " +
         "        <col>                                                                                          " +
         "        <col style='width: 120px;'>                                                                    " +
-        "        <col style='width: 80px;'>                                                                     " +
+        "        <col style='width: 120px;'>                                                                     " +
+        "        <col style='width: 120px;'>                                                                     " +
         "    </colgroup>                                                                                        " +
         "    <thead>                                                                                            " +
         "        <tr>                                                                                           " +
@@ -139,7 +148,10 @@ function makeBoardDOM({
         "                작성일                                                                                    " +
         "            </th>                                                                                      " +
         "            <th scope='col'>                                                                           " +
-        "                조회                                                                                     " +
+        "                조회수                                                                                     " +
+        "            </th>                                                                                      " +
+        "            <th scope='col'>                                                                           " +
+        "                추천수                                                                                     " +
         "            </th>                                                                                      " +
         "            <!---->                                                                                    " +
         "        </tr>                                                                                          " +
@@ -148,6 +160,7 @@ function makeBoardDOM({
 
     if (boardList === null || boardList.length === 0) {
         tag += "<tr><td colspan='4' class='blocked_list'>작성 한 게시글이 없습니다.</td></tr>";
+        document.getElementById("post_btns").style.display = "none";
 
     } else {
         for (let boa of boardList) {
@@ -182,6 +195,9 @@ function makeBoardDOM({
                 "            <td class='td_view'>                                                                       " +
                 boa.viewCnt +
                 "            </td>                                                                                      " +
+                "            <td class='td_like'>                                                                       " +
+                boa.likeCnt +
+                "            </td>                                                                                      " +
                 "        </tr>                                                                                          ";
 
 
@@ -190,7 +206,7 @@ function makeBoardDOM({
             "</table>" +
             "</div>";
 
-
+            document.getElementById("post_btns").style.display = "block";
 
 
     }
@@ -198,11 +214,13 @@ function makeBoardDOM({
     // 목록에 생성된 게시판 DOM 추가
     document.getElementById("member_profile").innerHTML = tag;
 
-    document.getElementById("post_btns").style.display = "block";
+    
 
 
     // 페이지 렌더링
     makePageDOM(maker);
+
+    checkkAll();
 
 
 
@@ -357,7 +375,7 @@ function processRemove(dNo) {
 // 댓글 목록을 서버로부터 비동기요청으로 불러오는 함수
 function showReplies(pageNum = 1) {
 
-    fetch(URL + '/reply' + '?pageNum=' + pageNum)
+    fetch(URL + '/reply' + '?pageNum=' + pageNum + '&amount=6')
         .then(res => res.json())
         .then(replyMap => {
             // console.log(replyMap.replyList);
@@ -412,27 +430,103 @@ function MemberBoardList() {
 
 
 }
+function MemberProfile(){
+
+    $pwChk= document.getElementById("validatePasswordForm");
+
+    $pwChk.parentElement.style.display = "block";
+
+  
+
+    document.getElementById("checkPw-btn").onclick = e => {
+        e.preventDefault();
+
+        $pwChk.submit();
+
+    }
+
+    
+}
 
 function MemberEvent() {
 
     $nav = document.getElementById("myPageNav");
-
+   
     $nav.onclick = e => {
-        if (e.target.matches('.myBoard')) {
-            e.preventDefault();
+
+        document.getElementById("member_profile").innerHTML =""
+        document.getElementById("post_btns").style.display = "none";
+
+        e.preventDefault();
+
+        var unActive = type;
+
+        if (e.target.matches('.board')) {
+            
             type = "board";
-            MemberBoardList();
-        } else if (e.target.matches('.myReply')) {
-            e.preventDefault();
+            
+        } else if (e.target.matches('.reply')) {
+            
             type = "reply";
-            MemberReplies();
-        } else if (e.target.matches('.myProfile')) {
-            e.preventDefault();
+            
+        } else if (e.target.matches('.profile')) {
+            
             type = "profile";
+           
+        }else{
             return;
         }
 
+        processMenuEvent(unActive);
 
+
+
+
+    }
+
+}
+
+
+
+
+function processMenuEvent(unActive){
+
+    var active = type;
+
+    $deactivateTag = document.querySelector("."+unActive);
+    $deactivateTag.classList.remove('active');
+    
+    $activeTag = document.querySelector("."+active);
+    $activeTag.classList.add('active');
+
+
+
+    if(type==="board"){
+        MemberBoardList();
+    }else if(type==="reply"){
+        MemberReplies();
+    }else if(type==="profile"){
+        MemberProfile();
+    }
+
+
+
+}
+
+function checkkAll(){
+
+    $chk_all= document.getElementById("chk_all");
+    $checkList = document.querySelectorAll(".input_check");
+
+  
+
+    $chk_all.onclick = e =>{ 
+
+        for($check of $checkList){
+        $check.checked = $chk_all.checked;
+        }
+
+    
     }
 
 }
@@ -451,6 +545,7 @@ function MemberEvent() {
     console.log("MemberEvent 호출");
     // 메뉴 이벤트 추가
     MemberEvent();
+    
 
 
 

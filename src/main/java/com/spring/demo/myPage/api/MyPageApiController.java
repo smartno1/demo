@@ -26,6 +26,9 @@ public class MyPageApiController {
 
     private final MyPageService myPageService;
 
+
+
+
     @GetMapping("/board")
     public Map<String, Object> getMyBoard(HttpSession session, Page page){
 

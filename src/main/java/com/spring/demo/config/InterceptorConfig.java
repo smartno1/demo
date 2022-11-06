@@ -23,6 +23,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     private final GalleryInterceptor galleryInterceptor;
 
+    private final MyPageInterceptor myPageInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
@@ -42,6 +44,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 비포 라이크 인터셉터 설정
         registry.addInterceptor(beforeLikeInterceptor)
                 .addPathPatterns("/like/*");
+
+        registry.addInterceptor(myPageInterceptor)
+                .addPathPatterns("/myPage/*","/member/myPage");
 
 
         // 게시판 인터셉터 설정

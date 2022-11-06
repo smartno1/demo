@@ -6,6 +6,7 @@ import com.spring.demo.board.service.BoardService;
 import com.spring.demo.common.paging.Page;
 import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.common.search.Search;
+import com.spring.demo.util.LoginUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,7 @@ public class BoardController {
 
         model.addAttribute("bList", boardMap.get("bList"));
         model.addAttribute("pm", pm);
+        model.addAttribute("s",search);
 
         return "board/board-list";
     }
@@ -67,6 +69,8 @@ public class BoardController {
             , @ModelAttribute("p") Page page
     ) {
         log.info("controller request /board/content GET! - {}", boardNo);
+        log.info("controller request /board/content GET! - Page {}", page);
+
         Board board = boardService.findOneService(boardNo, response, request);
         log.info("return data - {}", board);
         model.addAttribute("b", board);
@@ -89,27 +93,19 @@ public class BoardController {
     // 게시물 등록 요청
     @PostMapping("/write")
     public String write(Board board,
-                        @RequestParam("files") List<MultipartFile> fileList,
                         RedirectAttributes ra,
                         HttpSession session
     ) {
 
         log.info("controller request /board/write POST! - {}", board);
 
-        /*if (fileList != null) {
-            List<String> fileNames = new ArrayList<>();
-            for (MultipartFile f : fileList) {
-                log.info("attachmented file-name: {}", f.getOriginalFilename());
-                fileNames.add(f.getOriginalFilename());
-            }
-            // board객체에 파일명 추가
-            board.setFileNames(fileNames);
-        }*/
 
         // 현재 로그인 사용자 계정명 추가
-//        board.setAccount(LoginUtils.getCurrentMemberAccount(session));
+        board.setAccount(LoginUtils.getCurrentMemberAccount(session));
 
         boolean flag = boardService.saveService(board);
+        log.info("글쓰기 플래그 - {}",flag);
+
         // 게시물 등록에 성공하면 클라이언트에 성공메시지 전송
         if (flag) ra.addFlashAttribute("msg", "reg-success");
 
@@ -117,7 +113,7 @@ public class BoardController {
     }
 
 
-    // 게시물 삭제 확정 요청
+    // 게시물 삭제  요청
     @GetMapping("/delete")
     public String delete(@ModelAttribute("boardNo") Long boardNo, Model model) {
 
@@ -152,28 +148,28 @@ public class BoardController {
         Board board = boardService.findOneService(boardNo, response, request);
         log.info("find article: {}", board);
 
+
         model.addAttribute("board", board);
+
+        model.addAttribute("validate", boardService.getMember(boardNo));
 
         return "board/board-modify";
     }
 
     // 수정 처리 요청
     @PostMapping("/modify")
-    public String modify(Board board) {
+    public String modify(Board board, RedirectAttributes ra) {
         log.info("controller request /board/modify POST! - {}", board);
         boolean flag = boardService.modifyService(board);
-        return flag ? "redirect:/board/content/" + board.getBoardNo() : "redirect:/";
+
+        if (!flag) ra.addFlashAttribute("msg", "mod-failed");
+        else ra.addFlashAttribute("msg", "mod-success");
+        return  "redirect:/board/content/" + board.getBoardNo();
+
+
     }
 
-    @GetMapping("/file/{bno}")
-    @ResponseBody
-    public ResponseEntity<List<String>> getFiles(@PathVariable Long bno) {
 
-        List<String> files = boardService.getFiles(bno);
-        log.info("/board/file/{} GET! ASYNC - {}", bno, files);
-
-        return new ResponseEntity<>(files, HttpStatus.OK);
-    }
 
 
 

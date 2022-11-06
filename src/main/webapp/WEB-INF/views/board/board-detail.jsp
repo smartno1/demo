@@ -4,12 +4,35 @@
         <html lang="ko">
 
         <head>
-            <%@ include file="../include/static-head.jsp" %>
+              <!-- reset css -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
 
+            <!-- 부트스트랩-->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
+            <link rel="stylesheet" type="text/css" href="/css/header.css"/>
+            <style>
+                a {color: #fff; text-decoration: none; outline: none}
+                a:hover, a:active {text-decoration: none; }
+                .header-wrraper .nav .nav-ul{
+                        padding: 0; 
+                    }
+                .header-wrraper .nav .nav-ul li{
+                        list-style: none;
+                    }
+                .wrap{
+                    padding-bottom: 150px;
+                }
+                
+
+
+              </style>
                 <style>
+
+                 
                     .content-container {
                         width: 60%;
-                        margin: 150px auto;
+                        margin: 0px auto;
                         position: relative;
                     }
 
@@ -33,11 +56,50 @@
                     }
 
                     .content-container .custom-btn-group {
-                        position: absolute;
-                        bottom: -10%;
-                        left: 50%;
+                        position: fixed;
+                        width: 60px;
+                        height: 120px;
+                        bottom: 40%;
+                        right: 5%;
                         transform: translateX(-50%);
+                        box-sizing: border-box;
+                        border-radius: 0.5rem ;
+                  
+                        overflow: hidden;
+                        margin: 0;
                     }
+                    .content-container .custom-btn-group .btn{
+                        position: absolute;
+
+                        height: 40px;
+                        width: 60px;
+                        border-radius: 0;
+                        box-sizing: border-box;
+                        
+                        text-align: center;
+                        line-height: 40px;
+                        
+                    }
+
+                    #mod-btn{
+                        margin: 0;
+                        padding: 0;
+                        transform: translateY(-0%);
+
+                    }
+                    #del-btn{
+                        margin: 0;
+                        padding: 0;
+                        transform: translateY(200%);
+
+                    }
+                    #list-btn{
+                        margin: 0;
+                        padding: 0;
+                        transform: translateY(100%);
+
+                    }
+
 
                     /* 페이지 액티브 기능 */
                     .pagination .page-item.p-active a {
@@ -89,13 +151,18 @@
                     #LikeAndDate {
                         width: 40%;
                     }
+
+
+           
                 </style>
+
+
         </head>
 
         <body>
-
+            <%@ include file="../include/header.jsp" %>
             <div class="wrap">
-                <%@ include file="../include/header.jsp" %>
+                
 
                     <div class="content-container">
 
@@ -119,11 +186,13 @@
 
                             </p>
 
+                            <a id="boardLikeBtn" class="page-link" href='#'><img id="boardLikeImg"><span id="boardLikeCnt">추천${b.likeCnt}</span></a>
+
                         </div>
 
 
 
-                        <div class="btn-group btn-group-lg custom-btn-group" role="group">
+                        <div class="btn-group btn-group-lg custom-btn-group clear-fix" role="group">
 
                             <c:if test="${loginUser.account == b.account || loginUser.auth == 'ADMIN'}">
                                 <button id="mod-btn" type="button" class="btn btn-warning">수정</button>
@@ -141,7 +210,7 @@
                                     <div class="card-body">
 
                                         <c:if test="${empty loginUser}">
-                                            <a href="/member/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
+                                            <a class="page-link" href="/member/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
                                         </c:if>
 
                                         <c:if test="${not empty loginUser}">
@@ -233,13 +302,23 @@
                     </div>
 
 
-                    <%@ include file="../include/footer.jsp" %>
+                  
             </div>
 
 
             <!-- 게시글 상세보기 관련 script -->
             <script>
-                // const [$modBtn, $delBtn, $listBtn] = [...document.querySelector('div[role=group]').children];
+                
+                function alertServerMessage() {
+                        const msg ="${msg}";
+                    if (msg=== 'mod-success') {
+                                 
+                        alert('게시물이 정상 수정되었습니다.');
+                         
+                    }else if(msg==="mod-failed"){
+                       alert('게시물 수정을 실패 하였습니다.');
+                    }
+                }
 
                 const $modBtn = document.getElementById('mod-btn');
                 const $delBtn = document.getElementById('del-btn');
@@ -272,6 +351,7 @@
 
             <!-- 댓글관련 script -->
             <script>
+
 
                 // 로그인한 회원 계정명
                 const currentAccount = '${loginUser.account}';
@@ -377,7 +457,7 @@
                                 "         <b>" + rep.replyWriter + "</b>" +
                                 "       </span>" +
                                 "<div id='LikeAndDate'>" +
-                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' href='#'><img id='replyImg'>" + rep.likeCnt + "</a> " +
+                                "<a id='replyLikeBtn' class='btn btn-sm btn-outline-dark' data-account="+rep.account +"href='#'><img id='replyLikeImg'>" + rep.likeCnt + "</a> " +
                                 "       <span class='offset-md-1 col-md-3 text-right dateForm'><b>" + formatDate(rep.replyDate) +
                                 "</b></span></div>" +
                                 "    </div><br>" +
@@ -440,13 +520,18 @@
                 // 댓글 등록 이벤트 처리 핸들러 등록 함수
                 function makeReplyRegisterClickEvent() {
 
-                    // console.log(document.getElementById('replyAddBtn'));
-                    document.getElementById('replyAddBtn').onclick = makeReplyRegisterClickHandler;
+   
+                    
+                    document.querySelector('.card-body').onclick = makeReplyRegisterClickHandler;
+                    
                 }
+
 
 
                 // 댓글 등록 이벤트 처리 핸들러 함수
                 function makeReplyRegisterClickHandler(e) {
+                    
+                    if(!e.target.matches("#replyAddBtn"))return;
 
                     const $writerInput = document.getElementById('newReplyWriter');
                     const $contentInput = document.getElementById('newReplyText');
@@ -497,7 +582,7 @@
 
                     // 모달에 해당 댓글내용을 배치한다.
                     document.getElementById('modReplyText').value = replyText;
-
+                    
                     // 모달을 띄울 때 다음 작업(수정완료처리)을 위해 댓글번호를 모달에 달아두자.
                     const $modal = document.querySelector('.modal');
                     $modal.dataset.rno = rno;
@@ -523,10 +608,102 @@
 
                 // 댓글 추천 상세처리
 
-                function processLike(rno) {
+         
+
+
+
+
+
+                // 댓글 수정화면 열기, 삭제 처리, 추천 처리 핸들러 정의 
+                function makeReplyModAndDelHandler(e) {
+
+                    const rno = e.target.parentElement.parentElement.parentElement.dataset.replyid;
+                    
+
+                    e.preventDefault();
+
+                    // console.log('수정버튼 클릭함!! before');
+                    if (e.target.matches('#replyModBtn')) {
+                        processModifyShow(e, rno);
+                    } else if (e.target.matches('#replyDelBtn')) {
+                        processRemove(rno);
+                    } else if (e.target.matches('#replyLikeBtn')) {
+                        processLike(rno, e);
+                    }
+                }
+
+                // 댓글 수정 화면 열기, 삭제, 추천 이벤트 처리
+                function openModifyModalAndRemoveAndLikeEvent() {
+
+                    const $replyData = document.getElementById('replyData');
+                    $replyData.onclick = makeReplyModAndDelHandler;
+                }
+
+                // 댓글 수정 비동기 처리 이벤트
+                function replyModifyEvent() {
+
+                    const $modal = document.querySelector('#modal-close');
+                    
+                    document.getElementById('replyModBtn').onclick =
+                        e => {
+                            // console.log('수정 완료 버튼 클릭!');
+
+                            // 서버에 수정 비동기 요청 보내기
+                            const rno = e.target.closest('.modal').dataset.rno;
+                            console.log('mod post rno', rno);
+                            const modText = document.getElementById('modReplyText').value
+                            
+                            console.log(modText)
+                            const reqInfo = {
+                                method: 'PUT',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    replyText: modText,
+                                    replyNo: rno
+                                })
+                            };
+
+
+                            fetch(URL + '/' + rno, reqInfo)
+                                .then(res => res.text())
+                                .then(msg => {
+                                    if (msg === 'mod-success') {
+                                        
+                                        $modal.click();
+                                        // 모달창 닫기
+                                        
+                                        showReplies(); // 댓글 새로불러오기
+                                        alert('수정 성공!!');
+
+                                    } else {
+                                        alert('수정 실패!!');
+                                    }
+                                });
+                        };
+                }
+
+
+                function openBoardLikeEvent(){
+
+                    $boardLikeBtn = document.getElementById("boardLikeBtn");
+
+                    $boardLikeBtn.onclick = processBoardLike;
+
+
+
+                }
+                function processLike(rno, e) {
+
+                    if("${loginUser}"===null){
+                        alert("로그인 후 추천 가능합니다.");
+                        return;
+                    }
+                    console.log(e.target.dataset.account);
 
                   
-                    if("${loginUser.account}"==="${b.account}"){
+                    if("${loginUser.account}"===e.target.dataset.account){
                         alert("작성자는 추천할 수 없습니다.")
                         return;
                     }
@@ -567,74 +744,57 @@
                     }
 
 
-
-
-
-
-                // 댓글 수정화면 열기, 삭제 처리, 추천 처리 핸들러 정의 
-                function makeReplyModAndDelHandler(e) {
-
-                    const rno = e.target.parentElement.parentElement.parentElement.dataset.replyid;
+                function processBoardLike(e){
                     
-
-                    e.preventDefault();
-
-                    // console.log('수정버튼 클릭함!! before');
-                    if (e.target.matches('#replyModBtn')) {
-                        processModifyShow(e, rno);
-                    } else if (e.target.matches('#replyDelBtn')) {
-                        processRemove(rno);
-                    } else if (e.target.matches('#replyLikeBtn')) {
-                        processLike(rno);
+                    console.log("${loginUser}"!==null);
+                    if("${loginUser}"===null){
+                        alert("로그인 후 추천 가능합니다.");
+                        return;
                     }
+                    var boardNo = "${b.boardNo}";
+                    if("${loginUser.account}"==="${b.account}"){
+                        alert("작성자는 추천할 수 없습니다.");
+                        return;
+                    }
+
+                    fetch("/like/check?boardNo=" +boardNo)
+                    .then(res => res.text())
+                    .then(flag => {
+
+
+                        if(flag==="true"){
+                            if (!confirm('추천을 취소하시겠습니까???'))return;
+                        }else if(flag==="false"){
+                            if (!confirm('추천하시겠습니까?'))return;
+
+                        }else if(flag==="match-account"){
+                            alert("작성자는 추천할 수 없습니다.");
+                            return;
+                        }else{
+                            alert("잘못된 입력")
+                            return;
+                        }
+                        console.log("게시글 추천 업데이트");
+
+                        fetch("/like/update?boardNo=" +boardNo)
+                            .then(res => res.text())
+                             .then(cnt => {
+
+                                console.log(cnt);
+
+                                if(cnt!=="null"){
+                                    document.getElementById("boardLikeCnt").innerHTML = cnt;
+                                }else{
+                                    alert("추천실패");
+                                    return;
+                                }
+                            });
+                        
+
+                    });
                 }
-
-                // 댓글 수정 화면 열기, 삭제, 추천 이벤트 처리
-                function openModifyModalAndRemoveEvent() {
-
-                    const $replyData = document.getElementById('replyData');
-                    $replyData.onclick = makeReplyModAndDelHandler;
-                }
-
-                // 댓글 수정 비동기 처리 이벤트
-                function replyModifyEvent() {
-
-                    const $modal = document.getElementById('replyModifyModal');
-
-                    document.getElementById('replyModBtn').onclick =
-                        e => {
-                            // console.log('수정 완료 버튼 클릭!');
-
-                            // 서버에 수정 비동기 요청 보내기
-                            const rno = e.target.closest('.modal').dataset.rno;
-                            console.log('mod post rno', rno);
-
-                            const reqInfo = {
-                                method: 'PUT',
-                                headers: {
-                                    'content-type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    replyText: $('#modReplyText').val(),
-                                    replyNo: rno
-                                })
-                            };
-
-
-                            fetch(URL + '/' + rno, reqInfo)
-                                .then(res => res.text())
-                                .then(msg => {
-                                    if (msg === 'mod-success') {
-                                        alert('수정 성공!!');
-                                        $modal.modal('hide'); // 모달창 닫기
-                                        showReplies(); // 댓글 새로불러오기
-                                    } else {
-                                        alert('수정 실패!!');
-                                    }
-                                });
-                        };
-                }
-
+                    
+                
 
 
                 // 메인 실행부
@@ -643,14 +803,19 @@
                     // 초기 화면 렌더링시 댓글 1페이지 렌더링
                     showReplies();
 
+                    //게시글 추천 이벤트 처리
+                    openBoardLikeEvent();
+
                     // 댓글 페이지 버튼 클릭이벤트 처리
                     makePageButtonClickEvent();
 
                     // 댓글 등록 버튼 클릭이벤트 처리
                     makeReplyRegisterClickEvent();
 
-                    // 댓글 수정 모달 오픈, 삭제 이벤트 처리
-                    openModifyModalAndRemoveEvent();
+                    // 댓글 수정 모달 오픈, 삭제, 추천 이벤트 처리
+                    openModifyModalAndRemoveAndLikeEvent();
+
+                    
 
                     // 댓글 수정 완료 버튼 이벤트 처리
                     replyModifyEvent();
@@ -660,9 +825,9 @@
 
                 })();
             </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-
-
+            <%@ include file="../include/footer.jsp" %>
         </body>
 
         </html>

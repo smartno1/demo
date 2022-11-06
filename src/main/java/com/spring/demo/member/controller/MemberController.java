@@ -4,6 +4,7 @@ import com.spring.demo.member.domain.Member;
 import com.spring.demo.member.dto.LoginDTO;
 import com.spring.demo.member.service.LoginFlag;
 import com.spring.demo.member.service.MemberService;
+import com.spring.demo.util.LoginUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import static com.spring.demo.util.LoginUtils.LOGIN_FLAG;
 
 @Controller
 @Log4j2
@@ -40,8 +43,22 @@ public class MemberController {
     public String signUp(Member member, RedirectAttributes ra) {
         log.info("/member/sign-up POST ! - {}", member);
         boolean flag = memberService.signUp(member);
-        ra.addFlashAttribute("msg", "reg-success");
+        if(flag)ra.addFlashAttribute("msg", "reg-success");
         return flag ? "redirect:/member/sign-in" : "redirect:/member/sign-up";
+    }
+
+    @PostMapping("/update")
+    public String update(Member member, RedirectAttributes ra, HttpSession session) {
+        log.info("/member/update POST ! - {}", member);
+        boolean flag = memberService.update(member);
+        if(flag){
+            ra.addFlashAttribute("msg", "mod-success");
+            session.removeAttribute("loginUser");
+
+            session.invalidate();
+
+        }else {ra.addFlashAttribute("msg", "mod-failed");}
+        return flag ? "redirect:/member/sign-in" : "redirect:/member/modify";
     }
 
     // 아이디, 이메일 중복확인 비동기 요청 처리
@@ -87,6 +104,7 @@ public class MemberController {
             log.info("login success!!");
 
                 String redirectURI = (String) session.getAttribute("redirectURI");
+                if(redirectURI.contains("/member/modify"))return "redirect:/";
                 return "redirect:" + redirectURI;
 
         }
@@ -115,5 +133,25 @@ public class MemberController {
         return "myPage";
 
     }
+
+
+    //패스워드 검증
+    @PostMapping("/modify")
+    public String viewMyPage(HttpSession session, String password) {
+
+        log.info("/member/modify Post -{}",password);
+
+        Member loginUser = (Member) session.getAttribute(LOGIN_FLAG);
+        boolean flag = memberService.validatePassword(password,loginUser);
+
+        log.info("/member/modify Post end -{}",flag);
+
+
+
+        return flag ? "/member/modify" : "redirect:/member/myPage/";
+
+    }
+
+
 
 }

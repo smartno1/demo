@@ -38,6 +38,13 @@ public class MemberService {
         return memberMapper.register(member);
     }
 
+    public boolean update(Member member) {
+        // 비밀번호 인코딩
+
+
+        return memberMapper.update(member);
+    }
+
     // 중복확인 중간처리
 
     /**
@@ -135,7 +142,17 @@ public class MemberService {
 
 
 
-    // 마이페이지
+    // 마이페이지 validatePassword
+
+    public boolean validatePassword(String password, Member loginuser){
+
+
+        boolean flag = encoder.matches(password,loginuser.getPassword());
+
+        return flag;
+
+
+    }
 
 
 }

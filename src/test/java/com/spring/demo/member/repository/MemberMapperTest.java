@@ -23,6 +23,29 @@ class MemberMapperTest {
     BCryptPasswordEncoder encoder;
 
 
+    @Test
+    @DisplayName("회원가입에 성공해야 한다.")
+    void registerTest() {
+
+        Member m = new Member();
+
+        m.setAccount("apple123");
+        m.setPassword("12345");
+        m.setFavorite(FavoriteMember.V);
+        m.setNickname("apple");
+        m.setName("사과왕");
+        m.setPhoneNum("010-1234-1234");
+        m.setBirth("010101");
+        m.setAddress("서울시 중구");
+        m.setEmail("apple@gmail.com");
+        m.setGender(Gender.M);
+
+        m.setAuth(Auth.ADMIN);
+
+        boolean flag = mapper.register(m);
+
+        assertTrue(flag);
+    }
 
 
     @Test
@@ -53,18 +76,21 @@ class MemberMapperTest {
 
         Member m = new Member();
 
-        m.setAccount("gugu");
+
+
+
+        m.setAccount("hello");
         m.setPassword(new BCryptPasswordEncoder().encode("1234"));
         m.setFavorite(FavoriteMember.V);
-        m.setNickname("gugu");
+        m.setNickname("천도복숭아");
         m.setName("김복숭아");
-        m.setPhoneNum("010-3533-1112");
+        m.setPhoneNum("010-2233-1112");
         m.setBirth("010201");
         m.setAddress("서울시 동대문구");
-        m.setEmail("peach31@gmail.com");
+        m.setEmail("hello@gmail.com");
         m.setGender(Gender.F);
 
-        m.setAuth(Auth.COMMON);
+        m.setAuth(Auth.ADMIN);
 
         boolean flag = mapper.register(m);
 

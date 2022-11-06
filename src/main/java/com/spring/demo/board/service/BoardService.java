@@ -38,13 +38,8 @@ public class BoardService {
         // 게시물 내용 DB에 저장
         boolean flag = boardMapper.save(board);
 
-//        List<String> fileNames = board.getFileNames();
-//        if (fileNames != null && fileNames.size() > 0) {
-//            for (String fileName : fileNames) {
-//                // 첨부파일 내용 DB에 저장
-//                boardMapper.addFile(fileName);
-//            }
-//        }
+        log.info("save service end - {}", flag);
+
         return flag;
     }
 
@@ -83,11 +78,13 @@ public class BoardService {
         Map<String, Object> findDataMap = new HashMap<>();
 
         List<Board> boardList = boardMapper.findAll2(search);
+
         // 목록 중간 데이터 처리
         processConverting(boardList);
 
         findDataMap.put("bList", boardList);
         findDataMap.put("tc", boardMapper.getTotalCount2(search));
+        log.info("findAll service End");
 
         return findDataMap;
     }
@@ -98,13 +95,14 @@ public class BoardService {
             convertDateFormat(b);
             substringTitle(b);
             checkNewArticle(b);
-//            setReplyCount(b);
+            setReplyCount(b);
+
         }
     }
 
-//    private void setReplyCount(Board b) {
-//        b.setReplyCount(replyMapper.getReplyCount(b.getBoardNo()));
-//    }
+    private void setReplyCount(Board b) {
+        b.setReplyCount(replyMapper.getReplyCount(b.getBoardNo()));
+    }
 
     // 신규 게시물 여부 처리
     private void checkNewArticle(Board b) {
@@ -122,8 +120,11 @@ public class BoardService {
         // 신규 게시물 제한시간
         long limitTime = 60 * 5 * 1000;
 
+
         if (diff < limitTime) {
             b.setNewArticle(true);
+
+
         }
 
     }

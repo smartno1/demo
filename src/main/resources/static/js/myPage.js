@@ -432,6 +432,9 @@ function MemberBoardList() {
 }
 function MemberProfile(){
 
+
+    document.getElementById("member_profile").style.display = "hidden";
+
     $pwChk= document.getElementById("validatePasswordForm");
 
     $pwChk.parentElement.style.display = "block";
@@ -454,8 +457,13 @@ function MemberEvent() {
    
     $nav.onclick = e => {
 
-        document.getElementById("member_profile").innerHTML =""
+        $pwChk= document.getElementById("validatePasswordForm");
+
+        //스타일 초기화
+        document.getElementById("member_profile").innerHTML ="";
+        document.getElementById("member_profile").style.display = "block";
         document.getElementById("post_btns").style.display = "none";
+        $pwChk.parentElement.style.display = "none";
 
         e.preventDefault();
 

@@ -92,7 +92,7 @@
                     background: white;
                     width: 70%;
 
-
+                    display :block;
 
                     padding: 60px 150px 30px 80px;
 

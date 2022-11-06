@@ -88,14 +88,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/delete")
-    public String delete(HttpServletRequest request){
-
-        Object no = request.getAttribute("no");
-
-
-        log.info("{}{}",no, no.getClass());
-        Dto dto = new Dto();
-        dto.setNo((int)(no));
+    public String delete(@RequestBody Dto dto, HttpServletRequest request){
 
 
         log.info("delete ");

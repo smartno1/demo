@@ -72,12 +72,12 @@
               },
               eventClick: function(arg) {
                 if (confirm('이 일정을 삭제하시겠습니까?')) {
-                    console.log("아이디" + arg.id);
+                    console.log("아이디" + arg.event.id);
 
                   arg.event.remove()
 
                   let data = {
-                    no : arg.id
+                    no : arg.event.id
                     
                 }
 

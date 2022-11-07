@@ -6,5 +6,5 @@ import lombok.*;
 @AllArgsConstructor @NoArgsConstructor
 public class Dto {
     private String account;
-    private int no;
+    private int id;
 }

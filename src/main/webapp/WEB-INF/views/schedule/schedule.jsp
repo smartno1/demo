@@ -13,17 +13,19 @@
         <link rel="stylesheet" type="text/css" href="/css/scelectable.css" />
          <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
         <link rel="stylesheet" type="text/css" href="/css/header.css"/>
-
-         
-        <script src="/js/main.js"></script>
-        <script src="/js/ko.js"></script>
        <style>
             a {color: #fff; text-decoration: none; outline: none}
             a:hover, a:active {text-decoration: none; }
           </style>
+        <script src="/js/main.js"></script>
+        <script src="/js/ko.js"></script>
         <script>
-          var toDay = new Date()
+            // 오늘날짜 가져오기
+
+
+            var toDay = new Date()
           var date = toDay.toISOString().split("T")[0]
+
           document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
 
@@ -33,23 +35,27 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
-              initialDate : date,
+              initialDate : date, // 오늘날짜로 세팅
               navLinks: true, // can click day/week names to navigate views
               selectable: true,
               selectMirror: true,
+              editable: false,  // 스케쥴 옮기기
+              dayMaxEvents: true, // allow "more" link when too many events
               select: function(arg) {
-                if(!("${loginUser.auth}"==="ADMIN"))return;
+                if(${empty loginUser}) return;
                 var title = prompt('일정을 적어주세요:');
                 
                 if (title) {
                   calendar.addEvent({
                     title: title,
+                    content: "야야야",
                     start: arg.start,
                     end: arg.end,
                     allDay: arg.allDay
                   })
                   let data = {
                     title: title,
+                    content:"야야야",
                     start: arg.start,
                     end: arg.end,
                     allDay: arg.allDay,
@@ -68,10 +74,11 @@
 
                 calendar.unselect()
               },
-              eventClick: function(arg) {
-                if(!("${loginUser.auth}"==="ADMIN"))return;
+              eventClick: function(arg) {       // 마우스 클릭시 이벤트
+                if(!("${loginUser.account}"===arg.event.groupId))return;
                 if (confirm('이 일정을 삭제하시겠습니까?')) {
-                    console.log("아이디" + arg.event.id);
+                    console.log("아이디", arg.event.id);
+                    console.log("arg" ,arg.event.extendedProps.content);
 
                   arg.event.remove()
 
@@ -88,10 +95,20 @@
                   fetch('/schedule/delete', reqInfo)
                 }
               },
-              editable: true,
-              dayMaxEvents: true, // allow "more" link when too many events
 
-              events: function(info, successCallback, failureCallback) {
+                eventMouseEnter: function(arg){ // 마우스 가져다 데면 해당 스케쥴 정보를 가져온다.
+                  console.info(arg);
+
+
+                },
+                eventMouseLeave: function(arg){ // 마우스 가져다 데면 해당 스케쥴 정보를 가져온다.
+                    console.info(arg);
+
+
+                },
+
+
+              events: function(info, successCallback, failureCallback) {    // 스케쥴정보 데이터 생성
                   fetch('/schedule/list')
                       .then(res => res.json())
                       .then(list => {
@@ -102,12 +119,15 @@
 
                           for (let i = 0; i < list.length; i++) {
                               const data = list[i];
+                              console.info(data);
                               events.push({
                                   id: data.id,
                                   title: data.title,
                                   start: data.start,
                                   end: data.end,
-                                  account: data.account,
+                                  groupId: data.account,
+                                  content: data.content,
+
                                   allDay: data.allDay
                               })
                           }

@@ -61,9 +61,9 @@ public class ScheduleController {
     @ResponseBody
     public String update (@RequestBody Calendar calendar, HttpServletRequest request, HttpServletResponse response) {
 
-        Dto dto = new Dto(calendar.getAccount(), calendar.getNo());
+        Dto dto = new Dto(calendar.getAccount(), calendar.getId());
 
-        log.info("no = {},  acc = {}",dto.getNo(),dto.getAccount());
+        log.info("no = {},  acc = {}",dto.getId(),dto.getAccount());
 //        if(dto.getNo() > 0) {
 //            log.info("update");
 //            boolean flag = calenderService.updateService(calendar);

@@ -35,7 +35,7 @@
         FROM tbl_board
         <include refid="search" />
         ORDER BY board_no DESC
-        LIMIT #{pageNum}, #{amount}
+        LIMIT #{start}, #{amount}
     </select>
 
     <sql id="search">

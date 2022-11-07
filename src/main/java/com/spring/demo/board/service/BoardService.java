@@ -78,10 +78,11 @@ public class BoardService {
         Map<String, Object> findDataMap = new HashMap<>();
 
         List<Board> boardList = boardMapper.findAll2(search);
+        log.info("before converting boardList - {}",boardList);
 
         // 목록 중간 데이터 처리
         processConverting(boardList);
-
+        log.info("after converting boardList - {}",boardList);
         findDataMap.put("bList", boardList);
         findDataMap.put("tc", boardMapper.getTotalCount2(search));
         log.info("findAll service End");

@@ -162,12 +162,10 @@
             cursor: pointer;
 
         }
-
+        /*===== 페이징 =============================*/
         #galleryWrap .bottom-section div{
            
             /* background-color: red; */
-
-
         }
         #galleryWrap .bottom-section div .bottom-ul {
             /* border: 4px solid #000; */
@@ -182,10 +180,35 @@
         
         #galleryWrap .bottom-section div .bottom-ul li {
             float: left;
-            margin:10px;
-
         }
 
+        .bottom-section .bottom-ul li {
+            text-align: center;
+
+        }
+        .bottom-section .bottom-ul li a{
+            width: 50px;
+            height: 40px;
+            display: block;
+            border-radius: 10px;
+            line-height: 40px;
+            font-size: 25px;
+        }
+
+        .bottom-section .bottom-ul li.active a,
+        .bottom-section .bottom-ul li:hover a {
+            background: #6965c3 !important;
+            color: #fff !important;
+        }
+
+        .bottom-section .bottom-ul li .prev{
+            margin-right: 10px;
+        }
+        .bottom-section .bottom-ul li .next {
+            margin-left: 10px;
+        }
+            /*===========================================*/
+       /* 클로즈업 모달 ==============================================*/
        #galleryWrap .close-up {
            position: absolute;
            background-color: rgba(0,0,0,0.8);
@@ -388,21 +411,8 @@
             width: 150px;
         }
         /*===========================================*/
-        /*===== 페이징 =============================*/
-        .bottom-section .bottom-ul li {
-            width: 30px;
-            height: 25px;
-        }
-
-        .bottom-section .bottom-ul li.currentPage{
-            background: #fff;
-        }
 
 
-        /*===========================================*/
-        .blackout{
-            background-color: #000000;
-        }
 
     </style>
 </head>
@@ -450,7 +460,7 @@
                     <ul class="bottom-ul">
                         <%-- 이전 버튼 --%>
                         <c:if test="${pm.prev}">
-                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}">prev</a></li>
+                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}" class="prev">prev</a></li>
                         </c:if>
 
                         <%-- 페이지 버튼 --%>
@@ -462,7 +472,7 @@
 
                         <%--다음 버튼--%>
                         <c:if test="${pm.next}">
-                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.endPage + 1}&amount=${pm.page.amount}">next</a></li>
+                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.endPage + 1}&amount=${pm.page.amount}" class="next">next</a></li>
                         </c:if>
                     </ul>
                 </div>
@@ -1068,11 +1078,33 @@ function likeListEvent (){
     }
 }
 
+//현재 위치한 페이지에 active 스타일 부여하기
+function appendPageActive() {
+
+    // 현재 내가 보고 있는 페이지 넘버
+    const curPageNum =''+ ${pm.page.pageNum};
+    console.log("현재페이지: ", curPageNum, typeof curPageNum);
+
+
+    // 페이지 li태그들을 전부 확인해서
+    // 현재 위치한 페이지 넘버와 텍스트컨텐츠가 일치하는
+    // li를 찾아서 class active 부여
+    const $ul = document.querySelector('.bottom-ul');
+
+    for (let $li of [...$ul.children]) {
+        if (curPageNum === $li.firstElementChild.textContent) {
+            $li.classList.add('active');
+            break;
+        }
+    }
+
+}
 
 
 (function (){
     upEvent();
     downEvent();
+    appendPageActive();
 
 
 

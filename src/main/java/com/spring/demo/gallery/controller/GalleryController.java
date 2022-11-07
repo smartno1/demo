@@ -5,14 +5,11 @@ import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.common.search.Search;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.service.GalleryService;
-import com.spring.demo.like.domain.Like;
 import com.spring.demo.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.Collection;
 import java.util.Map;
 
 @Controller
@@ -61,13 +56,8 @@ public class GalleryController {
         // 루트 경로확인
 //        String path = request.getSession().getServletContext().getRealPath("/");
 //        log.info("realPath= {}",path );
-        return "gallery/list";
+        return "gallery/gallery-list";
     }
-
-    @GetMapping("/upload-form")
-    public String uploadForm(){
-
-        return "upload/upload-form"; }
 
     @PostMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file, String fileText, HttpServletRequest request){

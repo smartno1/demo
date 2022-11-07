@@ -119,12 +119,13 @@ head {
 
 
 .pagination-custom a {
+
     color: #444 !important;
 }
 
 .pagination-custom li.active a,
 .pagination-custom li:hover a {
-    background: #333 !important;
+    background: #6965c3 !important;
     color: #fff !important;
 }
 

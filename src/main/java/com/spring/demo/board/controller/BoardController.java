@@ -54,7 +54,7 @@ public class BoardController {
         PageMaker pm = new PageMaker(
                 new Page(search.getPageNum(), search.getAmount())
                 , (Integer) boardMap.get("tc"));
-
+        log.info(boardMap);
         model.addAttribute("bList", boardMap.get("bList"));
         model.addAttribute("pm", pm);
         model.addAttribute("s",search);

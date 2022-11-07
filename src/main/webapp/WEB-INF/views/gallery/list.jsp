@@ -657,7 +657,9 @@ function likeUpdate(){
 function escSearch() {
     document.addEventListener('keydown', function(e){
         if(e.keyCode === 27) {
-             goList();
+            setTimeout(goList,100);
+            // 딜레이를 줘서 새로운 데이터가 업데이트되는 시간을 준다.
+
         }
     }) 
 }

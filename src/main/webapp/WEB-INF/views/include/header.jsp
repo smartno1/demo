@@ -14,7 +14,12 @@
           <a href="/member/sign-in"><span id="login-btn">로그인</span></a>
         </c:if>
         <c:if test="${loginUser != null}">
-          <a href="/member/myPage">마이 페이지</a>
+          <a href="/member/myPage">
+            <c:if test="${loginUser.auth == 'ADMIN'}">
+              <span>관리자<span>
+            </c:if>
+            <span>${loginUser.account}님 </span>마이 페이지
+          </a>
           <a href="/member/sign-out"><span id="logout-btn">로그아웃</span></a>
         </c:if>
       </div>

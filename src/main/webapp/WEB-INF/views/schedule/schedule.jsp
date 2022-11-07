@@ -53,12 +53,9 @@
                     start: arg.start,
                     end: arg.end,
                     allDay: arg.allDay,
-                    account : "gogo"
-                    
+                    account : "${loginUser.account}"
                   }
-
-                  
-
+                  console.info(data);
                   const reqInfo = {
                                     method: 'POST',
                                     headers: {'content-type': 'application/json' },
@@ -79,12 +76,9 @@
                   arg.event.remove()
 
                   let data = {
-                    no : arg.event.id
+                    id : arg.event.id
                     
                 }
-
-                  
-
                   const reqInfo = {
                                     method: 'POST',
                                     headers: {'content-type': 'application/json' },
@@ -96,27 +90,31 @@
               },
               editable: true,
               dayMaxEvents: true, // allow "more" link when too many events
+
               events: function(info, successCallback, failureCallback) {
-                            fetch('/schedule/list')
-                                .then(res => res.json())
-                                .then(list => {
+                  fetch('/schedule/list')
+                      .then(res => res.json())
+                      .then(list => {
 
-                                  let events = [];
+                          if(!list){ return;}
 
-                                  list.forEach((data, index, array) => {
+                          let events = [];
 
-                                      events.push({
-                                        id : data.no,
-                                        title : data.title,
-                                        start : data.start,
-                                        end : data.end,
-                                        account : data.account,
-                                        allDay: data.allDay
-                                      })
-                                  });
-                                  successCallback(events);
+                          for (let i = 0; i < list.length; i++) {
+                              const data = list[i];
+                              events.push({
+                                  id: data.id,
+                                  title: data.title,
+                                  start: data.start,
+                                  end: data.end,
+                                  account: data.account,
+                                  allDay: data.allDay
                               })
-                  }
+                          }
+                          successCallback(events);
+                      })
+
+              }
             });
 
             calendar.render();

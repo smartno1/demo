@@ -13,7 +13,7 @@
 
     <select id="findAll" resultMap="calMap">
         SELECT *
-        FROM calender
+        FROM calendar
 <!--        <if test="account != 'n'">-->
 <!--        WHERE account = #{account}-->
 <!--        </if>-->
@@ -22,26 +22,26 @@
 
     <select id="findOne">
         SELECT *
-        FROM calender
-        WHERE account = #{account}, no = #{no}
+        FROM calendar
+        WHERE account = #{account}, id = #{id}
     </select>
 
     <insert id="insert">
-        INSERT INTO calender
+        INSERT INTO calendar
         (title, start, end, content, account)
         VALUES
         (#{title},#{start},#{end},#{content},#{account})
     </insert>
 
     <update id="update">
-        UPDATE calender
+        UPDATE calendar
         SET title=#{title}, start=#{start}, end=#{end}, content=#{content}, account=#{account}
-        WHERE no = #{no}
+        WHERE id = #{id}
     </update>
 
     <delete id="delete">
-        DELETE FROM calender
-        WHERE no = #{no}
+        DELETE FROM calendar
+        WHERE id = #{id}
     </delete>
 
 </mapper>

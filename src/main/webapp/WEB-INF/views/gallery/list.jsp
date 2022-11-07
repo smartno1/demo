@@ -73,7 +73,7 @@
         #gallery-ul li {
             margin-right: 0;
             margin-top: 0;
-            margin-bottom: 0x;
+            margin-bottom: 0;
             /*border-radius: 10px;*/
 
             float: left;
@@ -390,8 +390,9 @@
         /*===========================================*/
         /*===== 페이징 =============================*/
         .bottom-section .bottom-ul li {
-            width:30px;
-            height:25px;
+            width: 30px;
+            height: 25px;
+        }
 
         .bottom-section .bottom-ul li.currentPage{
             background: #fff;
@@ -494,7 +495,7 @@
                             <span></span> <img src="/img/like.jpg">
                         </div>
                         <div class ="likeBtn">
-                            <button >Like!!</button>
+                            <button >likeIt!</button>
                         </div>
                     </div>
 
@@ -527,26 +528,6 @@ const loginNick = "<%=nick%>";
 const loginAccount = "<%=account%>";
 console.log(loginNick);
 
-// like체크
-function lickCheck(){
-        const $ul = document.getElementById('gallery-ul').firstElementChild;
-
-        for(let i=0; i<6;i++){
-            let gno = $ul.firstElementChild.dataset.galleryno;
-            
-            
-            $ul = $ul.nextElementSibling;
-            fetch("/like/check?account=${loginUser.account}&type=galleryNo&no="+gno)
-                .then(res => res.json())
-                .then(flag =>{
-                    console.log(typeof flag);
-                    if(flag){
-
-                    }
-                })
-        }
-}
-
 //클로즈 갤러리 버튼으로 옆으로 넘기기
 function nextEvent(pe){
     document.getElementById('next-btn').onclick = e => {
@@ -574,7 +555,7 @@ function prevEvent(pe){
         if( pe.previousElementSibling){
             closeUp(pe.previousElementSibling);
         }else{
-            fetch("/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}")
+            <%--fetch("/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}")--%>
 
             closeUp(pe.parentElement.lastElementChild);
         }
@@ -599,17 +580,7 @@ function fullSizeEvent(){
     }
 }
 
-// like 이벤트 - gallery-li
-
-function likeEvent2(){
-    document.querySelector('.likeImg').onclick = e => {
-        
-        console.log(e.target);
-        if(!e.target.matches('.likeImg')) return;
-        console.log(e.target);
-        likeUpdate2();
-    }
-}
+// likeupdown - gallery-li
 
 function likeUpdate2(e){
     console.log(e.parentElement.parentElement.previousElementSibling);
@@ -626,17 +597,11 @@ function likeUpdate2(e){
             .then(res => res.text())
             .then(cnt => {
 
-                let likeCnt = parseInt(cnt);
-                console.log(likeCnt);
-                console.log(cnt);
-                console.log(cnt <= likeCnt);
-                if (cnt !== "match-account") {
-                    const $like = e.parentElement.nextElementSibling;
-                    const preLikeCnt = $like.textContent;
-                    $like.textContent = likeCnt;
+                if (cnt === "match-account") {
+                    alert("본인의 갤러리엔 좋아요가 안되요");
 
                 } else {
-                    alert("본인의 갤러리엔 좋아요가 안되요");
+                    e.parentElement.nextElementSibling.textContent = cnt;
                 }
             });
     }
@@ -644,7 +609,7 @@ function likeUpdate2(e){
 
 
 
-// like 이벤트 - closeUp 창
+// likeupdown 이벤트 - closeUp 창
 
 function likeEvent(){
     const $likeBtn = document.querySelector('.likeBtn');
@@ -690,8 +655,8 @@ function likeUpdate(){
 
 // 모달창 닫기 - esc
 function escSearch() {
-    document.addEventListener('keydown', function(){
-        if(window.event.keyCode == 27) {
+    document.addEventListener('keydown', function(e){
+        if(e.keyCode === 27) {
              goList();
         }
     }) 
@@ -704,7 +669,7 @@ function upEvent(){
     document.getElementById('gallery-ul').onclick = e => {
         
         if(e.target.matches('.likeImg')){
-            
+            // 갤러리 리스트에서 하트눌렀을 때 like 반영 이벤트
             likeUpdate2(e.target);
         }
 
@@ -719,6 +684,9 @@ function upEvent(){
 }
 // 모달창에 값넣고 띄우기
 function closeUp(e){
+
+
+
     // 노드를 복사
     // const cloneE = e.cloneNode(true)
     // 타겟 이미지의 src 와 data-id 가져오기
@@ -743,10 +711,9 @@ function closeUp(e){
     document.querySelector('.in-text').textContent = text;
     document.querySelector('.up-likeCnt').firstElementChild.textContent=like;
 
-
     const $downBtn = document.querySelector('.down-btn');
 
-    if(loginNick == nickName || "${loginUser.auth}" === "ADMIN") {
+    if("${loginUser.account}" == writer || "${loginUser.auth}" === "ADMIN") {
         $downBtn.innerHTML = `
 
                             <button class="down-btn-mod" style="display: inline-block">
@@ -764,12 +731,16 @@ function closeUp(e){
                             </button>`;
     }
     // 라이크 확인
-    if(${!empty loginUser}) {
+    if(${empty loginUser}) {
+        document.querySelector('.likeBtn').firstElementChild.textContent = "likeIt!";
+    }else{
         fetch("/like/check?galleryNo=" + galleryNo)
-            .then(res => res.text())
+            .then(res => res.json())
             .then(msg => {
-                if (msg == "true") {
-                    document.querySelector('.likeBtn').firstElementChild.textContent = "Liking";
+                if (msg) {
+                    document.querySelector('.likeBtn').firstElementChild.textContent = "liking";
+                } else {
+                    document.querySelector('.likeBtn').firstElementChild.textContent = "likeIt!";
                 }
             });
     }
@@ -947,11 +918,8 @@ function goListEvent(){
     }
 }
 function goList(){
-    const galleryNo = document.querySelector('.down-text').dataset.galleryno;
-
     closeUpDel();
-    location.href = "/gallery/list?galleryNo=" + galleryNo +
-        "&pageNum=${pm.page.pageNum}&amount=${pm.page.amount}";
+    location.href = "/gallery/list?&pageNum=${pm.page.pageNum}&amount=${pm.page.amount}";
 
 }
 function delEvent(){

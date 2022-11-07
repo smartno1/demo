@@ -24,7 +24,7 @@ public class LikeService {
 
         }
         likeMapper.updateLike(like);
-        int cnt = likeMapper.likeCnt(like);;
+        int cnt = likeMapper.likeCnt(like);
 
         return cnt;
 

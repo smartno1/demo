@@ -62,6 +62,11 @@ dependencies {
 	// 카카오
 	implementation 'com.google.code.gson:gson:2.8.5'
 
+	//jqurey
+	// https://mvnrepository.com/artifact/org.webjars/jquery
+	implementation 'org.webjars:jquery:3.6.0'
+
+
 }
 
 tasks.named('test') {

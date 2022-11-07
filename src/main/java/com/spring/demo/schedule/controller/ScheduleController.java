@@ -1,25 +1,20 @@
 package com.spring.demo.schedule.controller;
 
 import com.spring.demo.member.domain.Member;
-import com.spring.demo.schedule.domain.Calendar;
-import com.spring.demo.schedule.dto.Dto;
-import com.spring.demo.schedule.repository.CalendarMapper;
-import com.spring.demo.schedule.service.CalenderService;
-import com.spring.demo.util.LoginUtils;
+import com.spring.demo.schedule.domain.Schedule;
+import com.spring.demo.schedule.repository.ScheduleMapper;
+import com.spring.demo.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.spring.demo.util.LoginUtils.getCurrentMemberAccount;
-import static com.spring.demo.util.LoginUtils.isLogin;
+import java.util.Calendar;
 
 @Controller
 @Log4j2
@@ -27,74 +22,55 @@ import static com.spring.demo.util.LoginUtils.isLogin;
 @RequestMapping("/schedule")
 public class ScheduleController {
 
-    private final CalenderService calenderService;
-
+    private final ScheduleService scheduleService;
 
     @GetMapping("")
     public String viewSchedule(){
 
         log.info("schedule 호출");
         return "/schedule/schedule";
-
-
     }
 
-    @GetMapping("/list")
-    @ResponseBody
-    public List list (HttpServletRequest request){
-
-        log.info("list - start");
-        Dto dto = new Dto();
-
-        HttpSession session = request.getSession();
-//        if(!isLogin(session)){
-//
-//
-//        }else{
-//            dto.setAccount(getCurrentMemberAccount(session));
-//
-//        }
-
-        log.info(dto);
-
-        List<Calendar> calenderList = new ArrayList<>(calenderService.findAllService());
-
-        log.info(calenderList);
-
-        return calenderList;
-
-    }
-    @PostMapping("/update")
-    @ResponseBody
-    public String update (@RequestBody Calendar calendar, HttpServletRequest request, HttpServletResponse response) {
-
-        Dto dto = new Dto(calendar.getAccount(), calendar.getNo());
-
-        log.info("no = {},  acc = {}",dto.getNo(),dto.getAccount());
-//        if(dto.getNo() > 0) {
-//            log.info("update");
-//            boolean flag = calenderService.updateService(calendar);
-//        }
-//        if (calenderService.findOneService(dto) == null) {
-            log.info("insert");
-
-            boolean flag = calenderService.insertService(calendar);
-//        } else {
-
-//        }
-
-        return "redirect:/schedule/list";
-
+    // http://localhost:7080/springweb/calendar.do
+   @PostMapping("/calendar.do")
+    public String calendar() {
+        return "schedule/schedule";
     }
 
-    @PostMapping("/delete")
-    public String delete(@RequestBody Dto dto, HttpServletRequest request){
+    // http://localhost:7080/springweb/calList.do
+    @RequestMapping("/calList.do")
+    public String calList(HttpSession session, Model model) {
+
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        model.addAttribute("callist", scheduleService.getCalListService(loginUser.getAccount()));
+        return "pageJsonReport";
+    }
+
+    // http://localhost:7080/springweb/calInsert.do
+    @RequestMapping("/calInsert.do")
+    public String calInsert(Schedule ins) {
+        scheduleService.insertCalendarService(ins);
+
+        // 등록 후, 초기화면으로 이동
+        return "redirect:/schedule/calendar.do";
+    } // calUpdate.do calDelete.do
+    // http://localhost:7080/springweb/calUpdate.do
+
+    @RequestMapping("/calUpdate.do")
+    public String updateCalendar(Schedule upt) {
+        System.out.println("## 수정 ##");
+        System.out.println(upt.getTitle());
 
 
-        log.info("delete ");
-        calenderService.deleteService(dto);
+        scheduleService.updateCalendarService(upt);
+        return "redirect:/schedule/calendar.do";
+    }
 
-        return "redirect:/schedule/list";
+    // http://localhost:7080/springweb/calDelete.do
+    @RequestMapping("/calDelete.do")
+    public String deleteCalendar(int id) {
+        scheduleService.deleteCalendarService(id);
+        return "redirect:/schedule/calendar.do";
     }
 
 }

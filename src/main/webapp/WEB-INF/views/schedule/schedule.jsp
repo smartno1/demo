@@ -14,11 +14,7 @@
          <link rel="stylesheet" type="text/css" href="/css/footer.css"/>
         <link rel="stylesheet" type="text/css" href="/css/header.css"/>
 
-         <script>
-         var calendar = new Calendar(calendarEl, {
-           events: '/schedule?start=2022-12-01T00:00:00-05:00&end=2023-01-12T00:00:00-05:00'
-         });
-         </scrpt>
+         
         <script src="/js/main.js"></script>
         <script src="/js/ko.js"></script>
        <style>
@@ -26,7 +22,8 @@
             a:hover, a:active {text-decoration: none; }
           </style>
         <script>
-
+          var toDay = new Date()
+          var date = toDay.toISOString().split("T")[0]
           document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
 
@@ -36,12 +33,14 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
-
+              initialDate : date,
               navLinks: true, // can click day/week names to navigate views
               selectable: true,
               selectMirror: true,
               select: function(arg) {
+                if(!("${loginUser.auth}"==="ADMIN"))return;
                 var title = prompt('일정을 적어주세요:');
+                
                 if (title) {
                   calendar.addEvent({
                     title: title,
@@ -49,20 +48,75 @@
                     end: arg.end,
                     allDay: arg.allDay
                   })
+                  let data = {
+                    title: title,
+                    start: arg.start,
+                    end: arg.end,
+                    allDay: arg.allDay,
+                    account : "gogo"
+                    
+                  }
+
+                  
+
+                  const reqInfo = {
+                                    method: 'POST',
+                                    headers: {'content-type': 'application/json' },
+                                    body: JSON.stringify(data) 
+                                  };
+
+                  fetch('/schedule/update', reqInfo)
+                      
                 }
+
                 calendar.unselect()
               },
               eventClick: function(arg) {
+                if(!("${loginUser.auth}"==="ADMIN"))return;
                 if (confirm('이 일정을 삭제하시겠습니까?')) {
+                    console.log("아이디" + arg.event.id);
+
                   arg.event.remove()
+
+                  let data = {
+                    no : arg.event.id
+                    
+                }
+
+                  
+
+                  const reqInfo = {
+                                    method: 'POST',
+                                    headers: {'content-type': 'application/json' },
+                                    body: JSON.stringify(data) 
+                                  };
+
+                  fetch('/schedule/delete', reqInfo)
                 }
               },
               editable: true,
               dayMaxEvents: true, // allow "more" link when too many events
-              events: [
-                {title: 'title'
-                ,start: 'start'
-                ,end: 'end'}]
+              events: function(info, successCallback, failureCallback) {
+                            fetch('/schedule/list')
+                                .then(res => res.json())
+                                .then(list => {
+
+                                  let events = [];
+
+                                  list.forEach((data, index, array) => {
+
+                                      events.push({
+                                        id : data.no,
+                                        title : data.title,
+                                        start : data.start,
+                                        end : data.end,
+                                        account : data.account,
+                                        allDay: data.allDay
+                                      })
+                                  });
+                                  successCallback(events);
+                              })
+                  }
             });
 
             calendar.render();

@@ -1,5 +1,6 @@
 package com.spring.demo.schedule.controller;
 
+import com.spring.demo.member.domain.Member;
 import com.spring.demo.schedule.domain.Calendar;
 import com.spring.demo.schedule.dto.Dto;
 import com.spring.demo.schedule.service.CalendarService;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.spring.demo.util.LoginUtils.*;
 
 @Controller
 @Log4j2
@@ -40,17 +43,13 @@ public class ScheduleController {
         Dto dto = new Dto();
 
         HttpSession session = request.getSession();
-//        if(!isLogin(session)){
-//
-//
-//        }else{
-//            dto.setAccount(getCurrentMemberAccount(session));
-//
-//        }
+        if(isLogin(session)){
+            dto.setAccount(getCurrentMemberAccount(session));
+        }
 
         log.info(dto);
 
-        List<Calendar> calenderList = new ArrayList<>(calendarService.findAllService());
+        List<Calendar> calenderList = new ArrayList<>(calendarService.findAllService(dto));
 
         log.info(calenderList);
 
@@ -62,16 +61,25 @@ public class ScheduleController {
     public String update (@RequestBody Calendar calendar, HttpServletRequest request, HttpServletResponse response) {
 
         Dto dto = new Dto(calendar.getAccount(), calendar.getId());
+        HttpSession session = request.getSession();
+//        log.info("auth  {}" , getCurrentMemberAuth(session));
+        if(!getCurrentMemberAuth(session).equals("ADMIN")){
+            calendar.setBackgroundColor("#ffc0cb");
+            calendar.setBorderColor("#ffc0cb");
+        }
 
-        log.info("no = {},  acc = {}",dto.getId(),dto.getAccount());
-//        if(dto.getNo() > 0) {
-//            log.info("update");
-//            boolean flag = calenderService.updateService(calendar);
-//        }
-//        if (calenderService.findOneService(dto) == null) {
-        log.info("insert");
+        log.info("id = {},  acc = {}",dto.getId(),dto.getAccount());
+        log.info("calendar = {}",calendar);
+        boolean flag;
+        if (calendarService.findOneService(dto) != null){
+            log.info("update");
+            flag = calendarService.updateService(calendar);
+        }else{
+            log.info("insert");
 
-        boolean flag = calendarService.insertService(calendar);
+            flag = calendarService.insertService(calendar);
+        }
+
 //        } else {
 
 //        }

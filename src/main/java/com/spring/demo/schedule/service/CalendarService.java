@@ -15,8 +15,8 @@ public class CalendarService {
 
     private final CalendarMapper calendarMapper;
 
-    public List<Calendar> findAllService(){
-        return calendarMapper.findAll();
+    public List<Calendar> findAllService(Dto dto){
+        return calendarMapper.findAll(dto);
     }
 
     public Calendar findOneService(Dto dto){ return  calendarMapper.findOne(dto);}

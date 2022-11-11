@@ -7,6 +7,9 @@
 
     <resultMap id="calMap" type="com.spring.demo.schedule.domain.Calendar">
         <result property="allDay" column="all_day"/>
+        <result property="backgroundColor" column="background_color"/>
+        <result property="textColor" column="text_color"/>
+        <result property="borderColor" column="border_color"/>
 
     </resultMap>
 
@@ -14,28 +17,28 @@
     <select id="findAll" resultMap="calMap">
         SELECT *
         FROM calendar
-<!--        <if test="account != 'n'">-->
-<!--        WHERE account = #{account}-->
-<!--        </if>-->
+
+        WHERE account = #{account} OR account = "aaa2"
+
 
     </select>
 
-    <select id="findOne">
+    <select id="findOne" resultMap="calMap">
         SELECT *
         FROM calendar
-        WHERE account = #{account}, id = #{id}
+        WHERE account = #{account} AND id = #{id}
     </select>
 
     <insert id="insert">
         INSERT INTO calendar
-        (title, start, end, content, account)
+        (title, start, end, content, account, all_day, background_color, text_color, border_color)
         VALUES
-        (#{title},#{start},#{end},#{content},#{account})
+        (#{title},#{start},#{end},#{content},#{account}, #{allDay}, #{backgroundColor}, #{textColor}, #{borderColor})
     </insert>
 
     <update id="update">
         UPDATE calendar
-        SET title=#{title}, start=#{start}, end=#{end}, content=#{content}, account=#{account}
+        SET title=#{title}, start=#{start}, end=#{end}, all_day=#{allDay}, content=#{content}, account=#{account}
         WHERE id = #{id}
     </update>
 

@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface CalendarMapper {
 
-    List<Calendar> findAll();
+    List<Calendar> findAll(Dto dto);
 
     Calendar findOne(Dto dto);
 

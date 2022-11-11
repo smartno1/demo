@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.demo.shop.repository.ShopMapper">
+
+    <resultMap id="shopMap" type="com.spring.demo.shop.domain.Shop">
+        <result property="regDate" column="reg_date"/>
+    </resultMap>
+
+
+    <insert id="insert">
+        INSERT INTO shop_stock
+        (name, content, img, price, stock)
+        VALUES (#{name}, #{content}, #{img}, #{price}, #{stock})
+    </insert>
+
+    <update id="update">
+        UPDATE shop_stock
+        SET name=#{name}, content=#{content}, img=#{img}, price=#{price}, stock=#{stock}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM shop_stock
+        WHERE id = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="shopMap">
+        SELECT *
+        FROM shop_stock
+    </select>
+
+    <select id="findOne" resultMap="shopMap">
+        SELECT *
+        FROM shop_stock
+        WHERE id=#{id}
+    </select>
+
+</mapper>

@@ -40,14 +40,14 @@ public class NewsController {
         currentTime.setDate(currentTime.getDate() - 1);
         String s_date = formatter.format(currentTime);
 
-        String query = "BTS";
+        String query = "방탄소년단%20BTS";
         String s_from = s_date.replace(".", "");
         String e_to = e_date.replace(".", "");
         int page = 1;
 
         List<News> arr = new ArrayList<>();
-        while (page < 20) {
-            String address = "https://search.naver.com/search.naver?where=news&query=" + query + "&sort=1&ds=" + s_date
+        while (page < 30) {
+            String address = "https://search.naver.com/search.naver?where=news&query=" + query + "&sort=0&ds=" + s_date
                     + "&de=" + e_date + "&nso=so%3Ar%2Cp%3Afrom" + s_from + "to" + e_to + "%2Ca%3A&start="
                     + Integer.toString(page);
             Document rawData = Jsoup.connect(address).timeout(5000).get();

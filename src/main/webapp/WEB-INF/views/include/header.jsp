@@ -39,6 +39,7 @@
         <li>
         <a href="/schedule">
           SCHEDULE
+        </a>
         </li>
         <li>
         <a href="/news">
@@ -64,7 +65,7 @@
           </a>
         </li>
         <li>
-         <a href="/">
+         <a href="/shop/list">
           SHOP
           </a>
         </li>

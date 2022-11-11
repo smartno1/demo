@@ -5,6 +5,8 @@ package com.spring.demo.util;
 import com.spring.demo.gallery.domain.Gallery;
 import com.spring.demo.gallery.service.GalleryService;
 import com.spring.demo.member.domain.Member;
+import com.spring.demo.shop.domain.Shop;
+import com.spring.demo.shop.domain.ShopSold;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,6 +65,41 @@ public class FileUtils {
         System.out.println(gallery);
 
         return gallery;
+    }
+
+    public static Shop uploadShop(MultipartFile file, String uploadPath, HttpServletRequest req){
+
+        System.out.println("file: " + file);
+
+        String  newPath = "\\shopImg";
+
+        // 중복이 없게 파일명 변경
+        String newFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+        // 파일 업로드 수행
+        File f = new File(uploadPath + newPath, newFileName);
+        log.info("file f = {}",f);
+        try {
+            file.transferTo(f);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        // Gallery 객체에 데이터 담기
+        String fullPath = newPath + "\\" + newFileName;
+        fullPath = fullPath.replace("\\", "/");
+        String filename = file.getOriginalFilename();
+        Member user =(Member) req.getSession().getAttribute("loginUser");
+        log.info("user=={}",user);
+
+        Shop shop = new Shop();
+        shop.setName((String) req.getAttribute("name"));
+        shop.setContent((String) req.getAttribute("content"));
+        shop.setImg(fullPath);
+        shop.setPrice((String) req.getAttribute("price"));
+        shop.setStock((int) req.getAttribute("stock"));
+
+        return shop;
     }
 
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.demo.shop.repository.ShopSoldMapper">
+
+    <resultMap id="shopSoldMap" type="com.spring.demo.shop.domain.ShopSold">
+        <result property="regDate" column="reg_date"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="deliveryAddress" column="delivery_address"/>
+        <result property="purchaseComplete" column="purchase_complete"/>
+        <result property="purchaseAccount" column="purchase_account"/>
+    </resultMap>
+
+
+
+
+</mapper>

@@ -30,7 +30,7 @@ class BoardMapperTest {
             board.setTitle("제목" + i);
             board.setWriter("길동이" + i);
             board.setContent("안녕하세요요요요요요요~~" + i);
-            board.setAccount("gogo");
+            board.setAccount("hello");
             mapper.save(board);
         }
     }

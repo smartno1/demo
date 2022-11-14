@@ -55,7 +55,7 @@
         FROM tbl_reply
         WHERE board_no=#{boardNo}
         ORDER BY reply_no
-        LIMIT #{page.pageNum}, #{page.amount}
+        LIMIT #{page.start} ,  #{page.amount}
     </select>
 
 

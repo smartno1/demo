@@ -76,15 +76,15 @@ class MemberMapperTest {
 
         Member m = new Member();
 
-        m.setAccount("hello");
+        m.setAccount("peach");
         m.setPassword(new BCryptPasswordEncoder().encode("1234"));
         m.setFavorite(FavoriteMember.V);
         m.setNickname("천도복숭아");
         m.setName("김복숭아");
-        m.setPhoneNum("010-2233-1112");
+        m.setPhoneNum("010-2233-1212");
         m.setBirth("010201");
         m.setAddress("서울시 동대문구");
-        m.setEmail("hello@gmail.com");
+        m.setEmail("peach@gmail.com");
         m.setGender(Gender.F);
 
         m.setAuth(Auth.ADMIN);

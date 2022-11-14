@@ -38,7 +38,7 @@
         ON a.board_no = b.board_no
         WHERE account = #{account}
         ORDER BY a.board_no DESC
-        LIMIT #{page.pageNum}, #{page.amount}
+        LIMIT #{page.start}, #{page.amount}
 
     </select>
 
@@ -56,7 +56,7 @@
         ON a.board_no = b.board_no AND b.board_no = r.board_no
         WHERE a.account = #{account}
         ORDER BY reply_no DESC
-        LIMIT #{page.pageNum}, #{page.amount}
+        LIMIT #{page.start}, #{page.amount}
 
     </select>
 

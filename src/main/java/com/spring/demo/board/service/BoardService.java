@@ -77,6 +77,8 @@ public class BoardService {
 
         Map<String, Object> findDataMap = new HashMap<>();
 
+
+
         List<Board> boardList = boardMapper.findAll2(search);
 
         // 목록 중간 데이터 처리

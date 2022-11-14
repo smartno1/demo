@@ -5,8 +5,8 @@ plugins {
 	id 'war'
 }
 
-bootWar.enabled= false; //내장툼캣 비활성화
-war.enabled = true; // 외장 툼캣 활성화
+//bootWar.enabled= false; //내장툼캣 비활성화
+//war.enabled = true; // 외장 툼캣 활성화
 
 group = 'com.spring'
 version = '0.0.1-SNAPSHOT'
@@ -68,8 +68,9 @@ dependencies {
 }
 
 tasks.named('test') {
-//	useJUnitPlatform()
-	exclude '**/*' //빌드 시 테스트 스킵
+	useJUnitPlatform()
+//	exclude '**/*' //빌드 시 테스트 스킵
 }
 
 
+ 

@@ -24,14 +24,14 @@ class ReplyMapperTest {
     @DisplayName("댓글 1000개를 무작위 게시물에 등록해야 한다.")
     void saveTest() {
 
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 100; i++) {
             long bno = (long) (Math.random() * 300 + 1);
 
             Reply reply = new Reply();
             reply.setBoardNo(bno);
             reply.setReplyText("댓글" + i);
             reply.setReplyWriter("메롱이"+ i);
-            reply.setAccount("gaga");
+            reply.setAccount("hello");
 
             replyMapper.save(reply);
         }

@@ -25,7 +25,7 @@
         SELECT  *
         FROM tbl_board
         ORDER BY board_no DESC
-        LIMIT (#{pageNum} - 1) * #{amount}, (#{pageNum} * #{amount})
+        LIMIT #{start}, #{amount}
     </select>
 
 
@@ -35,7 +35,7 @@
         FROM tbl_board
         <include refid="search" />
         ORDER BY board_no DESC
-        LIMIT #{pageNum}, #{amount}
+        LIMIT #{start}, #{amount}
     </select>
 
     <sql id="search">

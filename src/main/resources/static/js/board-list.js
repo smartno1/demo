@@ -64,6 +64,26 @@ function fixSearchOption() {
     }
 }
 
+function appendAmountActive(){
+
+ 
+    $amount = document.querySelector(".amount");
+
+  
+
+    if(amount===null||amount==="10")
+    {   
+        $amount.children[0].classList.add("active");
+    }else if(amount==="20"){
+        $amount.children[1].classList.add("active");
+    }else if(amount==="30"){
+        $amount.lastElementChild.classList.add("active");
+    }
+
+
+
+}
+
 
 (function () {
 
@@ -71,6 +91,7 @@ function fixSearchOption() {
     detailEvent();
     appendPageActive();
     fixSearchOption();
+    appendAmountActive()
 
 })();
 

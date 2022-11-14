@@ -25,6 +25,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     private final MyPageInterceptor myPageInterceptor;
 
+    private final ShopInterceptor shopInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
@@ -60,8 +62,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         // 갤러리 인터셉터 설정
         registry.addInterceptor(galleryInterceptor)
-                .addPathPatterns("/gallery/**");
+                .addPathPatterns("/gallery/*");
 //                .excludePathPatterns("/gallery/list");
+
+        registry.addInterceptor(shopInterceptor)
+                .addPathPatterns("/shop/*")
+                .excludePathPatterns("/shop/list", "/shop/detail");
+
 
     }
 

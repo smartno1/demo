@@ -57,7 +57,7 @@ public class BoardController {
         log.info(boardMap);
         model.addAttribute("bList", boardMap.get("bList"));
         model.addAttribute("pm", pm);
-        model.addAttribute("s",search);
+//        model.addAttribute("s",search);
 
         return "board/board-list";
     }

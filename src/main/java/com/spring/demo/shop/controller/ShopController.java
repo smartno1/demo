@@ -1,5 +1,9 @@
 package com.spring.demo.shop.controller;
 
+import com.spring.demo.common.paging.Page;
+import com.spring.demo.common.paging.PageMaker;
+import com.spring.demo.common.search.Search;
+import com.spring.demo.like.domain.Like;
 import com.spring.demo.shop.domain.Shop;
 import com.spring.demo.shop.service.ShopService;
 import com.spring.demo.util.FileUtils;
@@ -8,12 +12,21 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import java.util.List;
+import java.util.Map;
+
+import static com.spring.demo.util.LoginUtils.getCurrentMemberAuth;
 
 @Controller @RequiredArgsConstructor
 @Log4j2 @PropertySource("classpath:uploadpath.properties")
@@ -26,7 +39,19 @@ public class ShopController {
     private final ShopService shopService;
 
     @GetMapping("/list")
-    public String list (){
+    public String list (@ModelAttribute("s") Search search, Model model){
+
+        Map<String, Object> shopMap = shopService.findAllService(search);
+
+        // 페이지 정보 생성
+        PageMaker pm = new PageMaker(
+                new Page(search.getPageNum(), search.getAmount())
+                , (Integer) shopMap.get("tc"));
+        log.info("pm - {}", pm);
+
+        model.addAttribute("goods", shopMap.get("shopList"));
+        model.addAttribute("pm", pm);
+
         return "shop/shop-list";
     }
 
@@ -36,19 +61,36 @@ public class ShopController {
 
         return "shop/regist-form";
     }
+
+    @Transactional
     @PostMapping("/regist")
-    public void resist2(MultipartFile file, HttpServletRequest request){
+    public String regist(MultipartFile file, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        // 관리자가 아니라면 리스트로 돌려보내기
+        if(!getCurrentMemberAuth(session).equals("ADMIN") || session == null ) {
+            log.info("돌아가");
+            return "shop/shop-list";
+        }
 
         Shop shop = FileUtils.uploadShop(file,UPLOAD_PATH,request);
 
         log.info("upload - {}",shop);
         shopService.insertService(shop);
 
+        return "redirect:/shop/list";
     }
 
+
+
     @GetMapping("/detail")
-    public String detail(){
-        return "";
+    public String detail(int id, Model model){
+
+        Shop shop = shopService.findOneService(id);
+
+        model.addAttribute("g",shop);
+
+        return "shop/shop-detail";
     }
 
 }

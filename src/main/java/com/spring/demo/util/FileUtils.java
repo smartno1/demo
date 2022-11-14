@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -85,7 +86,7 @@ public class FileUtils {
             e.printStackTrace();
         }
 
-        // Gallery 객체에 데이터 담기
+        // Shop 객체에 데이터 담기
         String fullPath = newPath + "\\" + newFileName;
         fullPath = fullPath.replace("\\", "/");
         String filename = file.getOriginalFilename();
@@ -93,11 +94,12 @@ public class FileUtils {
         log.info("user=={}",user);
 
         Shop shop = new Shop();
-        shop.setName((String) req.getAttribute("name"));
-        shop.setContent((String) req.getAttribute("content"));
-        shop.setImg(fullPath);
-        shop.setPrice((String) req.getAttribute("price"));
-        shop.setStock((int) req.getAttribute("stock"));
+        shop.setName(req.getParameter("name"));
+        shop.setContent(req.getParameter("content"));
+        shop.setSrc(fullPath);
+        shop.setOrigin(req.getParameter("origin"));
+        shop.setPrice(Integer.parseInt(req.getParameter("price")));
+        shop.setStock(Long.parseLong(req.getParameter("stock")));
 
         return shop;
     }

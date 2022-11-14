@@ -312,10 +312,6 @@ function checkAddress(){
         //var pop = window.open("/juso/jusoPopup","pop","scrollbars=yes, resizable=yes");
 			
     });
-
-    
-
-
 }
 
 
@@ -359,13 +355,15 @@ function jusoCallBack(zipNo, roadAddrPart1, jibunAddr, addrDetail) {
     const $regForm = document.getElementById('signUpForm');
     $zipNo = document.getElementById("zipNo")
     $roadAddrPart1 = document.getElementById("roadAddrPart1")
+    $addrDetail = document.getElementById("addrDetail");
+    $jibunAddr = document.getElementById('jibunAddr');
     $address = document.getElementById("user_address")
 
     console.log(checkArr);
 
     $signUpBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        $address.value = $zipNo.value + $roadAddrPart1.value; 
+        $address.value = $zipNo.value +"_"+$roadAddrPart1.value+"_"+$addrDetail.value+"_"+$jibunAddr.value;
         if (!checkArr.includes(false)) {
             $regForm.submit();
         }else if (!checkArr[8]) {

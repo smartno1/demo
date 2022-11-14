@@ -12,13 +12,13 @@
 
     <insert id="insert">
         INSERT INTO shop_stock
-        (name, content, img, price, stock)
-        VALUES (#{name}, #{content}, #{img}, #{price}, #{stock})
+        (name, content, src, price, stock, origin)
+        VALUES (#{name}, #{content}, #{src}, #{price}, #{stock}, #{origin})
     </insert>
 
     <update id="update">
         UPDATE shop_stock
-        SET name=#{name}, content=#{content}, img=#{img}, price=#{price}, stock=#{stock}
+        SET name=#{name}, content=#{content}, src=#{src}, price=#{price}, stock=#{stock}, origin=#{origin}
         WHERE id=#{id}
     </update>
 
@@ -30,6 +30,9 @@
     <select id="findAll" resultMap="shopMap">
         SELECT *
         FROM shop_stock
+        <include refid="search" />
+        ORDER BY id DESC
+        LIMIT #{start}, #{amount}
     </select>
 
     <select id="findOne" resultMap="shopMap">
@@ -38,4 +41,18 @@
         WHERE id=#{id}
     </select>
 
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM shop_stock
+        <include refid="search" />
+    </select>
+
+    <sql id="search">
+        <if test="type == 'name'">WHERE name LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'content'">WHERE content LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'tc'">
+            WHERE name LIKE CONCAT('%', #{keyword}, '%')
+            OR content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </sql>
 </mapper>

@@ -1,5 +1,6 @@
 package com.spring.demo.shop.repository;
 
+import com.spring.demo.common.search.Search;
 import com.spring.demo.shop.domain.Shop;
 import com.spring.demo.shop.domain.ShopSold;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,7 +16,9 @@ public interface ShopMapper {
 
     boolean delete(int id);
 
-    List<Shop> findAll();
+    List<Shop> findAll(Search search);
 
     Shop findOne(int id);
+
+    int getTotalCount(Search search);
 }

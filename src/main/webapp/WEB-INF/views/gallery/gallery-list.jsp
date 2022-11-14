@@ -1106,9 +1106,6 @@ function appendPageActive() {
     downEvent();
     appendPageActive();
 
-
-
-
 })();
 
 </script>

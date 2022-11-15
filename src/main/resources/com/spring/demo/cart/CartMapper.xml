@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.demo.cart.repository.CartMapper">
+
+
+    <resultMap id="cartMap" type="com.spring.demo.board.domain.Board">
+        <result property="cartId" column="cart_id" />
+        <result property="goodsId" column="goods_id" />
+        <result property="goodsCnt" column="goods_cnt" />
+    </resultMap>
+
+
+    <!-- 카트 추가 -->
+    <insert id="addCart">
+
+        INSERT INTO
+        tbl_cart(account, goodsId, goodsCnt)
+        VALUES
+        (#{account}, #{goodsId}, #{goodsCnt})
+
+    </insert>
+
+
+    <!-- 카트 삭제 -->
+    <delete id="deleteCart">
+
+        DELETE FROM tbl_cart
+        WHERE cartId = #{cartId}
+
+    </delete>
+
+    <!-- 카트 수량 수정 -->
+    <update id="modifyCount">
+
+        UPDATE tbl_cart
+        SET goodsCnt=#{goodsCnt}
+        WHERE cartId = #{cartId}
+
+    </update>
+
+
+    <!-- 카트 목록 -->
+    <select id="getCart" resultMap="cartMap">
+
+        SELECT
+        a.cartId, a.account, a.goodsId, a.goodsCnt, b.goodsName, b.goodsPrice
+        FROM
+        tbl_cart a LEFT JOIN tbl_goods b
+        ON
+        a.goodsId = b.goodsId
+        WHERE
+        account = #{account}
+
+    </select>
+
+    <!-- 카트 확인 -->
+    <select id="checkCart" resultMap="cartMap">
+
+        SELECT *
+        FROM tbl_cart
+        WHERE
+        account = #{account} AND goodsId = #{goodsId}
+
+    </select>
+    
+
+
+
+
+
+</mapper>

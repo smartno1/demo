@@ -3,11 +3,9 @@ package com.spring.demo.myPage.service;
 import com.spring.demo.board.domain.Board;
 import com.spring.demo.common.paging.Page;
 import com.spring.demo.common.paging.PageMaker;
-import com.spring.demo.myPage.dto.MyPageBoardDTO;
 import com.spring.demo.myPage.dto.MyPageReplyDTO;
 import com.spring.demo.myPage.repository.MyPageMapper;
 
-import com.spring.demo.reply.domain.Reply;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,6 @@ package com.spring.demo.myPage.repository;
 
 import com.spring.demo.board.domain.Board;
 import com.spring.demo.common.paging.Page;
-import com.spring.demo.myPage.dto.MyPageBoardDTO;
 import com.spring.demo.myPage.dto.MyPageReplyDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MyPageMapperTest {

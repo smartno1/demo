@@ -2,9 +2,7 @@ package com.spring.demo.myPage.repository;
 
 import com.spring.demo.board.domain.Board;
 import com.spring.demo.common.paging.Page;
-import com.spring.demo.myPage.dto.MyPageBoardDTO;
 import com.spring.demo.myPage.dto.MyPageReplyDTO;
-import com.spring.demo.reply.domain.Reply;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

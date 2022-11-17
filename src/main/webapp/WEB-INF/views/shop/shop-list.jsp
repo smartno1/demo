@@ -165,7 +165,7 @@
                 <ul class="list-ul clear-fix">
                     <c:forEach var="i" items="${goods}">
                     <li>
-                        <a href="/shop/detail?id=${i.id}">
+                        <a href="/shop/detail?id=${i.id}&search=${s}">
                             <div class="img">
 
                                     <img src="${i.src}" art="">
@@ -189,26 +189,26 @@
                     <ul class="bottom-ul">
                         <%-- 이전 버튼 --%>
                         <c:if test="${pm.prev}">
-                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}" class="prev">prev</a></li>
+                            <li><a href="/shop/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.beginPage - 1}&amount=${pm.page.amount}" class="prev">prev</a></li>
                         </c:if>
 
                         <%-- 페이지 버튼 --%>
                         <c:forEach var="i" begin="${pm.beginPage}" end="${pm.endPage}" step="1">
                             <li>
-                                <a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${i}&amount=${pm.page.amount}">${i}</a>
+                                <a href="/shop/list?type=${search.type}&keyword=${search.keyword}&pageNum=${i}&amount=${pm.page.amount}">${i}</a>
                             </li>
                         </c:forEach>
 
                         <%--다음 버튼--%>
                         <c:if test="${pm.next}">
-                            <li><a href="/gallery/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.endPage + 1}&amount=${pm.page.amount}" class="next">next</a></li>
+                            <li><a href="/shop/list?type=${search.type}&keyword=${search.keyword}&pageNum=${pm.endPage + 1}&amount=${pm.page.amount}" class="next">next</a></li>
                         </c:if>
                     </ul>
                 </nav>
             </div>
-            <%@ include file= "../include/footer.jsp" %>
+        </div>
+        <%@ include file= "../include/footer.jsp" %>
     </div>
-
 
 
 <script>

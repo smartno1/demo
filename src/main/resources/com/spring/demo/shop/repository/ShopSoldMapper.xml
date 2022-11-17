@@ -11,9 +11,15 @@
         <result property="deliveryAddress" column="delivery_address"/>
         <result property="purchaseComplete" column="purchase_complete"/>
         <result property="purchaseAccount" column="purchase_account"/>
+        <result property="totalPrice" column="total_price"/>
     </resultMap>
 
 
+    <insert id="insert" >
+        INSERT INTO shop_sold
+            (goods_id, purchase_account, recipient, delivery_address, count, price, total_price)
+        VALUES (#{goodsId}, #{purchaseAccount}, #{recipient}, #{deliveryAddress}, #{count}, #{price}, #{totalPrice})
+    </insert>
 
 
 </mapper>

@@ -66,11 +66,17 @@
             position: relative;
             margin: 0 auto;
         }
+        .goList{
+            margin-top: 10px;
+            color: #fff;
+        }
 
         .top-box {
-            margin-top: 30px;
+            /*border: 1px solid greenyellow;*/
+            margin-top: 20px;
             color: #fff;
             position: relative;
+            height: 500px;
         }
 
         .top-box .img-box {
@@ -104,11 +110,19 @@
             margin-bottom: 10px;
         }
 
-        .top-box .info-box .name-price #price {
+        .top-box .info-box .name-price #priceStock {
             font-size: 25px;
             width: 470px;
-            padding-bottom: 30px;
+            padding-bottom: 60px;
+            padding-top: 20px;
             border-bottom: 1px solid #fff;
+            position: relative;
+        }
+        .top-box .info-box .name-price #priceStock #price {
+            float: left;
+        }
+        .top-box .info-box .name-price #priceStock #stock{
+            float: right;
         }
 
         .top-box .info-box .info {
@@ -194,12 +208,12 @@
         .top-box .info-box .buyBtn #like {
             margin-right: 0;
         }
-
+        #content {
+            margin-top: 30px;
+        }
         #content div {
-
             margin-bottom: 30px;
             padding-bottom: 20px;
-            text-align: center;
             border-bottom: 1px solid #fff;
             color: #fff;
         }
@@ -255,7 +269,8 @@
         #buy-modal .modal-box .deliveryAddr .address-table #jusoCallBack {
             width: 100px;
         }
-        #buy-modal .modal-box .modalBtn{
+
+        #buy-modal .modal-box .modalBtn {
             /*background: red;*/
             width: fit-content;
             height: 60px;
@@ -263,6 +278,7 @@
 
             margin: 30px auto;
         }
+
         #buy-modal .modal-box #buyBtn, #cancelBtn {
             width: 200px;
             height: 50px;
@@ -276,9 +292,49 @@
             float: left;
             cursor: pointer;
         }
+
         #buy-modal .modal-box #cancelBtn {
             width: 100px;
             margin-left: 50px;
+        }
+
+        #buySuccess {
+            background: #fff;
+            width: 320px;
+            height: 200px;
+
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            border-radius: 20px;
+            border: 2px double black;
+        }
+        #buySuccess > div{
+            margin:25px;
+        }
+        #buySuccess > div > h1{
+            line-height: 30px;
+        }
+        #buySuccess > div > div{
+            position: relative;
+            margin-top: 10px;
+            border-top: 1px solid black;
+        }
+        #buySuccess > div > div > div{
+            float: left;
+            border: 2px solid black;
+            border-radius: 10px;
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 30px;
+            text-align: center;
+
+        }
+        #buySuccess > div > div #shopping{
+            margin-right: 20px;
         }
 
     </style>
@@ -287,6 +343,9 @@
 <div class="wrap">
     <%@ include file="../include/header.jsp" %>
     <section class="detail-wrap">
+        <div class="goList">
+            <a href="/shop/list?search=${s}">SHOP</a><span> > ${g.shortName}</span>
+        </div>
         <div class="top-box clear-fix">
             <div class="img-box">
                 <img src="${g.src}" alt="">
@@ -296,9 +355,14 @@
                     <p id="name">
                         ${g.name}
                     </p>
-                    <p id="price">
-                        ${g.decimalPrice}원
-                    </p>
+                    <div id="priceStock">
+                        <p id="price">
+                            ${g.decimalPrice}원
+                        </p>
+                        <p id="stock">
+                            재고량 : ${g.stock}
+                        </p>
+                    </div>
                 </div>
                 <div class="info">
                     <em>원산지 </em> &nbsp&nbsp${g.origin}<br>
@@ -341,60 +405,69 @@
         </div>
         <div id="buy-modal" style="display: none">
             <div class="modal-box">
-                <form id="modal-form" >
-                    <input id="modalCount" name="count" type="hidden"/>
-                    <input id="modalId" name="id" type="hidden"/>
+                <input id="modalCount" name="count" type="hidden"/>
+                <input id="modalId" name="goodsId" type="hidden"/>
 
-                    <div class="checkbox">
-                        <span> 받는사람</span>
-                        주문자와 동일<input id="recipient" type="checkbox"  value="${loginUser.account}"/><br>
-                        <input id="other" type="text" name="recipient" placeholder="받는사람 이름"/>
-                    </div>
-                    <div class="deliveryAddr">
-                        <span> 받으실 주소</span>
-                        주문자와 동일<input id="deliveryAddr" type="checkbox"
-                                      value="${loginUser.address}"/><br><br>
-                        <input id="deliveryAddress" type="hidden" name="deliveryAddress">
-                        <table class="address-table">
-                            <tr>
-                                <td><strong>우편번호</strong></td>
-                                <td><input type="text" id="zipNo" name="zipNo" readonly
-                                           value=""/>
-                                    <input type="button" id="jusoCallBack" value="주소 검색"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>도로명주소</strong></td>
-                                <td><input type="text" id="roadAddrPart1"
-                                           name="roadAddrPart1" readonly/></td>
-                            </tr>
-                            <tr>
-                                <td><strong>지번</strong></td>
-                                <td><input type="text" id="jibunAddr" name="jibunAddr"
-                                           readonly/></td>
-                            </tr>
-                            <tr>
-                                <td><strong>고객입력 상세주소</strong></td>
-                                <td><input type="text" id="addrDetail"
-                                           name="addrDetail"/></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modalBtn">
-                        <div id="buyBtn">
+                <div class="checkbox">
+                    <span> 받는사람</span>
+                    주문자와 동일<input id="recipient" type="checkbox" value="${loginUser.account}"/><br>
+                    <input id="other" type="text" name="recipient" placeholder="받는사람 이름"/>
+                </div>
+                <div class="deliveryAddr">
+                    <span> 받으실 주소</span>
+                    주문자와 동일<input id="deliveryAddr" type="checkbox"
+                                  value="${loginUser.address}"/><br><br>
+                    <input id="deliveryAddress" type="hidden" name="deliveryAddress">
+                    <table class="address-table">
+                        <tr>
+                            <td><strong>우편번호</strong></td>
+                            <td><input type="text" id="zipNo" name="zipNo" readonly
+                                       value=""/>
+                                <input type="button" id="jusoCallBack" value="주소 검색"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>도로명주소</strong></td>
+                            <td><input type="text" id="roadAddrPart1"
+                                       name="roadAddrPart1" readonly/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>지번</strong></td>
+                            <td><input type="text" id="jibunAddr" name="jibunAddr"
+                                       readonly/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>고객입력 상세주소</strong></td>
+                            <td><input type="text" id="addrDetail"
+                                       name="addrDetail"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modalBtn">
+                    <div id="buyBtn">
                         구매
-                        </div>
-                        <div id="cancelBtn">
-                        취소
-                        </div>
                     </div>
-
-                </form>
+                    <div id="cancelBtn">
+                        취소
+                    </div>
+                </div>
             </div>
         </div>
-
-</section>
-<%@ include file="../include/footer.jsp" %>
+        <div id="buySuccess" style="display: none">
+            <div>
+                <h1>구매가 성공적으로 완료되었습니다.<br>감사합니다.</h1>
+                <div>
+                    <div id="shopping">
+                        계속 쇼핑하기
+                    </div>
+                    <div id="confirm">
+                        구매확인
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%@ include file="../include/footer.jsp" %>
 </div>
 
 <script>
@@ -417,6 +490,10 @@
                 count = 100;
                 alert("한번에 최대 주문수량은 100개 입니다.");
             }
+            if(count > ${g.stock}){
+                count = ${g.stock};
+                alert("주문량이 재고량보다 많습니다");
+            }
             document.getElementById('totalCnt').textContent = `총 상품금액(` + count + `개)`;
 
             let price = "${g.price}";
@@ -438,6 +515,10 @@
                 e.target.value = 100;
                 alert("한번에 최대주문수량은 100개입니다.");
             }
+            if(e.target.value > ${g.stock}){
+                e.target.value = ${g.stock};
+                alert("주문량이 재고량보다 많습니다");
+            }
             let price = "${g.price}";
             price = price * e.target.value;
             price = price.toLocaleString('ko-KR');
@@ -451,11 +532,12 @@
 
             if (!e.target.matches('#buy')) return;
 
-            const $count = document.getElementById('count').firstElementChild.value;
+            const count = document.getElementById('count').firstElementChild.value;
 
             document.getElementById('modalCount').value = count;
             document.getElementById('modalId').value = ${g.id};
             document.getElementById('buy-modal').style.display = "block";
+            console.log("madalcount",document.getElementById('modalCount').value)
         })
     }
 
@@ -533,31 +615,69 @@
             const deliveryAddr = document.getElementById('zipNo').value;
             console.log(recipient, deliveryAddr);
 
-            if(recipient !== null && recipient !== undefined){
-                if(deliveryAddr !== null && deliveryAddr !== undefined){
+            if (recipient !== '' && recipient !== undefined) {
+                if (deliveryAddr !== '' && deliveryAddr !== undefined) {
                     const $zipNo = document.getElementById("zipNo")
                     const $roadAddrPart1 = document.getElementById("roadAddrPart1")
                     const $addrDetail = document.getElementById("addrDetail");
                     const $jibunAddr = document.getElementById('jibunAddr');
 
-                    const deliveryAddress = $zipNo.value+"_"+$roadAddrPart1.value+"_"+$addrDetail.value+"_"+$jibunAddr.value;
-                    document.getElementById('deliveryAddress').value = deliveryAddress;
-                    console.log("서브밋");
-                    const $form = document.getElementById('modal-form');
-                    // $form.submit();
-                }else{
+                    const deliveryAddress = $zipNo.value + "_" + $roadAddrPart1.value + "_" + $addrDetail.value + "_" + $jibunAddr.value;
+                    const count = document.getElementById('modalCount').value;
+                    const id = document.getElementById('modalId').value;
+                    console.log(typeof id, id);
+                    console.log(typeof count, count);
+
+                    const reqInfo = {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            recipient: recipient,
+                            deliveryAddress: deliveryAddress,
+                            goodsId: parseInt(id),
+                            count: parseInt(count)
+                        })
+                    };
+
+                    fetch("/shop/buy", reqInfo)
+                        .then(res => res.text())
+                        .then(msg => {
+                            if (msg === 'success') {
+                                document.getElementById('buySuccess').style.display='block';
+                            }
+                        })
+
+                } else {
+                    console.log("addr no")
                     alert("작성란을 확인하세요");
                 }
-            }else{
+            } else {
+                console.log("recipient no")
                 alert("작성란을 확인하세요");
             }
         })
     }
 
-    function cancel(){
+    function cancel() {
         document.getElementById('cancelBtn').addEventListener('click', e => {
 
-            location.href = "/shop/detail?id=${g.id}"
+            location.href = "/shop/detail?id=${g.id}&search=${s}"
+        })
+    }
+
+    function shopping(){
+        document.getElementById('buySuccess').addEventListener('click', e=>{
+            if(e.target.matches('#shopping')){
+
+                location.href="/shop/list?type=${s.type}&keyword=${s.keyword}&pageNum=${s.pageNum}&amount=${s.amount}";
+            }
+            if(e.target.matches('#confirm')){
+                alert("구매확인페이지")
+            }
+
+
         })
     }
 
@@ -570,6 +690,7 @@
         deliveryAddr();
         checkOrder();
         cancel();
+        shopping();
 
 
     })();

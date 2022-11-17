@@ -14,10 +14,10 @@
             <style>
                 a {color: #fff; text-decoration: none; outline: none}
                 a:hover, a:active {text-decoration: none; }
-                .header-wrraper .nav .nav-ul{
+                .header-wraper .nav .nav-ul{
                         padding: 0; 
                     }
-                .header-wrraper .nav .nav-ul li{
+                .header-wraper .nav .nav-ul li{
                         list-style: none;
                     }
                 .wrap{
@@ -143,7 +143,7 @@
                     }
 
                     .user-block {
-                        display: flexbox;
+                        display: flex;
                     }
 
                     .dateForm {}
@@ -179,7 +179,7 @@
                                 name="title" value="${b.title}" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+                            <label class="form-label">내용</label>
 
                             <p class="main-content">
                                 ${b.content}

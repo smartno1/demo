@@ -19,10 +19,10 @@
               <style>
                   a {color: #fff; text-decoration: none; outline: none}
                   a:hover, a:active {text-decoration: none; }
-                  .header-wrraper .nav .nav-ul{
+                  .header-wraper .nav .nav-ul{
                           padding: 0; 
                       }
-                  .header-wrraper .nav .nav-ul li{
+                  .header-wraper .nav .nav-ul li{
                           list-style: none;
                       }
                   .wrap{
@@ -88,9 +88,8 @@
 
     (function(){
 
-        $listBtn = document.getElementById("listBtn");
-        
-        $listBtn.onclick = e =>{
+
+        document.getElementById("listBtn").onclick = e =>{
             
             history.go(-2);
 

@@ -14,5 +14,7 @@ public class ShopSold {
     private String deliveryAddress;
     private boolean purchaseComplete;
     private int count;
+    private int price;
+    private int totalPrice;
     private LocalDate regDate;
 }

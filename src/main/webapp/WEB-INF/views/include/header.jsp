@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <header class="header">
-  <div class="header-wrraper">
+  <div class="header-wraper">
     <div class="header-top clear-fix">
       <div class="header-top-link">
         <span>인스타</span>

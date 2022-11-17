@@ -21,6 +21,12 @@
         SET name=#{name}, content=#{content}, src=#{src}, price=#{price}, stock=#{stock}, origin=#{origin}
         WHERE id=#{id}
     </update>
+    <update id="updateCount">
+        UPDATE shop_stock
+        SET stock=stock-#{stock}
+        WHERE id=#{id}
+    </update>
+
 
     <delete id="delete">
         DELETE FROM shop_stock

@@ -13,6 +13,7 @@ public interface ShopMapper {
     boolean insert(Shop shop);
 
     boolean update(Shop shop);
+    boolean updateCount(Shop shop);
 
     boolean delete(int id);
 

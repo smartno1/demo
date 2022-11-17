@@ -34,11 +34,11 @@
                     text-decoration: none;
                 }
 
-                .header-wrraper .nav .nav-ul {
+                .header-wraper .nav .nav-ul {
                     padding: 0;
                 }
 
-                .header-wrraper .nav .nav-ul li {
+                .header-wraper .nav .nav-ul li {
                     list-style: none;
                 }
 

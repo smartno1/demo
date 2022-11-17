@@ -794,17 +794,6 @@ function closeUpDel (){
     document.querySelector('.down-text').setAttribute('data-galleryno','');
     document.querySelector('.in-text').classList.remove("border");
     document.querySelector('.in-text').textContent = '';
-//     document.querySelector('.down-btn').innerHTML = `
-//                                             <button class="down-btn-mod" style="display: inline-block">
-//                                                 코멘트수정
-//                                             </button>
-//                                              <button class="down-btn-del" style="display: inline-block">
-//                                                 삭제
-//                                             </button>
-//                                              <button class="down-btn-back" style="display: inline-block">
-//                                                  돌아가기
-//                                              </button>`
-//
 }
 // 모달창 수정버튼 이벤트 걸기
 function modEvent(ee){

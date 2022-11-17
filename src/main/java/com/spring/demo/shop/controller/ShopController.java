@@ -5,7 +5,9 @@ import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.common.search.Search;
 import com.spring.demo.like.domain.Like;
 import com.spring.demo.shop.domain.Shop;
+import com.spring.demo.shop.domain.ShopSold;
 import com.spring.demo.shop.service.ShopService;
+import com.spring.demo.shop.service.ShopSoldService;
 import com.spring.demo.util.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,10 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+import static com.spring.demo.util.LoginUtils.getCurrentMemberAccount;
 import static com.spring.demo.util.LoginUtils.getCurrentMemberAuth;
 
 @Controller @RequiredArgsConstructor
@@ -37,6 +37,7 @@ public class ShopController {
     private String UPLOAD_PATH;
 
     private final ShopService shopService;
+    private final ShopSoldService shopSoldService;
 
     @GetMapping("/list")
     public String list (@ModelAttribute("s") Search search, Model model){
@@ -84,13 +85,29 @@ public class ShopController {
 
 
     @GetMapping("/detail")
-    public String detail(int id, Model model){
+    public String detail(int id,Search search, Model model){
 
         Shop shop = shopService.findOneService(id);
 
         model.addAttribute("g",shop);
+        model.addAttribute("s", search);
 
         return "shop/shop-detail";
     }
+
+    @Transactional
+    @PostMapping("/buy")
+    @ResponseBody
+    public String buy(@RequestBody ShopSold shopSold, HttpSession session ){
+
+        shopSold.setPurchaseAccount(getCurrentMemberAccount(session));
+        shopSold.setPurchaseComplete(true);
+        shopSold.setPrice(shopService.findOneService(shopSold.getGoodsId()).getPrice());
+        shopSold.setTotalPrice(shopSold.getPrice()*shopSold.getCount());
+//        log.info(shopSold);
+
+        return shopSoldService.insertService(shopSold)? "success":"fail";
+    }
+
 
 }

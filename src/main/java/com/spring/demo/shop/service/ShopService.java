@@ -2,6 +2,7 @@ package com.spring.demo.shop.service;
 
 import com.spring.demo.common.search.Search;
 import com.spring.demo.shop.domain.Shop;
+import com.spring.demo.shop.domain.ShopSold;
 import com.spring.demo.shop.repository.ShopMapper;
 import com.spring.demo.shop.repository.ShopSoldMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,9 @@ public class ShopService {
 
     public boolean updateService(Shop shop){
         return  shopMapper.update(shop);
+    }
+    public boolean updateCountService(Shop shop){
+        return  shopMapper.updateCount(shop);
     }
 
     public boolean deleteService(int id){
@@ -118,6 +122,7 @@ public class ShopService {
         DecimalFormat df = new DecimalFormat("###,###");
         s.setDecimalPrice(df.format(price));
     }
+
 
 
 }

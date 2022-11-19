@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.demo.visitor.repository.VisitorMapper">
+
+    <resultMap id="visitorMap" type="com.spring.demo.visitor.domain.Visitor">
+        <result column="limit_time" property="limitTime"/>
+        <result column="session_id" property="sessionId"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO visitor
+        (session_id, limit_time)
+        VALUES (#{sessionId}, #{limitTime})
+    </insert>
+
+    <update id="update">
+        UPDATE visitor
+        SET limit_time = #{limitTime}
+        WHERE session_id = #{sessionId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM visitor
+        WHERE session_id = #{sessionId}
+    </delete>
+
+    <select id="findOne" resultMap="visitorMap">
+        SELECT *
+        FROM visitor
+        WHERE session_id = #{sessionId}
+    </select>
+
+</mapper>

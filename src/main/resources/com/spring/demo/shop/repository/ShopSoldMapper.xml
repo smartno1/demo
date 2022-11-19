@@ -17,9 +17,19 @@
 
     <insert id="insert" >
         INSERT INTO shop_sold
-            (goods_id, purchase_account, recipient, delivery_address, count, price, total_price)
-        VALUES (#{goodsId}, #{purchaseAccount}, #{recipient}, #{deliveryAddress}, #{count}, #{price}, #{totalPrice})
+            (goods_id, purchase_account, recipient, delivery_address, purchase_complete, count, price, total_price)
+        VALUES (#{goodsId}, #{purchaseAccount}, #{recipient}, #{deliveryAddress}, #{purchaseComplete}, #{count}, #{price}, #{totalPrice})
     </insert>
 
+    <select id="findAllCount" resultType="int">
+        SELECT COUNT(*)
+        FROM shop_sold
+        WHERE purchase_account = #{account} AND purchase_complete = "BASKET"
+    </select>
+
+    <delete id="delete">
+        DELETE FROM shop_sold
+        WHERE purchase_account = #{account} AND purchase_complete = "BASKET"
+    </delete>
 
 </mapper>

@@ -20,15 +20,21 @@ public class ShopSoldService {
 
        boolean flag = shopSoldMapper.insert(shopSold);
        if(flag){
-
-           Shop shop = new Shop();
-           shop.setId(shopSold.getGoodsId());
-           shop.setStock((long) shopSold.getCount());
-           return  shopService.updateCountService(shop);
-
+            if(shopSold.isPurchase()) {
+                Shop shop = new Shop();
+                shop.setId(shopSold.getGoodsId());
+                shop.setStock((long) shopSold.getCount());
+                return shopService.updateCountService(shop);
+            }else {
+                return true;
+            }
        }else {
            return false;
        }
+    }
+
+    public int findAllCountService(String account){
+        return shopSoldMapper.findAllCount(account);
     }
 
 }

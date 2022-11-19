@@ -4,11 +4,14 @@ import com.spring.demo.common.paging.Page;
 import com.spring.demo.common.paging.PageMaker;
 import com.spring.demo.common.search.Search;
 import com.spring.demo.like.domain.Like;
+import com.spring.demo.member.domain.Member;
+import com.spring.demo.shop.domain.PurchaseDone;
 import com.spring.demo.shop.domain.Shop;
 import com.spring.demo.shop.domain.ShopSold;
 import com.spring.demo.shop.service.ShopService;
 import com.spring.demo.shop.service.ShopSoldService;
 import com.spring.demo.util.FileUtils;
+import com.spring.demo.visitor.domain.Visitor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-import static com.spring.demo.util.LoginUtils.getCurrentMemberAccount;
-import static com.spring.demo.util.LoginUtils.getCurrentMemberAuth;
+import static com.spring.demo.util.LoginUtils.*;
 
 @Controller @RequiredArgsConstructor
 @Log4j2 @PropertySource("classpath:uploadpath.properties")
@@ -101,13 +103,48 @@ public class ShopController {
     public String buy(@RequestBody ShopSold shopSold, HttpSession session ){
 
         shopSold.setPurchaseAccount(getCurrentMemberAccount(session));
-        shopSold.setPurchaseComplete(true);
         shopSold.setPrice(shopService.findOneService(shopSold.getGoodsId()).getPrice());
-        shopSold.setTotalPrice(shopSold.getPrice()*shopSold.getCount());
-//        log.info(shopSold);
-
-        return shopSoldService.insertService(shopSold)? "success":"fail";
+        shopSold.setTotalPrice(shopSold.getPrice() * shopSold.getCount());
+        if(shopSold.isPurchase()){
+            shopSold.setPurchaseComplete(PurchaseDone.DONE);
+        }else{
+            shopSold.setPurchaseComplete(PurchaseDone.BASKET);
+        }
+        return shopSoldService.insertService(shopSold)?"success":"fail";
     }
+
+    @Transactional
+    @PostMapping("/basket")
+    @ResponseBody
+    public String basket(@RequestBody ShopSold shopSold, HttpSession session){
+
+        shopSold.setPrice(shopService.findOneService(shopSold.getGoodsId()).getPrice());
+        shopSold.setTotalPrice(shopSold.getPrice() * shopSold.getCount());
+        if(isLogin(session)){
+            shopSold.setPurchaseAccount(getCurrentMemberAccount(session));
+        }else{
+            shopSold.setPurchaseAccount(getCurrentVisitor(session));
+        }
+
+        if(shopSold.isPurchase()){
+            shopSold.setPurchaseComplete(PurchaseDone.DONE);
+        }else{
+            shopSold.setPurchaseComplete(PurchaseDone.BASKET);
+        }
+        boolean flag = false;
+        if(shopSoldService.insertService(shopSold)){
+            if(isLogin(session)){
+                Member member = (Member) session.getAttribute("loginUser");
+                member.setBasket(shopSoldService.findAllCountService(member.getAccount()));
+            }else{
+                Visitor visitor = (Visitor) session.getAttribute("visitor");
+                visitor.setBasket(shopSoldService.findAllCountService(visitor.getSessionId()));
+            }
+            flag = true;
+        }
+        return flag?"success":"fail";
+    }
+
 
 
 }

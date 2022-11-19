@@ -23,6 +23,9 @@ public class Member {
     private Gender gender;
     private Auth auth;
     private Date regDate;
+    private String sessionId;
+    private Date limitTime;
 
-
+    //-----------------
+    private int basket;
 }

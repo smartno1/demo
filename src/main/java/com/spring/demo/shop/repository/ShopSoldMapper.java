@@ -13,9 +13,11 @@ public interface ShopSoldMapper {
 
     boolean update(ShopSold shopSold);
 
-    boolean delete(int id);
+    boolean delete(String account);
 
     List<ShopSold> findAll();
+
+    int findAllCount(String account);
 
     ShopSold findOne(int id);
 }

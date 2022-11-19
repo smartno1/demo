@@ -8,6 +8,8 @@
     <resultMap id="memberMap" type="com.spring.demo.member.domain.Member">
         <result column="reg_date" property="regDate" />
         <result column="phone_num" property="phoneNum"/>
+        <result column="session_id" property="sessionId"/>
+        <result column="limit_time" property="limitTime"/>
 
     </resultMap>
 
@@ -56,7 +58,7 @@
 
     <update id="saveAutoLoginValue">
 
-        UPDATE tbl_member
+        UPDATE tbl_user
         SET session_id = #{sessionId}, limit_time = #{limitTime}
         WHERE account = #{account}
 
@@ -64,7 +66,7 @@
 
     <select id="findMemberBySessionId" resultMap="memberMap">
 
-        SELECT * FROM tbl_member
+        SELECT * FROM tbl_user
         WHERE session_id = #{sessionId}
 
     </select>

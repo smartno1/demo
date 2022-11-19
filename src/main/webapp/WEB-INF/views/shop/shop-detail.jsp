@@ -66,9 +66,18 @@
             position: relative;
             margin: 0 auto;
         }
-        .goList{
+        .top-header{
             margin-top: 10px;
             color: #fff;
+            position: relative;
+        }
+        .top-header .goList{
+            float: left;
+        }
+        #modify, #delete{
+            float: right;
+            margin-left: 20px;
+            cursor: pointer;
         }
 
         .top-box {
@@ -343,8 +352,12 @@
 <div class="wrap">
     <%@ include file="../include/header.jsp" %>
     <section class="detail-wrap">
-        <div class="goList">
-            <a href="/shop/list?search=${s}">SHOP</a><span> > ${g.shortName}</span>
+        <div class="top-header clear-fix">
+            <div class="goList">
+                <a href="/shop/list?search=${s}">SHOP</a><span> > ${g.shortName}</span>
+            </div>
+            <div id="delete">삭제하기</div>
+            <div id="modify">수정하기</div>
         </div>
         <div class="top-box clear-fix">
             <div class="img-box">
@@ -531,6 +544,13 @@
         document.getElementById('buy').addEventListener('click', e => {
 
             if (!e.target.matches('#buy')) return;
+            if(${loginUser == null}){
+                if(confirm("로그인이 필요합니다.\n로그인페이지로 이동할까요?")){
+                    location.href="/member/sign-in";
+                }else{
+                    return;
+                }
+            }
 
             const count = document.getElementById('count').firstElementChild.value;
 
@@ -538,6 +558,45 @@
             document.getElementById('modalId').value = ${g.id};
             document.getElementById('buy-modal').style.display = "block";
             console.log("madalcount",document.getElementById('modalCount').value)
+        })
+    }
+
+    function basket(){
+        document.getElementById('basket').addEventListener('click', e => {
+
+            if(!e.target.matches('#basket')) return;
+
+            if(!confirm("장바구니에 담을까요?")) return;
+
+            const count = document.getElementById('count').firstElementChild.value;
+            const id = ${g.id};
+            console.log(count, id);
+
+                const reqInfo = {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        goodsId: parseInt(id),
+                        count: parseInt(count),
+                        purchase: false
+
+                    })
+                };
+
+                fetch("/shop/basket",reqInfo)
+                    .then(res => res.text())
+                    .then(msg => {
+                        if(msg === 'success'){
+                            alert("본 상품을 장바구니에 담았습니다.");
+                            location.reload();
+                        }else{
+                            alert("장바구니에 담을 수 없습니다.")
+                        }
+
+                    })
+
         })
     }
 
@@ -570,10 +629,10 @@
             const $other = document.getElementById('other');
             if (e.target.checked === true) {
                 $other.value = e.target.value;
-                $other.setAttribute("disabled", "disabled");
+                $other.setAttribute("disabled", ""); //$other.disabled=true;
             } else {
                 $other.value = '';
-                $other.removeAttribute("disabled");
+                $other.removeAttribute("disabled"); //$other.disabled=false;
             }
         })
     }
@@ -637,7 +696,8 @@
                             recipient: recipient,
                             deliveryAddress: deliveryAddress,
                             goodsId: parseInt(id),
-                            count: parseInt(count)
+                            count: parseInt(count),
+                            purchase: true
                         })
                     };
 
@@ -691,6 +751,7 @@
         checkOrder();
         cancel();
         shopping();
+        basket();
 
 
     })();

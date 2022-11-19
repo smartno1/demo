@@ -12,9 +12,12 @@ public class ShopSold {
     private String purchaseAccount;
     private String recipient;
     private String deliveryAddress;
-    private boolean purchaseComplete;
+    private PurchaseDone purchaseComplete;
     private int count;
     private int price;
     private int totalPrice;
     private LocalDate regDate;
+
+    //---------
+    private boolean purchase;
 }

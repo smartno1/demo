@@ -2,7 +2,6 @@ package com.spring.demo.shop.service;
 
 import com.spring.demo.common.search.Search;
 import com.spring.demo.shop.domain.Shop;
-import com.spring.demo.shop.domain.ShopSold;
 import com.spring.demo.shop.repository.ShopMapper;
 import com.spring.demo.shop.repository.ShopSoldMapper;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +41,7 @@ public class ShopService {
     public  Shop findOneService(int id){
 
         Shop s = shopMapper.findOne(id);
+        log.info("findOneService s - {}",s);
         convertDateFormat(s);
         substringTitle(s);
         checkNewArticle(s);

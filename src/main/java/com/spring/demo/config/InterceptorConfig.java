@@ -67,7 +67,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(shopInterceptor)
                 .addPathPatterns("/shop/*")
-                .excludePathPatterns("/shop/list", "/shop/detail");
+                .excludePathPatterns("/shop/list", "/shop/detail", "/shop/basket");
 
 
     }

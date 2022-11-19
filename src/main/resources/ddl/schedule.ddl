@@ -10,7 +10,7 @@ background_color VARCHAR(50),
 text_color VARCHAR(50),
 border_color VARCHAR(50),
 
-CONSTRAINT pk_calendar PRIMARY KEY (no),
+CONSTRAINT pk_calendar PRIMARY KEY (id),
 
 CONSTRAINT fk_calender_user
 FOREIGN KEY (account)

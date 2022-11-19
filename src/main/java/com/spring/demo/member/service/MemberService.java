@@ -4,6 +4,7 @@ import com.spring.demo.member.domain.Member;
 import com.spring.demo.member.dto.AutoLoginDTO;
 import com.spring.demo.member.dto.LoginDTO;
 import com.spring.demo.member.repository.MemberMapper;
+import com.spring.demo.shop.repository.ShopSoldMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,8 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.spring.demo.member.service.LoginFlag.*;
-import static com.spring.demo.util.LoginUtils.LOGIN_COOKIE;
-import static com.spring.demo.util.LoginUtils.getAutoLoginCookie;
+import static com.spring.demo.util.LoginUtils.*;
 
 @Service
 @Log4j2
@@ -27,6 +27,7 @@ import static com.spring.demo.util.LoginUtils.getAutoLoginCookie;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final ShopSoldMapper shopSoldMapper;
 
     private final BCryptPasswordEncoder encoder;
 
@@ -86,7 +87,8 @@ public class MemberService {
                     keepLogin(foundMember.getAccount(), session, response);
                 }
 
-
+                foundMember.setBasket(shopSoldMapper.findAllCount(foundMember.getAccount()));
+                shopSoldMapper.delete(getCurrentVisitor(session));
                 session.setAttribute("loginUser", foundMember);
 
                 // 세션 타임아웃 설정

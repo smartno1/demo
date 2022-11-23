@@ -55,7 +55,7 @@
             outline: none;
         }
 
-        .clear-fix {
+        .clear-fix:after {
             content: "";
             display: block;
             clear: both;
@@ -484,6 +484,12 @@
 </div>
 
 <script>
+    <%--function countBasket(){--%>
+    <%--    if(${s.type == null}) return;--%>
+    <%--    console.log(${s.keyword});--%>
+    <%--    if(${s.type != "count"}) return;--%>
+    <%--    document.getElementById('count').value = ${s.keyword}--%>
+    <%--}--%>
 
     // + , - 버튼클릭시 계산
     function countButton() {
@@ -742,6 +748,7 @@
     }
 
     (function () {
+        // countBasket();
         countButton();
         countInput();
         buyEvent();

@@ -27,6 +27,24 @@
         WHERE purchase_account = #{account} AND purchase_complete = "BASKET"
     </select>
 
+    <select id="findAll2" resultMap="shopSoldMap">
+        SELECT *
+        FROM shop_sold
+        WHERE purchase_account = #{account} AND purchase_complete = "BASKET"
+    </select>
+
+    <select id="findOne" resultMap="shopSoldMap">
+        SELECT *
+        FROM shop_sold
+        WHERE id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE shop_sold
+        SET purchase_complete = #{purchaseComplete}, recipient = #{recipient}, delivery_address = #{deliveryAddress}
+        WHERE id = #{id}
+    </update>
+
     <delete id="delete">
         DELETE FROM shop_sold
         WHERE purchase_account = #{account} AND purchase_complete = "BASKET"

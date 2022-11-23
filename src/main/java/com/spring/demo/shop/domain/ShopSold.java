@@ -20,4 +20,6 @@ public class ShopSold {
 
     //---------
     private boolean purchase;
+    private String name;
+    private String src;
 }

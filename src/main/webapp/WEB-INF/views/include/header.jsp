@@ -10,7 +10,7 @@
                 <span>유투브</span>
             </div>
             <div class="header-top-account">
-                <div class="accountContainer">
+                <div class="accountContainer clear-fix">
                     <c:if test="${loginUser != null}">
                         <div class="account">
                             <a href="/member/myPage">
@@ -22,7 +22,7 @@
                         </div>
                     </c:if>
                     <div class="basket clear-fix">
-                        <a href="">
+                        <a href="/shop/basket" >
                             <div class="basketContainer clear-fix">
                                 <div class="basketImg">
                                     <img src="/img/icon-basket.png" alt="">

@@ -15,7 +15,7 @@ public interface ShopSoldMapper {
 
     boolean delete(String account);
 
-    List<ShopSold> findAll();
+    List<ShopSold> findAll2(String account);
 
     int findAllCount(String account);
 

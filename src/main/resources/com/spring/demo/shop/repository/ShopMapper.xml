@@ -23,7 +23,7 @@
     </update>
     <update id="updateCount">
         UPDATE shop_stock
-        SET stock=stock-#{stock}, sold=#{stock}
+        SET stock=stock-#{stock}, sold = sold + #{stock}
         WHERE id=#{id}
     </update>
 

@@ -25,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import static com.spring.demo.util.LoginUtils.*;
@@ -93,7 +95,8 @@ public class ShopController {
 
         model.addAttribute("g",shop);
         model.addAttribute("s", search);
-
+        log.info(id);
+        log.info(search);
         return "shop/shop-detail";
     }
 
@@ -101,16 +104,24 @@ public class ShopController {
     @PostMapping("/buy")
     @ResponseBody
     public String buy(@RequestBody ShopSold shopSold, HttpSession session ){
-
-        shopSold.setPurchaseAccount(getCurrentMemberAccount(session));
-        shopSold.setPrice(shopService.findOneService(shopSold.getGoodsId()).getPrice());
-        shopSold.setTotalPrice(shopSold.getPrice() * shopSold.getCount());
-        if(shopSold.isPurchase()){
-            shopSold.setPurchaseComplete(PurchaseDone.DONE);
+            ShopSold shopSold2 = shopSoldService.findOneService(shopSold.getId());
+        if(shopSold2 == null){
+            shopSold.setPurchaseAccount(getCurrentMemberAccount(session));
+            shopSold.setPrice(shopService.findOneService(shopSold.getGoodsId()).getPrice());
+            shopSold.setTotalPrice(shopSold.getPrice() * shopSold.getCount());
+            if(shopSold.isPurchase()){
+                shopSold.setPurchaseComplete(PurchaseDone.DONE);
+            }else{
+                shopSold.setPurchaseComplete(PurchaseDone.BASKET);
+            }
+            return shopSoldService.insertService(shopSold) ? "success" : "fail";
         }else{
-            shopSold.setPurchaseComplete(PurchaseDone.BASKET);
+            shopSold2.setRecipient(shopSold.getRecipient());
+            shopSold2.setDeliveryAddress(shopSold.getDeliveryAddress());
+            String msg = shopSoldService.updateService(shopSold2) ? "success_"+shopSold2.getId() : "fail_"+shopSold2.getId();
+            log.info("msg - {}",msg);
+            return msg;
         }
-        return shopSoldService.insertService(shopSold)?"success":"fail";
     }
 
     @Transactional
@@ -143,6 +154,27 @@ public class ShopController {
             flag = true;
         }
         return flag?"success":"fail";
+    }
+
+    @GetMapping("/basket")
+    public String basket(HttpSession session, Model model){
+        String account = "";
+        if(isLogin(session)){
+            account = getCurrentMemberAccount(session);
+        }else{
+            account = getCurrentVisitor(session);
+        }
+
+        List<ShopSold> shopSoldList = shopSoldService.findAllService(account);
+        List<Shop> shopList = new ArrayList<>();
+        for (ShopSold s:shopSoldList) {
+            Shop shop = shopService.findOneService(s.getGoodsId());
+            s.setName(shop.getName());
+            s.setSrc(shop.getSrc());
+        }
+        model.addAttribute("shopSolds",shopSoldList);
+
+        return "shop/shop-basket";
     }
 
 

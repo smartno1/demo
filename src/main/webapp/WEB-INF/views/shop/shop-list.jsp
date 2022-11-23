@@ -24,7 +24,7 @@
         a {color: #fff; text-decoration: none; outline: none}
         a:hover, a:active {text-decoration: none; }
 
-        .clear-fix{
+        .clear-fix:after{
             content: "";
             display: block;
             clear: both;

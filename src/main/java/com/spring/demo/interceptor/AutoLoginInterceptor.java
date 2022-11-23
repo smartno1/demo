@@ -63,7 +63,6 @@ public class AutoLoginInterceptor implements HandlerInterceptor {
                     // 6. 세션에 해당 방문자정보를 저장
                     visitor.setBasket(shopSoldMapper.findAllCount(sessionId));
                     request.getSession().setAttribute(VISITOR_FLAG, visitor);
-                    log.info("visitorcookie");
                 }
             }
         }
